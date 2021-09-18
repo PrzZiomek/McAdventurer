@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Button } from "../components/Button";
 import { Div } from "../components/div";
 import { Input } from "../components/Input";
+import { Span } from "../components/Span";
 
 export const BrowserWrapper = styled.div`
   width: 300px;
@@ -16,7 +17,7 @@ export const BrowserInput = styled(Input)`
     width: 100%;
     height: 100%;
     border: 1px solid black;
-    font-size: 1rem; 
+    font-size: 1.3rem; 
     color: ${(props) => props.visibleText ? "black" : "transparent"};
   `;
 
@@ -49,3 +50,8 @@ export const InputButton = styled(Button)`
          opacity: 0.5;
       }
 `;
+
+export const InputTextSpan = styled(Span)`
+  text-transform: ${(props)=>props.textTransform ? props.textTransform  : "none"};
+  display: ${(props)=>props.display ? props.display  : "inline"};
+`
