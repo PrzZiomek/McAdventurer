@@ -1,4 +1,4 @@
-import {  useState,  ChangeEvent, MouseEvent, FC } from "react";
+import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEventHandler, KeyboardEvent } from "react";
 import { BrowserInput, InputButton, InputTextWrapper, BrowserWrapper, InputTextSpan } from "./styles/destinationBrowserStyle";
 
 interface DestinationBrowserProps{
@@ -8,15 +8,25 @@ interface DestinationBrowserProps{
 interface InputTextValue{
     firstPart: string;
     secondPart: string; 
-    noneIfDifferentValues: string;
+    display: string;
+}
+
+interface SetPropositionValue{
+    filtered: string;
+    typed: string;
+    letterNumber: number
 }
 
 
 export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
 
-    const [filtered, getCountryName] = useState<string[]>([""]);
-    const [typed, getTypedValue] = useState<string>("");
-    const [letterNumber, letterCounter] = useState<number>(0);
+    const [filtered, setCountryName] = useState<string[]>([]);
+    const [typed, setTypedValue] = useState<string>("");
+    const [completeValue, setInputValue] = useState({
+      firstPart: "",
+      secondPart: "",
+      display: ""
+     });
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const input = e.currentTarget;
@@ -28,42 +38,61 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
             }       
         };     
        const filtered = props.countryNames.filter(pickIfMatch);       
-       letterCounter(caretPosition);
-       getCountryName(filtered);
-       getTypedValue(value);
+       setCountryName(filtered);       
+       if(filtered[0]){
+          setPropositionValue({
+            filtered: filtered[0],
+            typed: value,
+            letterNumber: caretPosition
+         }); 
+       } 
     }
-
-    const handleClick = (e: MouseEvent<HTMLElement>) => {
+        // to develop in the future
+    const handleClick = (e: MouseEvent<HTMLElement>) => { 
         const value = e.currentTarget.innerText;
-        getCountryName([]);
-        getTypedValue(value);
+        setCountryName([]);
+        setTypedValue(value);
         alert(`selected country: ${value}`);
     }
 
-    const setPropositionValue = () => {
-        const firstPart = typed.slice(0, letterNumber);
-        const secondPart = filtered[0].slice(letterNumber, filtered[0].length); 
-        const valToCompare = filtered[0].toLowerCase().slice(0, letterNumber);      
-        const noneIfDifferentValues = firstPart !== valToCompare ? "none" : "inline";        
-        return{
-            firstPart,
-            secondPart,
-            noneIfDifferentValues
-        }      
+    const handleEnterClick = (e: KeyboardEvent<HTMLInputElement>) =>{
+        if(e.key === "Enter"){
+            setInputValue({
+                firstPart: filtered[0],
+                secondPart: "",
+                display: "none"
+            })
+        }
     }
 
+    const setPropositionValue = ({ filtered, typed, letterNumber }: SetPropositionValue) => {
+        const firstPart = typed.slice(0, letterNumber);
+        const secondPart = filtered.slice(letterNumber, filtered.length);     
+        const valToCompare = filtered.toLowerCase().slice(0, letterNumber);      
+        const noneIfDifferentValues = firstPart !== valToCompare ? "none" : "inline";    
+        setInputValue({ 
+            firstPart,
+             secondPart, 
+             display :noneIfDifferentValues
+        })    
+     }
+
     const InputText: FC<{ value: InputTextValue }> = ({ value }) => (
-        <InputTextWrapper> 
-            <InputTextSpan textTransform="capitalize">{value.firstPart}</InputTextSpan>
-            <InputTextSpan display={value.noneIfDifferentValues}>{value.secondPart}</InputTextSpan> 
-        </InputTextWrapper> 
-    )
+            <InputTextWrapper> 
+                <InputTextSpan textTransform="capitalize">{value.firstPart}</InputTextSpan>
+                <InputTextSpan display={value.display}>{value.secondPart}</InputTextSpan> 
+            </InputTextWrapper> 
+        )
 
     return (
         <BrowserWrapper> 
-            <BrowserInput visibleText={filtered[0] ? false : true} handleChange={handleChange}/>
+            <BrowserInput 
+                visibleText={filtered[0] ? false : true} 
+                handleChange={handleChange}
+                handleEnterClick={handleEnterClick}
+            />
             <InputButton handleClick={handleClick} >search</InputButton>
-            {filtered[0] &&  <InputText value={setPropositionValue()}/>}
+            {filtered[0]  && <InputText value={completeValue} />}
         </BrowserWrapper>
     )
 }
