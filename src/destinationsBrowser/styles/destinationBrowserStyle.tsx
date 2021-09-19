@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Button } from "../components/Button";
-import { Div } from "../components/div";
+import { Div } from "../components/Div";
 import { Input } from "../components/Input";
 import { Span } from "../components/Span";
 
