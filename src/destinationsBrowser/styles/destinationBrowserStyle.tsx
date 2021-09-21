@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Button } from "../components/Button";
-import { Div } from "../components/Div";
-import { Input } from "../components/Input";
-import { Span } from "../components/Span";
+import { Button } from "../../ui/Button";
+import { Div } from "../../ui/Div";
+import { Input } from "../../ui/Input";
+import { Span } from "../../ui/Span";
 
 export const BrowserWrapper = styled.div`
   width: 300px;
