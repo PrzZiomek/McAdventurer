@@ -2,7 +2,7 @@ import React from "react"
 
 
 
-export const MapOfWorld: React.FC = () => {
+export const WorldMap: React.FC = () => {
 
     return (
         <div>

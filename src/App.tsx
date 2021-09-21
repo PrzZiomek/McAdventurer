@@ -2,7 +2,7 @@ import React, { FC, Fragment } from "react";
 import styled from "styled-components";
 
 import  mainImage  from "./Belfast.jpg";
-import { WorldMap } from "./WorldMap";
+import { SearchingMap } from "./searchingMap/SearchingMap";
 import  GlobalStyles  from "./styles/globalStyles";
 
 const MainWrapper = styled.div`
@@ -18,7 +18,7 @@ export const App: React.FC = () => (
     <Fragment>
         <GlobalStyles />
         <MainWrapper>
-            <WorldMap/>   
+            <SearchingMap/>   
         </MainWrapper>    
      </Fragment>   
 ) 

@@ -1,9 +1,9 @@
 import React from "react"
 import styled from "styled-components";
 
-import { DestinationBrowser } from "./destinationsBrowser/DestinationsBrowser";
-import { MapOfWorld } from "./MapOfWorld";
-import destinations from "./data/destinations.json";
+import { DestinationBrowser } from "../destinationsBrowser/DestinationsBrowser";
+import { WorldMap } from "../worldMap/WorldMap";
+import destinations from "../data/destinations.json";
 
 const MapWrapper = styled.div`
     margin: auto;
@@ -16,12 +16,12 @@ const MapWrapper = styled.div`
 
 
 
-export const WorldMap: React.FC = () => {
+export const SearchingMap: React.FC = () => {
 
     return (
         <MapWrapper>
             <DestinationBrowser countryNames={destinations.countries} />
-            <MapOfWorld />
+            <WorldMap />
         </MapWrapper>
     )
 }

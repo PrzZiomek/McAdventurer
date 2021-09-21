@@ -1,14 +1,9 @@
 import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEventHandler, KeyboardEvent } from "react";
+import { InputText } from "./components/InputText";
 import { BrowserInput, InputButton, InputTextWrapper, BrowserWrapper, InputTextSpan } from "./styles/destinationBrowserStyle";
 
 interface DestinationBrowserProps{
     countryNames: string[];
-}
-
-interface InputTextValue{
-    firstPart: string;
-    secondPart: string; 
-    display: string;
 }
 
 interface SetPropositionValue{
@@ -76,13 +71,6 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
              display :noneIfDifferentValues
         })    
      }
-
-    const InputText: FC<{ value: InputTextValue }> = ({ value }) => (
-            <InputTextWrapper> 
-                <InputTextSpan textTransform="capitalize">{value.firstPart}</InputTextSpan>
-                <InputTextSpan display={value.display}>{value.secondPart}</InputTextSpan> 
-            </InputTextWrapper> 
-        )
 
     return (
         <BrowserWrapper> 
