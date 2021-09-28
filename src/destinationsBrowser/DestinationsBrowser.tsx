@@ -1,6 +1,6 @@
-import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEventHandler, KeyboardEvent } from "react";
+import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEvent } from "react";
 import { InputText } from "./components/InputText";
-import { BrowserInput, InputButton, InputTextWrapper, BrowserWrapper, InputTextSpan } from "./styles/destinationBrowserStyle";
+import { BrowserInput, InputButton, BrowserWrapper} from "./styles/destinationBrowserStyle";
 
 interface DestinationBrowserProps{
     countryNames: string[];
