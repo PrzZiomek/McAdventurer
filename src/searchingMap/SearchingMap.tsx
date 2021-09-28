@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components";
 
 import { DestinationBrowser } from "../destinationsBrowser/DestinationsBrowser";
@@ -7,7 +7,7 @@ import destinations from "../data/destinations.json";
 
 const MapWrapper = styled.div`
     margin: auto;
-    padding-top: calc(50vh - 300px);
+    padding-top: 45px;
     width: 600px;
     height: 600px;
     background-color: rgba(0, 0, 0, 0.5);
@@ -18,10 +18,24 @@ const MapWrapper = styled.div`
 
 export const SearchingMap: React.FC = () => {
 
-    return (
+    const [mapParams, setMapParams] =  useState<{ [x: string]: number; }>({
+        zoom: 0,
+        lat: 0,
+        lng: 0  
+    });
+
+   const handleInputChange = (name: string, value: number) => {
+          setMapParams({[name]:value})
+    }
+    
+    return( 
         <MapWrapper>
             <DestinationBrowser countryNames={destinations.countries} />
-            <WorldMap />
+            <WorldMap
+               mapParams={mapParams}
+               setMapPrams={setMapParams}
+             />
         </MapWrapper>
     )
+
 }

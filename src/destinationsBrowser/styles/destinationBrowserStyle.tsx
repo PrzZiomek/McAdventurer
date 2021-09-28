@@ -5,12 +5,14 @@ import { Input } from "../../ui/Input";
 import { Span } from "../../ui/Span";
 
 export const BrowserWrapper = styled.div`
-  width: 300px;
-  height: 35px;
+  width: 100%;
+  height: 45px;
+  margin-top: 10px;
   position: absolute;
   display:flex;
-  left: 20px;
-  top: 20px;
+  left: 0;
+  top: 0;
+  border: 2px solid black;
 `;
 
 export const BrowserInput = styled(Input)`
