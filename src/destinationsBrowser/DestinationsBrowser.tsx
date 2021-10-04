@@ -32,15 +32,15 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
                 return name.toLowerCase().slice(0,3) === value.slice(0,3);
             }       
         };     
-       const filtered = props.countryNames.filter(pickIfMatch);       
-       setCountryName(filtered);       
-       if(filtered[0]){
-          setPropositionValue({
-            filtered: filtered[0],
-            typed: value,
-            letterNumber: caretPosition
-         }); 
-       } 
+        const filtered = props.countryNames.filter(pickIfMatch);       
+        setCountryName(filtered);       
+        if(filtered[0]){
+            setPropositionValue({
+                filtered: filtered[0],
+                typed: value,
+                letterNumber: caretPosition
+            }); 
+        } 
     }
         // to develop in the future
     const handleClick = (e: MouseEvent<HTMLElement>) => { 
