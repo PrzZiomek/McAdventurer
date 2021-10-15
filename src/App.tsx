@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import React, { Component, FC, Fragment } from "react";
 import styled from "styled-components";
 
 import  mainImage  from "./Belfast.jpg";
@@ -14,6 +14,7 @@ const MainWrapper = styled.div`
 `;
 
 
+ 
 export const App: React.FC = () => (
     <Fragment>
         <GlobalStyles />
@@ -23,3 +24,54 @@ export const App: React.FC = () => (
      </Fragment>   
 ) 
 
+
+
+
+ /*
+import { useState, useEffect } from 'react';
+
+function useMousePosition() {
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
+  
+  useEffect(() => {
+    const handleMouseMove = e => {
+      setX(e.clientX);
+      setY(e.clientY);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+    
+  return { x, y };
+}
+
+
+class ExampleComponent extends Component {
+    render(){
+        const { x, y } = this.props;     
+        return <div>Current Mouse Position: ({x}, {y})</div>;
+    }
+  
+  }
+
+  const withWindowResize = Component => {
+    return (props) => {
+        const { x, y } = useMousePosition()
+      return <Component { ...props} x={x} y={y}/>;
+    }
+  };
+      
+
+  const Effect = withWindowResize(ExampleComponent);
+  
+  export const App: React.FC = () => (
+      <Effect />
+  )
+
+  
+  */

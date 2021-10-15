@@ -5,13 +5,13 @@ import { DestinationBrowser } from "../destinationsBrowser/DestinationsBrowser";
 import { WorldMap } from "../worldMap/WorldMap";
 import destinations from "../data/destinations.json";
 import { MapThemesMenu } from "../mapThemesMenu/mapThemesMenu";
-import { withFunctionality } from "../worldMap/models/withFunctionality";
+import {  WorldMapWithFunctionality } from "../worldMap/models/withFunctionality";
+import { Panel } from "../panel/panel";
+
 
 const MapWrapper = styled.div`
-    margin: auto;
-    padding-top: 45px;
-    width: 900px;
-    height: 700px;
+    display: flex;
+    width: 100vw;
     background-color: rgba(0, 0, 0, 0.5);
     position: relative;
 `;
@@ -32,17 +32,17 @@ export const SearchingMap: React.FC = () => {
         const themeElement = e.target as HTMLImageElement;    
         setTheme(themeElement.id)
     }
-
-    const WorldMapWithData =  withFunctionality(WorldMap);
        
-    return( 
-        <MapWrapper>
-            <DestinationBrowser countryNames={destinations.countries} />
-            <WorldMapWithData
-               setMapParams={setMapParams}
+    return(  
+        <MapWrapper className="mapWrapper">
+            <Panel destinations={destinations.countries} />
+            <WorldMapWithFunctionality
                theme={theme}
+               setMapParams={setMapParams}
              />
-            <MapThemesMenu onChangeTheme={onChangeTheme}/>
+           {
+           // <MapThemesMenu onChangeTheme={onChangeTheme}/>
+           } 
         </MapWrapper>
     )
 

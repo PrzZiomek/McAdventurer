@@ -3,22 +3,22 @@ import { Button } from "../../ui/Button";
 import { Div } from "../../ui/Div";
 import { Input } from "../../ui/Input";
 import { Span } from "../../ui/Span";
+import "../../styles/variables/panel.scss";
 
 export const BrowserWrapper = styled.div`
-  width: 100%;
+  width: 95%;
   height: 45px;
-  margin-top: 10px;
   position: absolute;
   display:flex;
-  left: 0;
-  top: 0;
-  border: 2px solid black;
+  left: 2.5%;
+  top: 10px;
 `;
 
 export const BrowserInput = styled(Input)`
     width: 100%;
     height: 100%;
-    border: 1px solid black;
+    border: 1px solid ;
+    border-radius: 7px;
     font-size: 1.3rem; 
     color: ${(props) => props.visibleText ? "black" : "transparent"};
   `;
@@ -38,7 +38,7 @@ export const InputTextWrapper = styled(Div)`
 
 export const InputButton = styled(Button)`
       position: absolute;
-      right: 4%;
+      right: 10px;
       height: 100%;
       cursor: pointer; 
       text-transform: uppercase;

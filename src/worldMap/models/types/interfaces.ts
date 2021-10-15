@@ -17,8 +17,8 @@ export namespace I {
       }
 
      export interface WorldMapWithData extends WorldMap{
-        handleMapViewChange: (e: Event) => void;
-        setMapPlatform: Dispatch<React.SetStateAction<H.service.Platform | null>>;
-        layerWithTheme: (theme: string) => H.map.layer.TileLayer | undefined;
+          handleMapViewChange: (e: Event) => void;
+          mapPlatform: () => H.service.Platform;
+          layerWithTheme: (theme: string) => H.map.layer.TileLayer | undefined;
       }
 }
