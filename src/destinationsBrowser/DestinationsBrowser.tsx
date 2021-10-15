@@ -72,15 +72,18 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
         })    
      }
 
+    const showInputTextUntilNotMatch = (item: string) => item && <InputText value={completeValue} />;
+
     return (
         <BrowserWrapper> 
             <BrowserInput 
+                className="browserInput"
                 visibleText={filtered[0] ? false : true} 
                 handleChange={handleChange}
                 handleEnterClick={handleEnterClick}
             />
             <InputButton handleClick={handleClick} >search</InputButton>
-            {filtered[0]  && <InputText value={completeValue} />}
+            { showInputTextUntilNotMatch(filtered[0]) }
         </BrowserWrapper>
     )
 }

@@ -8,7 +8,4 @@ export const ThemesMenu = styled(Div)`
         width: 11%;
         transition: .2s;
     }
-    img:hover{
-        width: 20%;
-    }
 `
