@@ -1,10 +1,11 @@
-import { FC } from "react";
+import React, { FC } from "react";
 
 interface Props{
     className?: string;
     color?: string;
+    mapRef?: React.MutableRefObject<null>;
 }
 
 export const Div: FC <Props> = (props) => (
-    <div className={props.className}> {props.children} </div>
+    <div ref={props.mapRef} className={props.className}> {props.children} </div>
 )

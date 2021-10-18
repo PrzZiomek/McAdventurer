@@ -17,10 +17,11 @@ export const BrowserWrapper = styled.div`
 export const BrowserInput = styled(Input)`
     width: 100%;
     height: 100%;
-    border: 1px solid ;
     border-radius: 7px;
     font-size: 1.3rem; 
-    color: ${(props) => props.visibleText ? "black" : "transparent"};
+    box-shadow: inset 0 0 8px #3E3E28;
+    color: ${(props) => props.visibleText ? "#3e3e28" : "transparent"};
+    border: none; 
   `;
 
 export const InputTextWrapper = styled(Div)`
@@ -41,16 +42,19 @@ export const InputButton = styled(Button)`
       right: 10px;
       height: 100%;
       cursor: pointer; 
+      color:#6F6F49;    //  #3E3E28;
       text-transform: uppercase;
+      padding-left: 8px;
       letter-spacing: 1px;
       font-size: 1.5rem;
       border: none;
       background-color: transparent;
       transition: 0.2s;
 
-      &:hover{
-         opacity: 0.5;
-      }
+      &:hover,
+      &:active{
+        color: #C7C7A9;
+    }
 `;
 
 export const InputTextSpan = styled(Span)`
