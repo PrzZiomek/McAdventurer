@@ -5,6 +5,7 @@ import  mainImage  from "./Belfast.jpg";
 import { SearchingMap } from "./searchingMap/SearchingMap";
 import  GlobalStyles  from "./styles/globalStyles";
 
+
 const MainWrapper = styled.div`
     width: 100vw;
     height: 100vh;
@@ -14,7 +15,6 @@ const MainWrapper = styled.div`
 `;
 
 
- 
 export const App: React.FC = () => (
     <Fragment>
         <GlobalStyles />

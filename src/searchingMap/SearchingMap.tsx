@@ -1,20 +1,11 @@
 import React, { MouseEvent, MouseEventHandler, useEffect, useState } from "react"
-import styled from "styled-components";
 
-import { DestinationBrowser } from "../destinationsBrowser/DestinationsBrowser";
-import { WorldMap } from "../worldMap/WorldMap";
 import destinations from "../data/destinations.json";
 import { MapThemesMenu } from "../mapThemesMenu/mapThemesMenu";
 import {  WorldMapWithFunctionality } from "../worldMap/models/withFunctionality";
 import { Panel } from "../panel/panel";
+import { MapWrapper } from "./styles/searchingMapStyles";
 
-
-const MapWrapper = styled.div`
-    display: flex;
-    width: 100vw;
-    background-color: rgba(0, 0, 0, 0.5);
-    position: relative;
-`;
 
 //type MouseEventHandler<T = Element> = (event: MouseEvent<T, globalThis.MouseEvent>) => void
 

@@ -2,10 +2,4 @@
 
 @import "../colorMaps/panel";
 
-:export {panelInputBorderColor: map.get($panelColors, "black-alabaster");}
-
-.root{
-    color: $panelInputBorderColor
-}
-
-// $panelInputBorderColor: map.get($panelColors, "black-alabaster");
+ $panelInputBorderColor: map.get($panelColors, "black-alabaster");

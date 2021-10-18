@@ -1,9 +1,7 @@
 import { FC, useState } from "react";
 import { isMapEvent } from "./types/mapEvents";
 import { I } from "./types/interfaces";
-import { MapStyles, WorldMap } from "../WorldMap";
-import { log } from "console";
-import { Layers } from "@material-ui/icons";
+import { WorldMap } from "../WorldMap";
 
 
  export const WorldMapWithFunctionality: FC<I.WorldMap> =  (props) => {

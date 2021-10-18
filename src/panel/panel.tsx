@@ -1,5 +1,5 @@
 import { FC } from "react";
-import styled from "styled-components";
+
 import { DestinationBrowser } from "../destinationsBrowser/DestinationsBrowser";
 import { PanelWrapper } from "./styles/panelStyles";
 
