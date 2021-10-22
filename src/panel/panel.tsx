@@ -6,11 +6,15 @@ import { PanelWrapper } from "./styles/panelStyles";
 
 interface Panel{
     destinations: string[];
+    bigScreenFit: boolean | undefined;
 }
 
 
-export const Panel: FC<Panel> = (props) => (
-    <PanelWrapper>
-         <DestinationBrowser countryNames={props.destinations} />
-    </PanelWrapper>
-   )
+export const Panel: FC<Panel> = (props) =>{
+
+    return (
+        <PanelWrapper bigScreenFit={props.bigScreenFit}>
+             <DestinationBrowser countryNames={props.destinations} />
+        </PanelWrapper>
+       )
+} 

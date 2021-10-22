@@ -58,6 +58,6 @@ export const InputButton = styled(Button)`
 `;
 
 export const InputTextSpan = styled(Span)`
-  text-transform: ${(props)=>props.textTransform ? props.textTransform  : "none"};
+  text-transform: ${(props)=> props.textTransform ? props.textTransform  : "none"};
   display: ${(props)=>props.display ? props.display  : "inline"};
 `

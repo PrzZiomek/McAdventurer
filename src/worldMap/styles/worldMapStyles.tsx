@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Div } from "../../ui/Div";
+import { Div, DivWrapper } from "../../ui/Div";
 
 
-export const Map = styled(Div)`
+export const Map = styled(DivWrapper)`
 
     margin-left: -25px;
     height: 100vh;
@@ -13,5 +13,6 @@ export const Map = styled(Div)`
         width: 100% !important;
         height: 100% !important;
         margin: 0 !important;
+        object-fit: cover;
     }
 `
