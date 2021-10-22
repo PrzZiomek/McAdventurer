@@ -1,4 +1,4 @@
-import React, { MouseEvent, MouseEventHandler, useEffect, useState } from "react"
+import React, { HtmlHTMLAttributes, MouseEvent, MouseEventHandler, MutableRefObject, RefCallback, RefObject, useCallback, useEffect, useRef, useState } from "react"
 
 import destinations from "../data/destinations.json";
 import { MapThemesMenu } from "../mapThemesMenu/mapThemesMenu";
@@ -12,28 +12,38 @@ import { MapWrapper } from "./styles/searchingMapStyles";
 
 export const SearchingMap: React.FC = () => {
 
+    const [theme, setTheme] = useState("normal.day");
+    const [size, setSize] = useState<DOMRect | null>(null);
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
     const [mapParams, setMapParams] =  useState({
         zoom: 0,
         lat: 0,
         lng: 0  
     });
-    const [theme, setTheme] = useState("normal.day");
+
+    useEffect(() => {
+         function handleResize(){
+             setWindowWidth(window.innerWidth)
+         }
+         window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize)
+    }) 
 
     const onChangeTheme = (e: MouseEvent<HTMLImageElement, globalThis.MouseEvent>) => {
         const themeElement = e.target as HTMLImageElement;    
         setTheme(themeElement.id)
     }
-       
-    return(  
+
+    console.log(windowWidth);
+    
+    return (  
         <MapWrapper className="mapWrapper">
-            <Panel destinations={destinations.countries} />
+            <Panel bigScreenFit={windowWidth > 1400} destinations={destinations.countries} />
             <WorldMapWithFunctionality
                theme={theme}
                setMapParams={setMapParams}
              />
-           {
-           // <MapThemesMenu onChangeTheme={onChangeTheme}/>
-           } 
+            <MapThemesMenu onChangeTheme={onChangeTheme}/>
         </MapWrapper>
     )
 

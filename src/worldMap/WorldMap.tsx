@@ -20,7 +20,7 @@ export const WorldMap: FC<I.WorldMapWithData> = (props) => {
 
     useEffect(() => {
       const layer = props.layerWithTheme(props.theme); 
-      if(map && layer) map.setBaseLayer(layer); console.log("layer",layer);
+      if(map && layer) map.setBaseLayer(layer); 
     }, [props.theme])
 
     React.useLayoutEffect(() =>{
