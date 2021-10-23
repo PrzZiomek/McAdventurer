@@ -1,21 +1,21 @@
 import React, { FC, LegacyRef, MouseEventHandler, MutableRefObject } from "react";
 
 
-interface Props{
+export interface DivProps{
     className?: string;
     color?: string;
     actualRef?: MutableRefObject<null> | LegacyRef<HTMLDivElement>
     mapRef?: MutableRefObject<null>;
-    bigScreenFit?: boolean;
     mainWrapperRef?: (el: HTMLDivElement) => void;
     onClick?: MouseEventHandler<HTMLDivElement>;
-    showUpBar?:boolean;
+    showUpBar?: boolean;
+    switchToggleArrow?: boolean;
 }
 
 
-export const DivWrapper: FC <Props> = (props) => {
+export const DivWrapper: FC<DivProps> = (props) => {
 
-    const setActualRef = (props: Props) => {
+    const setActualRef = (props: DivProps) => {
         if(props.mapRef) return props.mapRef;
         if(props.mainWrapperRef) return props.mainWrapperRef;
     }
@@ -26,7 +26,7 @@ export const DivWrapper: FC <Props> = (props) => {
 }
 
 
-export const Div: FC <Props> = (props) => (
+export const Div: FC<DivProps> = (props) => (
     <div 
         ref={props.actualRef} 
         className={props.className}

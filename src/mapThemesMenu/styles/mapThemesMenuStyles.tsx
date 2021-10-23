@@ -10,5 +10,6 @@ export const ThemesMenu = styled(Div)`
 
     img{
         width: 11%;
+        cursor: pointer;
     }
 `
