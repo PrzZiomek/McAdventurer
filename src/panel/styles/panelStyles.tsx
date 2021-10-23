@@ -3,8 +3,9 @@ import { Div } from "../../ui/Div";
 
 
 export const PanelWrapper = styled(Div)`
-    width: ${(props) => props.bigScreenFit ? "20vw" : "30vw" };
+    width: 400px;
     z-index: 2;
+    width: ${(props) => props.showUpBar === false ? 0 : "400px"};
     color: #3e3e28;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;

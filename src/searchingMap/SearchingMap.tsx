@@ -33,12 +33,10 @@ export const SearchingMap: React.FC = () => {
         const themeElement = e.target as HTMLImageElement;    
         setTheme(themeElement.id)
     }
-
-    console.log(windowWidth);
     
     return (  
         <MapWrapper className="mapWrapper">
-            <Panel bigScreenFit={windowWidth > 1400} destinations={destinations.countries} />
+            <Panel destinations={destinations.countries} />
             <WorldMapWithFunctionality
                theme={theme}
                setMapParams={setMapParams}

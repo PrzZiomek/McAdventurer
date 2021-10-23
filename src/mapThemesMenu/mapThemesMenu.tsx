@@ -9,7 +9,7 @@ export const ThemesMenuSection = styled(Div)`
    position: absolute;
    bottom:0;
    right: 0;
-   width: 70vw;
+   width: 800px;
 ` 
 
 interface MapThemesMenu{
@@ -40,7 +40,7 @@ export const MapThemesMenu:FC<MapThemesMenu> = (props) => {
         
     return (
         <ThemesMenuSection className="themesSection" >
-            <ThemesToggleBar toggle={setToggler} toggleState={toggleState}/>
+            <ThemesToggleBar toggle={setToggler} toggleState={toggleState}>Themes</ThemesToggleBar>
             <ThemesMenu showUpBar={toggleState}> {thumbnails} </ThemesMenu>
         </ThemesMenuSection>
     )
