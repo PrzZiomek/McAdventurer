@@ -11,9 +11,9 @@ export const WorldMap: FC<I.WorldMapWithData> = (props) => {
   const mapRef = React.useRef(null);
     
    useEffect(() => {
-       return () => {
+       return () => {     
         if (map) {
-          map.removeEventListener('mapviewchange', () => props.handleMapViewChange);
+          map.removeEventListener('mapviewchange',() => props.setMarker);
         }
       };
      }, []);
@@ -33,12 +33,18 @@ export const WorldMap: FC<I.WorldMapWithData> = (props) => {
             pixelRatio: window.devicePixelRatio || 1,
         });
         setMap(hMap);
-        hMap.addEventListener('mapviewchange',() => props.handleMapViewChange);
+        hMap.addEventListener('mapviewchange',() => props.setMarker(map));
+        hMap.addEventListener('resize', () => hMap.getViewPort().resize());
         new H.mapevents.Behavior(new H.mapevents.MapEvents(hMap));
         return () => { hMap.dispose() };
     }, [mapRef]);
 
+   //  props.moveMapTo(map);
+    props.setMarker(map);
+        
     return (
       <Map mapRef={mapRef} ></Map>
     )
   }
+
+       

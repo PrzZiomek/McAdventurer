@@ -3,14 +3,8 @@ import styled from "styled-components";
 import { Div } from "../ui/Div";
 import { ThemesToggleBar } from "./components/ThemesToggleBar";
 import { Theme } from "./models/Theme";
-import { ThemesMenu } from "./styles/mapThemesMenuStyles";
+import { ThemesMenu, ThemesMenuWrapper  } from "./styles/mapThemesMenuStyles";
 
-export const ThemesMenuSection = styled(Div)`
-   position: absolute;
-   bottom:0;
-   right: 0;
-   width: 800px;
-` 
 
 interface MapThemesMenu{
   onChangeTheme: MouseEventHandler<HTMLImageElement>;
@@ -39,9 +33,9 @@ export const MapThemesMenu:FC<MapThemesMenu> = (props) => {
         />);
         
     return (
-        <ThemesMenuSection className="themesSection" >
+        <ThemesMenuWrapper className="themesBar">
             <ThemesToggleBar toggle={setToggler} toggleState={toggleState}>Themes</ThemesToggleBar>
-            <ThemesMenu showUpBar={toggleState}> {thumbnails} </ThemesMenu>
-        </ThemesMenuSection>
+            <ThemesMenu className="themesMenu" showUpBar={toggleState}> {thumbnails} </ThemesMenu>
+        </ThemesMenuWrapper>
     )
 }

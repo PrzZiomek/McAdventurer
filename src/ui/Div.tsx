@@ -1,23 +1,30 @@
-import React, { FC, LegacyRef, MouseEventHandler, MutableRefObject } from "react";
+import { FC, LegacyRef, MouseEventHandler, MutableRefObject } from "react";
 
 
 export interface DivProps{
-    className?: string;
-    color?: string;
-    actualRef?: MutableRefObject<null> | LegacyRef<HTMLDivElement>
+    /* Required by default */
+    className?: string;     
+    /* to set color if need be */
+    color?: string;   
+    /* used in DivWrapper to apply proper ref to individual div  */
+    actualRef?: MutableRefObject<null> | LegacyRef<HTMLDivElement> 
+    /* to get map element ref  */
     mapRef?: MutableRefObject<null>;
-    mainWrapperRef?: (el: HTMLDivElement) => void;
+    /* used in ToggleBar  */                                                                       //   mainWrapperRef?: (el: HTMLDivElement) => void;
     onClick?: MouseEventHandler<HTMLDivElement>;
+    /* used to show and hide Panel and themes  */
     showUpBar?: boolean;
+    /* used in Panel toggle bar arrow  */
     switchToggleArrow?: boolean;
 }
+
 
 
 export const DivWrapper: FC<DivProps> = (props) => {
 
     const setActualRef = (props: DivProps) => {
         if(props.mapRef) return props.mapRef;
-        if(props.mainWrapperRef) return props.mainWrapperRef;
+    //    if(props.mainWrapperRef) return props.mainWrapperRef;
     }
  
     return(
