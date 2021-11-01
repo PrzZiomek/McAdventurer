@@ -6,7 +6,6 @@ export const Map = styled(DivWrapper)`
 
     margin-left: -25px;
     height: 100vh;
-    min-width: 70vw;
     flex-grow: 1;
 
     canvas{

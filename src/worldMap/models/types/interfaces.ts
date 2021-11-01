@@ -20,5 +20,7 @@ export namespace I {
           handleMapViewChange: (e: Event) => void;
           mapPlatform: () => H.service.Platform;
           layerWithTheme: (theme: string) => H.map.layer.TileLayer | undefined;
+          moveMapTo: (map: H.Map | null) => void;
+          setMarker: (map: H.Map | null) => void;
       }
 }

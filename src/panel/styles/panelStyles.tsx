@@ -4,6 +4,7 @@ import { Div } from "../../ui/Div";
 
 export const PanelWrapper = styled(Div)`
     width: 400px;
+    height: 100vh;
     z-index: 2;
     width: ${(props) => props.showUpBar === false ? 0 : "400px"};
     color: #3e3e28;

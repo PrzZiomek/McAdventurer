@@ -1,6 +1,14 @@
 import styled from "styled-components";
 import { Div } from "../../ui/Div";
 
+
+export const ThemesMenuWrapper = styled(Div)`
+   position: absolute;
+   bottom:0;
+   right: 0;
+   width: 800px;
+` 
+
 export const ThemesMenu = styled(Div)`
     display: flex;
     flex-wrap: nowrap;

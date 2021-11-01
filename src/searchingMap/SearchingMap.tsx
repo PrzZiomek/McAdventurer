@@ -1,10 +1,11 @@
-import React, { HtmlHTMLAttributes, MouseEvent, MouseEventHandler, MutableRefObject, RefCallback, RefObject, useCallback, useEffect, useRef, useState } from "react"
+import React, { MouseEvent, useEffect, useState } from "react"
 
 import destinations from "../data/destinations.json";
 import { MapThemesMenu } from "../mapThemesMenu/mapThemesMenu";
-import {  WorldMapWithFunctionality } from "../worldMap/models/withFunctionality";
+import {  withFunctionality } from "../worldMap/models/withFunctionality";
 import { Panel } from "../panel/panel";
 import { MapWrapper } from "./styles/searchingMapStyles";
+import { WorldMap } from "../worldMap/WorldMap";
 
 
 //type MouseEventHandler<T = Element> = (event: MouseEvent<T, globalThis.MouseEvent>) => void
@@ -13,7 +14,7 @@ import { MapWrapper } from "./styles/searchingMapStyles";
 export const SearchingMap: React.FC = () => {
 
     const [theme, setTheme] = useState("normal.day");
-    const [size, setSize] = useState<DOMRect | null>(null);
+   // const [size, setSize] = useState<DOMRect | null>(null);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
     const [mapParams, setMapParams] =  useState({
         zoom: 0,
@@ -34,15 +35,19 @@ export const SearchingMap: React.FC = () => {
         setTheme(themeElement.id)
     }
     
+    const WorldMapWithFunctionality = withFunctionality(WorldMap);
+     
     return (  
         <MapWrapper className="mapWrapper">
             <Panel destinations={destinations.countries} />
-            <WorldMapWithFunctionality
-               theme={theme}
-               setMapParams={setMapParams}
-             />
+            {WorldMapWithFunctionality({ 
+              theme,
+              setMapParams
+            })}
             <MapThemesMenu onChangeTheme={onChangeTheme}/>
         </MapWrapper>
     )
 
 }
+
+
