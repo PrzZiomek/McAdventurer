@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Div } from "../../ui/Div";
+import { Div } from "../../../ui/Div";
 
 
 export const Marker = styled(Div)`

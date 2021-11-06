@@ -1,8 +1,8 @@
 import { FC } from "react"
 import styled from "styled-components"
 
-import { Div } from "../../ui/Div"
-import { ToggleBar } from "../../ui/ToggleBar"
+import { Div } from "../../../ui/Div"
+import { ToggleBar } from "../../../ui/ToggleBar"
 
 
 const PanelToggleBarStyled = styled(Div)`

@@ -46,14 +46,14 @@ import { createDomMarker } from "../helpers/createDomMarker";
 
         const  moveMapTo = (map: H.Map | null) =>{
             if(!map) return; 
-            map.setCenter({lat:52.5159, lng:13.3777});
-            map.setZoom(10); console.log("ha ah");   
+            map.setCenter(props.mapParams);
         }
 
         const setMarker = (map: H.Map | null) =>{
             if(!map) return; 
+            moveMapTo(map);
             const domIcon = createDomMarker();
-            var bearsMarker = new H.map.DomMarker({lat:52.5159, lng:13.3777}, {
+            var bearsMarker = new H.map.DomMarker(props.mapParams, {
             icon: domIcon
             });
             map.addObject(bearsMarker); 

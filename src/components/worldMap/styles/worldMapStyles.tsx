@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Div, DivWrapper } from "../../ui/Div";
+import { Div, DivWrapper } from "../../../ui/Div";
 
 
 export const Map = styled(DivWrapper)`

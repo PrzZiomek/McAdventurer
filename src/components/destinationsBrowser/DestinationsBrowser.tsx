@@ -1,9 +1,10 @@
-import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEvent } from "react";
+import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEvent, Dispatch, SetStateAction } from "react";
 import { InputText } from "./components/InputText";
 import { BrowserInput, InputButton, BrowserWrapper} from "./styles/destinationBrowserStyle";
 
 interface DestinationBrowserProps{
     countryNames: string[];
+    setTypedValue: Dispatch<SetStateAction<string>>
 }
 
 interface SetPropositionValue{
@@ -16,7 +17,7 @@ interface SetPropositionValue{
 export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
 
     const [filtered, setCountryName] = useState<string[]>([]);
-    const [typed, setTypedValue] = useState<string>("");
+    const [inputTypedValue, setInputTypedValue] = useState<string>("");
     const [completeValue, setInputValue] = useState({
       firstPart: "",
       secondPart: "",
@@ -27,6 +28,7 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
         const input = e.currentTarget;
         const caretPosition = input.selectionStart as number;
         const value = input.value.toLowerCase();
+        setInputTypedValue(value);
         const pickIfMatch = (name: string) =>{ 
             if(value.length > 2){
                 return name.toLowerCase().slice(0,3) === value.slice(0,3);
@@ -42,12 +44,10 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
             }); 
         } 
     }
-        // to develop in the future
+
     const handleClick = (e: MouseEvent<HTMLElement>) => { 
-        const value = e.currentTarget.innerText;
         setCountryName([]);
-        setTypedValue(value);
-        alert(`selected country: ${value}`);
+        props.setTypedValue(inputTypedValue);
     }
 
     const handleEnterClick = (e: KeyboardEvent<HTMLInputElement>) =>{
@@ -56,7 +56,7 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
                 firstPart: filtered[0],
                 secondPart: "",
                 display: "none"
-            })
+            });console.log("enter!");     
         }
     }
 
@@ -68,9 +68,9 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
         setInputValue({ 
             firstPart,
              secondPart, 
-             display :noneIfDifferentValues
+             display: noneIfDifferentValues
         })    
-     }
+     } 
 
     const showInputTextUntilNotMatch = (item: string) => item && <InputText value={completeValue} />;
 

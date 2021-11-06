@@ -1,6 +1,6 @@
 import React, { FC, MouseEventHandler, useState } from "react"
 import styled from "styled-components";
-import { Div } from "../ui/Div";
+import { Div } from "../../ui/Div";
 import { ThemesToggleBar } from "./components/ThemesToggleBar";
 import { Theme } from "./models/Theme";
 import { ThemesMenu, ThemesMenuWrapper  } from "./styles/mapThemesMenuStyles";
