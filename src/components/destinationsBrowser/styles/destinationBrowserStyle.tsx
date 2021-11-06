@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Button } from "../../ui/Button";
-import { Div } from "../../ui/Div";
-import { Input } from "../../ui/Input";
-import { Span } from "../../ui/Span";
+import { Button } from "../../../ui/Button";
+import { Div } from "../../../ui/Div";
+import { Input } from "../../../ui/Input";
+import { Span } from "../../../ui/Span";
 import "../../styles/variables/panel.scss";
 
 export const BrowserWrapper = styled.div`
@@ -22,6 +22,7 @@ export const BrowserInput = styled(Input)`
     box-shadow: inset 0 0 8px #3E3E28;
     color: ${(props) => props.visibleText ? "#3e3e28" : "transparent"};
     border: none; 
+    padding-left: 10px;
   `;
 
 export const InputTextWrapper = styled(Div)`
@@ -29,7 +30,7 @@ export const InputTextWrapper = styled(Div)`
     position: absolute;
     font-size: 1.3rem;
     transform: translateY(-50%);
-    left: 2px;
+    left: 10px;
     top: 50%; 
 
     span:nth-child(2){

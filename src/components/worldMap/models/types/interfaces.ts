@@ -14,6 +14,7 @@ export namespace I {
           lng: number  
       }>>;
         theme: string;
+        typed: string
       }
 
      export interface WorldMapWithData extends WorldMap{

@@ -2,7 +2,7 @@ import React, { Component, FC, Fragment } from "react";
 import styled from "styled-components";
 
 import  mainImage  from "./Belfast.jpg";
-import { SearchingMap } from "./searchingMap/SearchingMap";
+import { SearchingMap } from "./components/searchingMap/SearchingMap";
 import  GlobalStyles  from "./styles/globalStyles";
 
 

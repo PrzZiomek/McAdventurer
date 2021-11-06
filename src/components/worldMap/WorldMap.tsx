@@ -33,15 +33,20 @@ export const WorldMap: FC<I.WorldMapWithData> = (props) => {
             pixelRatio: window.devicePixelRatio || 1,
         });
         setMap(hMap);
-        hMap.addEventListener('mapviewchange',() => props.setMarker(map));
+        const oldZoom = map?.getZoom();
+        hMap.addEventListener('mapviewchangeend',() => {
+        /*  const newZoom = map?.getZoom();
+          if(newZoom - oldZoom === 5){
+            props.setMarker(map)
+          }*/ props.setMarker(map)
+        });
         hMap.addEventListener('resize', () => hMap.getViewPort().resize());
-        new H.mapevents.Behavior(new H.mapevents.MapEvents(hMap));
+        new H.mapevents.Behavior(new H.mapevents.MapEvents(hMap)); 
         return () => { hMap.dispose() };
     }, [mapRef]);
-
-   //  props.moveMapTo(map);
-    props.setMarker(map);
         
+    props.setMarker(map)
+    
     return (
       <Map mapRef={mapRef} ></Map>
     )
