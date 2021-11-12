@@ -3,7 +3,7 @@ import { Button } from "../../../ui/Button";
 import { Div } from "../../../ui/Div";
 import { Input } from "../../../ui/Input";
 import { Span } from "../../../ui/Span";
-import "../../styles/variables/panel.scss";
+//import "../../styles/variables/panel.scss";
 
 export const BrowserWrapper = styled.div`
   width: 95%;

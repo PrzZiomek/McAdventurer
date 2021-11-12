@@ -1,7 +1,8 @@
-const request = require('request')
-const OAuth = require('oauth-1.0a')
-const crypto = require('crypto')
-
+"use strict";
+const request = require('request');
+const OAuth = require('oauth-1.0a');
+//const crypto = require('crypto')
+/*
 // Token request function
 export function generateToken() {
     // #1 Initialize OAuth with your HERE OAuth credentials from the credentials file that you downloaded above
@@ -44,3 +45,5 @@ export function generateToken() {
 
 // Calling this function to get the access token
 
+*/ 
+//# sourceMappingURL=generateToken.js.map

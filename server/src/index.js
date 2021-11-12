@@ -1,19 +1,17 @@
-//import express from "express";
-const express = require("express");
-
-const app = express();
-const port = process.env.PORT || 3000;
-
-const request = require('request')
-const OAuth = require('oauth-1.0a')
-const crypto = require('crypto')
-//import crypto from "crypto";
-
+"use strict";
+exports.__esModule = true;
+var express = require("express");
+var app = express();
+var port = process.env.PORT || 3000;
+var request = require('request');
+var OAuth = require('oauth-1.0a');
+//const crypto = require('crypto') declared in d.ts. 
+/*
 // Token request function
 export function generateToken() {
     const oauth = OAuth({
         consumer: {
-            key: 'qOsCg0ZIQ0RHmxKw-3ik9Q', 
+            key: 'qOsCg0ZIQ0RHmxKw-3ik9Q',
             secret: '5txYweZM6vTFB7z0L-Kwz-MnUDZ6WooqBlaUoP6igv5NXHSLaC-G9J3PDJvZwLtg5aKRmTtzOlDsWU38GIuGCQ', //Secret key
         },
         signature_method: 'HMAC-SHA256',
@@ -45,18 +43,14 @@ export function generateToken() {
         }
     );
 }
-
-generateToken();
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization")
-  next();
-})
-
-
-
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+*/
+// generateToken();
+app.use(function (req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    next();
+});
+app.listen(port, function () {
+    console.log("Serverrrrr listening at http://localhost:" + port);
 });

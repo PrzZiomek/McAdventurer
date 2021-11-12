@@ -22,12 +22,12 @@ export const SearchingMap: React.FC = () => {
     });
 
     useEffect(() => { 
-        if(!typed) return;
-        const { lat, lng } = setCoordinates(typed);
+        if(!typed) return; 
+        const { lat, lng } = setCoordinates(typed);       
         setMapParams({
             lat,
             lng
-        })
+        }) 
     }, [typed]) 
 
     const onChangeTheme = (e: MouseEvent<HTMLImageElement, globalThis.MouseEvent>) => {
@@ -42,6 +42,7 @@ export const SearchingMap: React.FC = () => {
                lng: -80.1917 
             }
         }
+        return { lat: 10, lng: 10 }
     }
     
     const WorldMapWithFunctionality = withFunctionality(WorldMap);

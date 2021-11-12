@@ -3,18 +3,14 @@ import { Dispatch, SetStateAction } from "react";
 export namespace I {
 
    export interface WorldMap{
-        mapParams?:{
-          zoom: number,
-          lat: number,
-          lng: number  
-      };
+        mapParams: H.geo.IPoint;
         setMapParams?: Dispatch<SetStateAction<{
-          zoom: number,
+        //  zoom: number,
           lat: number,
           lng: number  
       }>>;
         theme: string;
-        typed: string
+        typed?: string
       }
 
      export interface WorldMapWithData extends WorldMap{
