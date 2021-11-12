@@ -1,7 +1,6 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { isMapEvent } from "./types/mapEvents";
 import { I } from "./types/interfaces";
-import { WorldMap } from "../WorldMap";
 import { createDomMarker } from "../helpers/createDomMarker";
 
 
@@ -20,7 +19,7 @@ import { createDomMarker } from "../helpers/createDomMarker";
                 props.setMapParams({
                     lat,
                     lng,
-                    zoom
+                   // zoom
                 })               
         }
 
@@ -49,13 +48,15 @@ import { createDomMarker } from "../helpers/createDomMarker";
             map.setCenter(props.mapParams);
         }
 
-        const setMarker = (map: H.Map | null) =>{
+        const setMarker = (map: H.Map | null) =>{ 
             if(!map) return; 
             moveMapTo(map);
-            const domIcon = createDomMarker();
-            var bearsMarker = new H.map.DomMarker(props.mapParams, {
-            icon: domIcon
+            const domIcon = createDomMarker();    
+            const calibratedParams = { lat: props.mapParams.lat + 0.25, lng: props.mapParams.lng  }       
+            var bearsMarker = new H.map.DomMarker(calibratedParams, {
+              icon: domIcon
             });
+            map.setZoom(10);
             map.addObject(bearsMarker); 
         }
 
@@ -66,6 +67,7 @@ import { createDomMarker } from "../helpers/createDomMarker";
                     mapPlatform={mapPlatform}
                     moveMapTo={moveMapTo}
                     setMarker={setMarker}
+                    mapParams={props.mapParams}
                 />  
     }
 

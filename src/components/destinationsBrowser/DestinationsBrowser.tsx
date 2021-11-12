@@ -1,4 +1,5 @@
 import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEvent, Dispatch, SetStateAction } from "react";
+import { callApiForDestination } from "../../api/callApiForDestination";
 import { InputText } from "./components/InputText";
 import { BrowserInput, InputButton, BrowserWrapper} from "./styles/destinationBrowserStyle";
 
@@ -46,8 +47,10 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
     }
 
     const handleClick = (e: MouseEvent<HTMLElement>) => { 
+        const destination = filtered[0] || inputTypedValue;      
+        props.setTypedValue(destination);  
+        callApiForDestination(destination);
         setCountryName([]);
-        props.setTypedValue(inputTypedValue);
     }
 
     const handleEnterClick = (e: KeyboardEvent<HTMLInputElement>) =>{
@@ -56,7 +59,7 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
                 firstPart: filtered[0],
                 secondPart: "",
                 display: "none"
-            });console.log("enter!");     
+            });    
         }
     }
 

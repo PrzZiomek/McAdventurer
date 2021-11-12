@@ -23,6 +23,10 @@ export const WorldMap: FC<I.WorldMapWithData> = (props) => {
       if(map && layer) map.setBaseLayer(layer); 
     }, [props.theme])
 
+    useEffect(() => {
+      props.setMarker(map);
+    }, [props.mapParams])
+
     React.useLayoutEffect(() =>{
         if(!mapRef.current) return;
         const platform = props.mapPlatform(); 
@@ -33,19 +37,16 @@ export const WorldMap: FC<I.WorldMapWithData> = (props) => {
             pixelRatio: window.devicePixelRatio || 1,
         });
         setMap(hMap);
-        const oldZoom = map?.getZoom();
-        hMap.addEventListener('mapviewchangeend',() => {
-        /*  const newZoom = map?.getZoom();
-          if(newZoom - oldZoom === 5){
-            props.setMarker(map)
-          }*/ props.setMarker(map)
+        //const oldZoom = map?.getZoom();
+        hMap.addEventListener('mapviewchange',() => {
+          //const marker = new H.map.Marker({lat: 25.7616, lng: -80.1917});
+         // marker.setGeometry({lat: 25.7616, lng: -80.1917}); console.log(marker.getGeometry());
+          
         });
         hMap.addEventListener('resize', () => hMap.getViewPort().resize());
-        new H.mapevents.Behavior(new H.mapevents.MapEvents(hMap)); 
+        new H.mapevents.Behavior(new H.mapevents.MapEvents(hMap));   
         return () => { hMap.dispose() };
     }, [mapRef]);
-        
-    props.setMarker(map)
     
     return (
       <Map mapRef={mapRef} ></Map>
