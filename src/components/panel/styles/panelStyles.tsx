@@ -13,5 +13,5 @@ export const PanelWrapper = styled(Div)`
     background-color: #F7F7F3;
     position: relative;
     transition: 1s;
-    box-shadow: 1px 1px 8px #3E3E28;
+    box-shadow: 3px 0px 15px #3E3E28;
 `;
