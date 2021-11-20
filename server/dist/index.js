@@ -7,7 +7,7 @@ const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const destinationRequest_1 = require("./controlers/api/destinationRequest");
-const callWikiApi_1 = require("./middleware/callWikiApi");
+const callWikiApi_1 = require("./middleware/wikiApi/callWikiApi");
 //const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;

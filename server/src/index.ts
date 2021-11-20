@@ -3,7 +3,7 @@ import express, { NextFunction, Request, Response } from "express";
 import path from 'path'; 
 
 import { destinationRequest } from './controlers/api/destinationRequest';
-import { callWikiApi } from './middleware/callWikiApi';
+import { callWikiApi } from './middleware/wikiApi/callWikiApi';
 import { apiRoutes } from './routes/api/main';
 import { db } from "./util/database";
 
@@ -31,6 +31,7 @@ app.use((_: Request, res: Response, next: NextFunction) => {
 
 app.use("/api/destination", destinationRequest)
 app.use("/api/destination", callWikiApi);
+
 
 app.listen(port, () => { 
   console.log(`Serverrrrr start!`);

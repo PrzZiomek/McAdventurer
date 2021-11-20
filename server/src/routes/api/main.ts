@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { destinationRequest } from "../../controlers/api/destinationRequest";
-import { callWikiApi } from "../../middleware/callWikiApi";
+import { callWikiApi } from "../../middleware/wikiApi/callWikiApi";
 
 const router = Router();
 

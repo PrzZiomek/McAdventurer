@@ -17,6 +17,7 @@
     "lite-server": "^2.6.1"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "mysql2": "^2.3.3",
