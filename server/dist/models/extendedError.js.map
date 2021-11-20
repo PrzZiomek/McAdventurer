@@ -1,0 +1,1 @@
+{"version":3,"file":"extendedError.js","sourceRoot":"","sources":["../../src/models/extendedError.ts"],"names":[],"mappings":";;;AAAA,MAAa,aAAc,SAAQ,KAAK;IAIpC,YAAY,OAAgB;QACxB,KAAK,CAAC,OAAO,CAAC,CAAC;QACf,IAAI,CAAC,IAAI,GAAG,eAAe,CAAC;QAC5B,MAAM,CAAC,cAAc,CAAC,IAAI,EAAE,aAAa,CAAC,SAAS,CAAC,CAAA;IACxD,CAAC;CACJ;AATD,sCASC"}
