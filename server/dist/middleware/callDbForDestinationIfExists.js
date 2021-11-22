@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.destinationRequest = void 0;
-const errorHandle_1 = require("../../helpers/errorHandle");
-const Destination_1 = require("../../models/Destination");
-const destinationRequest = async (req, res, next) => {
+exports.callDbForDestinationIfExists = void 0;
+const errorHandle_1 = require("../helpers/errorHandle");
+const Destination_1 = require("../models/Destination");
+const callDbForDestinationIfExists = async (req, res, next) => {
     const name = req.body.destination.name;
+    //  const name = res.locals.destinationName
     let callWiki = false;
     const destinations = new Destination_1.Destinations();
     const savedAlready = await destinations.checkIfSavedAlready(name).catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
@@ -25,5 +26,5 @@ const destinationRequest = async (req, res, next) => {
     res.locals.callWiki = callWiki;
     next();
 };
-exports.destinationRequest = destinationRequest;
-//# sourceMappingURL=destinationRequest.js.map
+exports.callDbForDestinationIfExists = callDbForDestinationIfExists;
+//# sourceMappingURL=callDbForDestinationIfExists.js.map
