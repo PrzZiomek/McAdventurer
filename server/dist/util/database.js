@@ -8,7 +8,7 @@ const mysql2_1 = __importDefault(require("mysql2"));
 const pool = mysql2_1.default.createPool({
     host: "localhost",
     user: "root",
-    database: "adventurer_database",
+    database: "adventurer",
     password: "databaze"
 });
 exports.db = pool.promise();

@@ -3,17 +3,14 @@ import express, { NextFunction, Request, Response } from "express";
 import path from 'path'; 
 
 import { destinationRequest } from './controlers/api/destinationRequest';
+import { saveDestinationInDb } from './middleware/saveDestinationInDb';
 import { callWikiApi } from './middleware/wikiApi/callWikiApi';
+import { Destinations } from './models/Destination';
 import { apiRoutes } from './routes/api/main';
-import { db } from "./util/database";
 
-
-//const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const app = express();
 const port = process.env.PORT || 3000;
-
-//db.execute("SELECT * FROM destinations")
  
 app.use(cors());
 app.use(express.json());
@@ -28,9 +25,14 @@ app.use((_: Request, res: Response, next: NextFunction) => {
   });
 
 //app.use(apiRoutes)
-
-app.use("/api/destination", destinationRequest)
+/*
+const dest = new Destinations();
+dest.getAll().then(res => console.log(res)) 
+dest.getOne("Salvador").then(res => console.log(res)) 
+*/
+app.use("/api/destination", destinationRequest);
 app.use("/api/destination", callWikiApi);
+app.use("/api/destination", saveDestinationInDb);
 
 
 app.listen(port, () => { 
