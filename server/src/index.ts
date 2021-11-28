@@ -28,7 +28,6 @@ app.use((_: Request, res: Response, next: NextFunction) => {
 /*
 const dest = new Destinations();
 dest.getAll().then(res => console.log(res)) 
-dest.getOne("Salvador").then(res => console.log(res)) 
 */
 app.use("/api/destination", destinationRequest);
 app.use("/api/destination", callWikiApi);

@@ -24,7 +24,7 @@ app.use((_, res, next) => {
 //app.use(apiRoutes)
 const dest = new Destination_1.Destinations();
 dest.getAll().then(res => console.log(res));
-dest.getOne("Salvador").then(res => console.log(res));
+/**/
 app.use("/api/destination", destinationRequest_1.destinationRequest);
 app.use("/api/destination", callWikiApi_1.callWikiApi);
 app.use("/api/destination", saveDestinationInDb_1.saveDestinationInDb);

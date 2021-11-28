@@ -1,22 +1,15 @@
+import { failFetchDestAction, startFetchDestAction, successFetchDestAction } from "../state/actions/fetchDestinations"
+import { fetchDestination } from "./fetchDestination";
 
-export const callApiForDestination = (name: string) => { 
 
-    fetch("http://localhost:3000/api/destination", {
-        method: "POST",
-            headers:{
-               // "Cookie": "login=true",              !!! to set
-                "Content-Type": "application/json",
-               // "Authorization": "Bearer " + token,  !!! to set
-            },
-            body: JSON.stringify({
-                destination: {
-                    name,
-                }
-            })           
-    })
-    .then(res => res.json())
-    .then(resData => console.log(resData))
-    .catch(err => console.log(err))
-
+export const callApiForDestination = (name: string) => async (dispatch: Function) => { 
+    
+    dispatch(startFetchDestAction());
+ 
+    fetchDestination(name).then(
+        res => dispatch(successFetchDestAction(res)),
+        err => dispatch(failFetchDestAction(err))
+    )
+      
 }
 
