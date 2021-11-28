@@ -6,6 +6,7 @@ import {  withFunctionality } from "../worldMap/models/withFunctionality";
 import { Panel } from "../panel/panel";
 import { MapWrapper } from "./styles/searchingMapStyles";
 import { WorldMap } from "../worldMap/WorldMap";
+import { store } from "../../state/store";
 
 
 //type MouseEventHandler<T = Element> = (event: MouseEvent<T, globalThis.MouseEvent>) => void
@@ -14,7 +15,6 @@ import { WorldMap } from "../worldMap/WorldMap";
 export const SearchingMap: React.FC = () => {
 
     const [theme, setTheme] = useState("normal.day");
-   // const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const [typed, setTypedValue] = useState<string>("");
     const [mapParams, setMapParams] =  useState({
         lat: 0,
@@ -23,11 +23,10 @@ export const SearchingMap: React.FC = () => {
 
     useEffect(() => { 
         if(!typed) return; 
-        const { lat, lng } = setCoordinates(typed);       
-        setMapParams({
-            lat,
-            lng
-        }) 
+        console.log("!!!!!",store.getState().callApiReducer);         
+       /* setMapParams({
+           
+        }) */
     }, [typed]) 
 
     const onChangeTheme = (e: MouseEvent<HTMLImageElement, globalThis.MouseEvent>) => {
@@ -35,16 +34,6 @@ export const SearchingMap: React.FC = () => {
         setTheme(themeElement.id)
     }
 
-    const setCoordinates = (typed: string) =>{
-        if(typed === "miami"){
-            return { 
-               lat: 25.7616,
-               lng: -80.1917 
-            }
-        }
-        return { lat: 10, lng: 10 }
-    }
-    
     const WorldMapWithFunctionality = withFunctionality(WorldMap);
      
     return (  

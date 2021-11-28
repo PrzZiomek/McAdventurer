@@ -1,5 +1,8 @@
 import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEvent, Dispatch, SetStateAction } from "react";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { callApiForDestination } from "../../api/callApiForDestination";
+import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
+import { store } from "../../state/store";
 import { InputText } from "./components/InputText";
 import { BrowserInput, InputButton, BrowserWrapper} from "./styles/destinationBrowserStyle";
 
@@ -19,11 +22,16 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
 
     const [filtered, setCountryName] = useState<string[]>([]);
     const [inputTypedValue, setInputTypedValue] = useState<string>("");
+    const [destination, setDestinastion] = useState<string>("");
+    const destRes = useSelector((state) => state);  console.log(destRes);   
+    const dispatch = useDispatch();
     const [completeValue, setInputValue] = useState({
       firstPart: "",
       secondPart: "",
       display: ""
      });
+
+    useDidMountEffect(() => dispatch(callApiForDestination(destination)), [destination])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const input = e.currentTarget;
@@ -49,7 +57,7 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
     const handleClick = (e: MouseEvent<HTMLElement>) => { 
         const destination = filtered[0] || inputTypedValue;      
         props.setTypedValue(destination);  
-        callApiForDestination(destination);
+        setDestinastion(destination);
         setCountryName([]);
     }
 
@@ -90,3 +98,9 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
         </BrowserWrapper>
     )
 }
+
+const mapActionToProps = {
+   callApiForDestination
+}
+
+

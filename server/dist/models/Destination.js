@@ -20,10 +20,7 @@ class Destinations {
         return destArray[0];
     }
     async checkIfSavedAlready(name) {
-        const res = await database_1.db.execute(`SELECT COUNT(*) FROM destination WHERE name = '${name}'`);
-        if (!res)
-            throw new Error("checking failed due to database error");
-        const content = Object.values(JSON.parse(JSON.stringify(res)));
+        const content = await this.getDBData(`SELECT COUNT(*) FROM destination WHERE name = '${name}'`);
         const contentItem = content[0];
         return contentItem[0]['COUNT(*)'];
     }

@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction, useState } from "react";
 
-import { DestinationBrowser } from "../destinationsBrowser/DestinationsBrowser";
+import  {DestinationBrowser}  from "../destinationsBrowser/DestinationsBrowser";
 import { PanelToggleBar } from "./components/panelToggleBar";
 import { PanelWrapper } from "./styles/panelStyles";
 

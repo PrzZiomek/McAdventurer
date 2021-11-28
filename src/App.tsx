@@ -1,8 +1,9 @@
-import React, { Component, FC, Fragment } from "react";
+import { Provider } from "react-redux";
 import styled from "styled-components";
 
 import  mainImage  from "./Belfast.jpg";
 import { SearchingMap } from "./components/searchingMap/SearchingMap";
+import { store } from "./state/store";
 import  GlobalStyles  from "./styles/globalStyles";
 
 
@@ -15,13 +16,13 @@ const MainWrapper = styled.div`
 `;
 
 
-export const App: React.FC = () => (
-    <Fragment>
+export const App = () => (
+    <Provider store={store}>
         <GlobalStyles />
         <MainWrapper>
             <SearchingMap/>   
         </MainWrapper>    
-     </Fragment>   
+     </Provider>   
 ) 
 
 

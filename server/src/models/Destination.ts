@@ -1,5 +1,3 @@
-
-
 import { destinationRequest } from "../controlers/api/destinationRequest";
 import { db } from "../util/database";
 
