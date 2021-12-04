@@ -7,7 +7,7 @@ import { PanelWrapper } from "./styles/panelStyles";
 
 interface Panel{
     destinations: string[];
-    setTypedValue: Dispatch<SetStateAction<string>>
+    updateDestinationsSet: Dispatch<SetStateAction<string[]>>
 }
 
 
@@ -16,10 +16,10 @@ export const Panel: FC<Panel> = (props) =>{
     const [toggleState, setToggler] = useState(true);
 
     return (
-        <PanelWrapper showUpBar={toggleState}>
+        <PanelWrapper id="panel" showUpBar={toggleState}>
              <DestinationBrowser 
-                    countryNames={props.destinations}
-                    setTypedValue={props.setTypedValue}
+                destinations={props.destinations}
+                updateDestinationsSet={props.updateDestinationsSet}
              />
              <PanelToggleBar 
                 switchToggleArrow={toggleState} 

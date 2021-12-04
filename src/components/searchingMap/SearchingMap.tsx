@@ -3,10 +3,12 @@ import React, { MouseEvent, useEffect, useState } from "react"
 import destinations from "../../data/destinations.json";
 import { MapThemesMenu } from "../mapThemesMenu/mapThemesMenu";
 import {  withFunctionality } from "../worldMap/models/withFunctionality";
-import { Panel } from "../panel/panel";
+import { Panel } from "../panel/Panel";
 import { MapWrapper } from "./styles/searchingMapStyles";
 import { WorldMap } from "../worldMap/WorldMap";
 import { store } from "../../state/store";
+import { useSelector } from "react-redux";
+import { Store } from "../../state/types/store";
 
 
 //type MouseEventHandler<T = Element> = (event: MouseEvent<T, globalThis.MouseEvent>) => void
@@ -15,19 +17,25 @@ import { store } from "../../state/store";
 export const SearchingMap: React.FC = () => {
 
     const [theme, setTheme] = useState("normal.day");
-    const [typed, setTypedValue] = useState<string>("");
+    const [destinationsSet, updateDestinationsSet] = useState<string[]>(destinations.countries);
+    const destination = useSelector((state: Store) => {
+        const destination = state.callApiReducer.destination;
+         return destination 
+    });   
     const [mapParams, setMapParams] =  useState({
         lat: 0,
         lng: 0  
     });
-
+ 
     useEffect(() => { 
-        if(!typed) return; 
-        console.log("!!!!!",store.getState().callApiReducer);         
-       /* setMapParams({
+        if(!destination) return; 
+        const destinations = [...destinationsSet, destination.name];
+        updateDestinationsSet(Array.from(new Set(destinations)))    
+        console.log("destination: ",destination);      console.log("destArr: ", destinations);   
+         /* setMapParams({
            
-        }) */
-    }, [typed]) 
+        }) */ 
+    }, [destination]) 
 
     const onChangeTheme = (e: MouseEvent<HTMLImageElement, globalThis.MouseEvent>) => {
         const themeElement = e.target as HTMLImageElement;    
@@ -39,12 +47,11 @@ export const SearchingMap: React.FC = () => {
     return (  
         <MapWrapper className="mapWrapper">
             <Panel 
-                 destinations={destinations.countries} 
-                 setTypedValue={setTypedValue}
+                destinations={destinationsSet} 
+                updateDestinationsSet={updateDestinationsSet}
             />
             {WorldMapWithFunctionality({ 
               theme,
-              typed,
               setMapParams,
               mapParams
             })}

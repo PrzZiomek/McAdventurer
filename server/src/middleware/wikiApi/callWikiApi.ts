@@ -4,6 +4,7 @@ import { errorHandle } from "../../helpers/errorHandle";
 import { Destination } from "../../models/Destination";
 import { getDestinationData } from "./getDestinationData";
 
+
  export const callWikiApi = async (req: Request, res: Response, next: NextFunction) => {
     const name = res.locals.destinationName; 
     const callWiki = res.locals.callWiki;
@@ -20,7 +21,11 @@ import { getDestinationData } from "./getDestinationData";
         lng: coordinates ? coordinates[0].lon : "unset"
       },
       images: pageimage ? pageimage : "unset"
-    }
+    }; 
+    res.status(200).json({
+      destination,
+    });  
+    
     res.locals.destination = destination; 
     next();
 };

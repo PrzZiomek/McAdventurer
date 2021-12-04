@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false})); 
 app.use(express.static(path.join(__dirname, "public")));
-
+ 
 
 app.use((_: Request, res: Response, next: NextFunction) => {
     res.setHeader("Access-Control-Allow-Methods", "GET, PUT, POST, PATCH, DELETE");
@@ -24,15 +24,15 @@ app.use((_: Request, res: Response, next: NextFunction) => {
     next();
   });
 
-//app.use(apiRoutes)
+app.use(apiRoutes)
 /*
 const dest = new Destinations();
 dest.getAll().then(res => console.log(res)) 
-*/
+
 app.use("/api/destination", destinationRequest);
 app.use("/api/destination", callWikiApi);
 app.use("/api/destination", saveDestinationInDb);
-
+*/
 
 app.listen(port, () => { 
   console.log(`Serverrrrr start!`);

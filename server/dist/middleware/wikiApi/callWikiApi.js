@@ -22,6 +22,9 @@ const callWikiApi = async (req, res, next) => {
         },
         images: pageimage ? pageimage : "unset"
     };
+    res.status(200).json({
+        destination,
+    });
     res.locals.destination = destination;
     next();
 };

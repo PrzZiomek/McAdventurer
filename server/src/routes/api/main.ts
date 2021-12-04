@@ -1,13 +1,14 @@
 import { Router } from "express";
 import { destinationRequest } from "../../controlers/api/destinationRequest";
+import { saveDestinationInDb } from "../../middleware/saveDestinationInDb";
 import { callWikiApi } from "../../middleware/wikiApi/callWikiApi";
 
 const router = Router();
 
-router.use(
-    "/api/destination",
+router.post("/api/destination",
+    destinationRequest,
     callWikiApi,
-    destinationRequest, 
+    saveDestinationInDb
 );
 
 export const apiRoutes = router;
