@@ -4,6 +4,8 @@ import { FC, LegacyRef, MouseEventHandler, MutableRefObject } from "react";
 export interface DivProps{
     /* Required by default */
     className?: string;     
+    /* identifier */
+    id?: string;
     /* to set color if need be */
     color?: string;   
     /* used in DivWrapper to apply proper ref to individual div  */
@@ -35,6 +37,7 @@ export const DivWrapper: FC<DivProps> = (props) => {
 
 export const Div: FC<DivProps> = (props) => (
     <div 
+        id={props.id}
         ref={props.actualRef} 
         className={props.className}
         onClick={props.onClick}

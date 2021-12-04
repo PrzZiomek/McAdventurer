@@ -5,7 +5,6 @@ export namespace I {
    export interface WorldMap{
         mapParams: H.geo.IPoint;
         setMapParams?: Dispatch<SetStateAction<{
-        //  zoom: number,
           lat: number,
           lng: number  
       }>>;

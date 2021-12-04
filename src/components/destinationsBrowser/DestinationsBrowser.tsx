@@ -2,13 +2,12 @@ import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEvent, Dispatch, SetSt
 import { connect, useDispatch, useSelector } from "react-redux";
 import { callApiForDestination } from "../../api/callApiForDestination";
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
-import { store } from "../../state/store";
 import { InputText } from "./components/InputText";
 import { BrowserInput, InputButton, BrowserWrapper} from "./styles/destinationBrowserStyle";
 
 interface DestinationBrowserProps{
-    countryNames: string[];
-    setTypedValue: Dispatch<SetStateAction<string>>
+    destinations: string[];
+    updateDestinationsSet: Dispatch<SetStateAction<string[]>>
 }
 
 interface SetPropositionValue{
@@ -23,7 +22,6 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
     const [filtered, setCountryName] = useState<string[]>([]);
     const [inputTypedValue, setInputTypedValue] = useState<string>("");
     const [destination, setDestinastion] = useState<string>("");
-    const destRes = useSelector((state) => state);  console.log(destRes);   
     const dispatch = useDispatch();
     const [completeValue, setInputValue] = useState({
       firstPart: "",
@@ -39,11 +37,11 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
         const value = input.value.toLowerCase();
         setInputTypedValue(value);
         const pickIfMatch = (name: string) =>{ 
-            if(value.length > 2){
+            if(value.length > 2){    
                 return name.toLowerCase().slice(0,3) === value.slice(0,3);
             }       
         };     
-        const filtered = props.countryNames.filter(pickIfMatch);       
+        const filtered = props.destinations.filter(pickIfMatch);       
         setCountryName(filtered);       
         if(filtered[0]){
             setPropositionValue({
@@ -55,8 +53,9 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
     }
 
     const handleClick = (e: MouseEvent<HTMLElement>) => { 
-        const destination = filtered[0] || inputTypedValue;      
-        props.setTypedValue(destination);  
+        const valueCapitalized = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase()); console.log("capital", inputTypedValue);       
+        const destination =  valueCapitalized;  //filtered[0] || inputTypedValue;      
+        props.updateDestinationsSet([...props.destinations, destination]) 
         setDestinastion(destination);
         setCountryName([]);
     }
@@ -98,9 +97,4 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
         </BrowserWrapper>
     )
 }
-
-const mapActionToProps = {
-   callApiForDestination
-}
-
-
+ 

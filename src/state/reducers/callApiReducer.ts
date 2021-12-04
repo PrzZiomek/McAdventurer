@@ -5,7 +5,7 @@ type Action = {
 }
 
 const initialState = {
-   item: null,
+   destination: null,
    isFetching: false,
    error: null
 }
@@ -21,13 +21,13 @@ export const callApiReducer = (state = initialState, action: Action) => {
            return{
                ...state,
                loading:false,
-               item: action.payload
+               destination: action.payload
            };
        case `FETCH_FAIL`: 
            return{
                ...state,
                loading: false,
-               item: {},
+               destination: {},
                error: action.payload
            }
        default:

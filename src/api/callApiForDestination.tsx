@@ -4,10 +4,9 @@ import { fetchDestination } from "./fetchDestination";
 
 export const callApiForDestination = (name: string) => async (dispatch: Function) => { 
     
-    dispatch(startFetchDestAction());
- 
+    dispatch(startFetchDestAction());     
     fetchDestination(name).then(
-        res => dispatch(successFetchDestAction(res)),
+        res => dispatch(successFetchDestAction(res.destination)),
         err => dispatch(failFetchDestAction(err))
     )
       
