@@ -1,3 +1,4 @@
+import { ErrorObject } from "./models/ErrorObject";
 
 export const fetchDestination = async (name: string) => {
 
@@ -13,8 +14,17 @@ export const fetchDestination = async (name: string) => {
                   name,
               }
           })           
-  });
+    })
+    .then(res => {
+        if(!res.ok){
+            throw new ErrorObject({
+                message: res.statusText,
+                apiRes: "server connection error"
+            }); 
+       };  
+       return res;
+    }) ;
 
-  const resJson = res.json();
+   const resJson = res.json();
   return resJson;
 }

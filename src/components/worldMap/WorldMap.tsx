@@ -1,52 +1,80 @@
-import React, { useState, FC, useEffect } from "react"
+import React, { useState, FC, useEffect, useRef } from "react"
+import { useCreateMap } from "./customHooks/useCreateMap";
+import { createDomMarker } from "./helpers/createDomMarker";
 
 import { I } from "./models/types/interfaces";
+import { isMapEvent } from "./models/types/mapEvents";
 import { Map } from "./styles/worldMapStyles";
 
 
-export const WorldMap: FC<I.WorldMapWithData> = (props) => {
+export const WorldMap: FC<I.WorldMap> = (props) => {
 
-  const [map, setMap] = useState<H.Map | null>(null);
-
-  const mapRef = React.useRef(null);
+    const mapRef = useRef(null);
     
-   useEffect(() => {
-       return () => {     
-        if (map) {
-          map.removeEventListener('mapviewchange',() => props.setMarker);
-        }
-      };
-     }, []);
-
+    const [map] = useCreateMap(mapRef, [
+      () => setMarker
+    ])
+      
     useEffect(() => {
-      const layer = props.layerWithTheme(props.theme); 
+      const layer = layerWithTheme(props.theme); 
       if(map && layer) map.setBaseLayer(layer); 
     }, [props.theme])
 
     useEffect(() => {
-      props.setMarker(map);
+      if(!map) return;
+      setMarker(map);
     }, [props.mapParams])
 
-    React.useLayoutEffect(() =>{
-        if(!mapRef.current) return;
-        const platform = props.mapPlatform(); 
-        const defaultLayers = platform.createDefaultLayers();
-        const hMap = new H.Map(mapRef.current, defaultLayers.vector.normal.map, {
-            center: {lat: 0, lng: 0},
-            zoom: 0,
-            pixelRatio: window.devicePixelRatio || 1,
+    const handleMapViewChange = (e: Event) => {    
+      if(!isMapEvent(e, "mapviewchange")) return;         
+      if (!(e.newValue && e.newValue.lookAt)) return; 
+      const lookAt = e.newValue.lookAt;
+      const lat = Math.trunc(lookAt.position.lat * 1E7) / 1E7;
+      const lng = Math.trunc(lookAt.position.lng * 1E7) / 1E7;
+      const zoom = Math.trunc(lookAt.zoom * 1E2) / 1E2;
+      if(!props.setMapParams) return;
+          props.setMapParams({
+              lat,
+              lng,
+          })               
+    }
+
+    const mapPlatform = () => {
+        const platform = new H.service.Platform({
+            apikey: "zcdFfY4BuFMsIIBqpduLOVk5k6frv77VEhxqsATGbjI",        
         });
-        setMap(hMap);
-        //const oldZoom = map?.getZoom();
-        hMap.addEventListener('mapviewchange',() => {
-          //const marker = new H.map.Marker({lat: 25.7616, lng: -80.1917});
-         // marker.setGeometry({lat: 25.7616, lng: -80.1917}); console.log(marker.getGeometry());
-          
+        return platform;
+    }
+
+    const layerWithTheme = (theme: string) => { 
+        const platform = mapPlatform();
+        if(!mapPlatform) return; 
+        const tiles = platform.getMapTileService({'type': 'base'});
+        const layer = tiles.createTileLayer(
+            'maptile',
+            theme,
+            256, 
+            'png',
+            ); 
+        return layer;
+    }
+
+    const  moveMapTo = (map: H.Map | null) =>{
+        if(!map) return; 
+        map.setCenter(props.mapParams);
+    }
+
+    const setMarker = (map: H.Map | null) =>{ 
+        if(!map) return; 
+        moveMapTo(map);
+        const domIcon = createDomMarker();    
+        const calibratedParams = { lat: props.mapParams.lat + 0.25, lng: props.mapParams.lng  }       
+        var bearsMarker = new H.map.DomMarker(calibratedParams, {
+          icon: domIcon
         });
-        hMap.addEventListener('resize', () => hMap.getViewPort().resize());
-        new H.mapevents.Behavior(new H.mapevents.MapEvents(hMap));   
-        return () => { hMap.dispose() };
-    }, [mapRef]);
+        map.setZoom(10);
+        map.addObject(bearsMarker); 
+    }
     
     return (
       <Map mapRef={mapRef} ></Map>

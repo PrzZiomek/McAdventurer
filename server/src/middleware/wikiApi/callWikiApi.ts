@@ -11,7 +11,11 @@ import { getDestinationData } from "./getDestinationData";
     if(!callWiki) return;  
     const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${name}&prop=extracts|coordinates|pageimages&exintro&explaintext&format=json&exintro=1&indexpageids`
     const destinationRes = await getDestinationData(url).catch(err => next(errorHandle(err, 500)));
-    if(!destinationRes) return;
+    if(!destinationRes){
+      return res.status(422).send({
+        message: "wiki api error"
+      });
+    }
     const { title, extract, coordinates, pageimage } = destinationRes;
     const destination: Destination = {
       name: title,

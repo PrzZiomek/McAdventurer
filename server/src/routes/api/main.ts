@@ -5,6 +5,10 @@ import { callWikiApi } from "../../middleware/wikiApi/callWikiApi";
 
 const router = Router();
 
+router.post("/api/destinationsList",
+    destinationListRequest,
+);
+
 router.post("/api/destination",
     destinationRequest,
     callWikiApi,

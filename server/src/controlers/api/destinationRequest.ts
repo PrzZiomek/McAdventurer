@@ -18,13 +18,22 @@ export const destinationRequest = async (req: Request, res: Response, next: Next
     const name = req.body.destination.name;
     let callWiki = false;
     const destinations = new Destinations(); 
-    const savedAlready = await destinations.checkIfSavedAlready(name).catch(err => next(errorHandle(err, 500))); 
+    const savedAlready = await destinations.checkIfSavedAlready(name).catch(err => next(errorHandle(err, 500)));
+    if (savedAlready == null) {    
+      return res.status(422).send({
+        message: "database connection error"
+      });
+    } 
     if(savedAlready === 1){
         const destination = await destinations.getOne(name).catch(err => next(errorHandle(err, 500)));
         if(destination){
             res.status(200).json({
                 destination,
               });
+        }else{
+            return res.status(422).send({
+              message: "database error"
+            });
         }
         callWiki = false;  
     };
