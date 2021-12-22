@@ -10,8 +10,11 @@ const callWikiApi = async (req, res, next) => {
         return;
     const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${name}&prop=extracts|coordinates|pageimages&exintro&explaintext&format=json&exintro=1&indexpageids`;
     const destinationRes = await (0, getDestinationData_1.getDestinationData)(url).catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
-    if (!destinationRes)
-        return;
+    if (!destinationRes) {
+        return res.status(422).send({
+            message: "wiki api error"
+        });
+    }
     const { title, extract, coordinates, pageimage } = destinationRes;
     const destination = {
         name: title,

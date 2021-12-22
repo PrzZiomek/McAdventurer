@@ -22,10 +22,6 @@ app.use(main_1.apiRoutes);
 /*
 const dest = new Destinations();
 dest.getAll().then(res => console.log(res))
-
-app.use("/api/destination", destinationRequest);
-app.use("/api/destination", callWikiApi);
-app.use("/api/destination", saveDestinationInDb);
 */
 app.listen(port, () => {
     console.log(`Serverrrrr start!`);

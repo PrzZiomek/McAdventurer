@@ -8,11 +8,21 @@ const destinationRequest = async (req, res, next) => {
     let callWiki = false;
     const destinations = new Destination_1.Destinations();
     const savedAlready = await destinations.checkIfSavedAlready(name).catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
+    if (savedAlready == null) {
+        return res.status(422).send({
+            message: "database error"
+        });
+    }
     if (savedAlready === 1) {
         const destination = await destinations.getOne(name).catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
         if (destination) {
             res.status(200).json({
                 destination,
+            });
+        }
+        else {
+            return res.status(422).send({
+                message: "database error"
             });
         }
         callWiki = false;
