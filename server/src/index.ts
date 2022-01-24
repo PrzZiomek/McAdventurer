@@ -2,17 +2,14 @@ import cors from 'cors';
 import express, { NextFunction, Request, Response } from "express";
 import path from 'path'; 
 
-import { destinationRequest } from './controlers/api/destinationRequest';
-import { saveDestinationInDb } from './middleware/saveDestinationInDb';
-import { callWikiApi } from './middleware/wikiApi/callWikiApi';
-import { Destinations } from './models/Destination';
 import { apiRoutes } from './routes/api/main';
 
 
 const app = express();
 const port = process.env.PORT || 3000;
- 
+
 app.use(cors());
+app.use(express.json({limit: '50mb'}));
 app.use(express.json());
 app.use(express.urlencoded({extended: false})); 
 app.use(express.static(path.join(__dirname, "public")));

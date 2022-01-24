@@ -1,18 +1,16 @@
+import { Destination } from "../dataModels/destinationsList";
 import { ErrorObject } from "./models/ErrorObject";
 
 
-export const getDestinationsList = async (destinations: string[]) => {
+export const fetchDestinationsList = async (): Promise<Destination[]> => {
    
    const res = await fetch("http://localhost:3000/api/destinationsList", {
-      method: "GET",
+      method: "POST",    
           headers:{
              // "Cookie": "login=true",              !!! to set
               "Content-Type": "application/json",
              // "Authorization": "Bearer " + token,  !!! to set
-          },
-          body: JSON.stringify({
-            destinations
-        })       
+          }, 
     })
     .then(res => {
         if(!res.ok){
@@ -22,8 +20,10 @@ export const getDestinationsList = async (destinations: string[]) => {
             }); 
        };  
        return res;
-    }) ;
+    })
+    .catch(e => console.log("err in fetch: ", e));
 
-   const resJson = res.json();
-  return resJson;
+   const resJson = res?.json();
+
+   return resJson;
 }

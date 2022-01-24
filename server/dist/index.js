@@ -10,6 +10,7 @@ const main_1 = require("./routes/api/main");
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 app.use((0, cors_1.default)());
+app.use(express_1.default.json({ limit: '50mb' }));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.static(path_1.default.join(__dirname, "public")));
