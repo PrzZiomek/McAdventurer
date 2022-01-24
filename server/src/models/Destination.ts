@@ -1,31 +1,25 @@
+import { strictEqual } from "assert";
+import { type } from "os";
 import { destinationRequest } from "../controlers/api/destinationRequest";
 import { db } from "../util/database";
+import { AllDestination, Destination } from "./types";
 
-export interface Destination {
-    name: string;
-    content: string;
-    coordinates: {
-        lat: number | string,
-        lng: number | string,
-    };
-    images: string
-}
 type CountObj = { 'COUNT(*)': number }
 type ResArray = CountObj[];
 
-
 export class Destinations {
 
-  private async getDBData(sqlQuery: string){
+  private async getDBData(sqlQuery: string) {
     const res = await db.execute(sqlQuery);  
     if(!res) throw new Error("communication with database failed in Destination model");
     const data = Object.values(JSON.parse(JSON.stringify(res)));   
     return data;  
   }
 
-  async getAll(): Promise<Destination[]>{
-    const destinations = await this.getDBData('SELECT * FROM destination');
-    return destinations[0] as Destination[];
+  async getAll(table: string): Promise<AllDestination[] | Destination[]>{
+     const destinations = await this.getDBData(`SELECT * FROM ${table}`);
+     if(!destinations) throw new Error("communication with database failed in Destination model");
+     return destinations[0] as AllDestination[] | Destination[];     
   }
 
   async getOne(name: string): Promise<Destination>{
@@ -34,7 +28,7 @@ export class Destinations {
     return destArray[0];
   }
 
-  async checkIfSavedAlready(name: string){    
+  async checkIfSavedAlready(name: string): Promise<number>{    
     const content = await this.getDBData(`SELECT COUNT(*) FROM destination WHERE name = '${name}'`)
     const contentItem = content[0] as ResArray;
     return contentItem[0]['COUNT(*)'];

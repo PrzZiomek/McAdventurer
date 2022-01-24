@@ -10,8 +10,10 @@ class Destinations {
         const data = Object.values(JSON.parse(JSON.stringify(res)));
         return data;
     }
-    async getAll() {
-        const destinations = await this.getDBData('SELECT * FROM destination');
+    async getAll(table) {
+        const destinations = await this.getDBData(`SELECT * FROM ${table}`);
+        if (!destinations)
+            throw new Error("communication with database failed in Destination model");
         return destinations[0];
     }
     async getOne(name) {

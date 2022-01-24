@@ -7,10 +7,12 @@ const destinationRequest = async (req, res, next) => {
     const name = req.body.destination.name;
     let callWiki = false;
     const destinations = new Destination_1.Destinations();
-    const savedAlready = await destinations.checkIfSavedAlready(name).catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
+    const savedAlready = await destinations
+        .checkIfSavedAlready(name)
+        .catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
     if (savedAlready == null) {
         return res.status(422).send({
-            message: "database error"
+            message: "database connection error"
         });
     }
     if (savedAlready === 1) {

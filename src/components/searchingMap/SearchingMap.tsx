@@ -11,7 +11,8 @@ import { store } from "../../state/store";
 import { useSelector } from "react-redux";
 import { Store } from "../../state/types/store";
 import { ErrorPanel } from "./styles/errorPanel";
-import { getDestinationsList } from "../../api/getDestinationsList";
+import { fetchDestinationsList } from "../../api/fetchDestinationsList";
+import { Destination } from "../../dataModels/destinationsList";
 
 //type MouseEventHandler<T = Element> = (event: MouseEvent<T, globalThis.MouseEvent>) => void
 
@@ -19,7 +20,7 @@ import { getDestinationsList } from "../../api/getDestinationsList";
 export const SearchingMap: React.FC = () => {
 
     const [theme, setTheme] = useState("normal.day");
-    const [destinationsSet, updateDestinationsSet] = useState<string[]>(destinations.countries);
+    const [destinationsSet, updateDestinationsSet] = useState<Destination[]>([]);
     const [error, setErrorFlag] = useState({isError: false, msg: new Error()});
     const [mapParams, setMapParams] =  useState({
         lat: 0,
@@ -35,60 +36,20 @@ export const SearchingMap: React.FC = () => {
         const destination = state.callApiReducer.destination; 
         return destination 
     });  
-    
-    useEffect(() => { 
-       let citiesWithTheirCountries = [];
-       let citiesWithGeo = []; 
-       const destinationsList1Length = destinationsList1.length;
-       const destinationsList2Length = destinationsList2.length; 
 
-       const arrayObj = [{name:"henry", id: 2}, {name:"henry", id: 3}, {name:"henry", id: 5}, {name:"maret", id: 2}, {name:"jarek", id: 2}, {name:"henry", id: 4},  {name:"al", id: 2}];
-       const arryObjSorted = arrayObj.sort(function(a, b){
-        const nameA=a.name.toLowerCase(), nameB=b.name.toLowerCase();
-        if (nameA < nameB) 
-         return -1;
-        if (nameA > nameB)
-         return 1;
-        return 0; 
-       });  
-     /*  const resarr = arryObjSorted.reduce((acc, poz, i) => {
-            if(poz)
-       }, [])
-    */
-       for(let i=0; i <= destinationsList1.length; i++){ 
-         let name = destinationsList1[i]?.name ? destinationsList1[i]?.name : "unset";
-         let country = destinationsList1[i]?.country ? destinationsList1[i]?.country : "unset";
-         citiesWithTheirCountries[i] = { 
-            city: name,
-            country
-         }
-       } 
-      // console.log(citiesWithTheirCountries);
-        
-       for(let i=0; i <= destinationsList2Length - 1 ; i++){  
-        let city = destinationsList2[i]?.city ? destinationsList2[i]?.city : "unset";
-        let country = destinationsList2[i]?.country ? destinationsList2[i]?.country : "unset";
-        let lat = destinationsList2[i]?.lat ? destinationsList2[i]?.lat : "unset";
-        let lng = destinationsList2[i]?.lng ? destinationsList2[i]?.lng : "unset";
-        citiesWithGeo[i] = { 
-           city,
-           country,
-           lat,
-           lng
-        }
-      } 
-     // console.log(citiesWithGeo);
-    const allDestinations = [...citiesWithTheirCountries, ...citiesWithGeo];
-      const arrayObjdone = [...new Map(allDestinations.map(v => [v.city, v])).values()];
-      console.log(arrayObjdone);    
-      //  getDestinationsList()
-    },[])
-    
     useEffect(() => { 
-        if(!destination) return; 
-        const destinations = [...destinationsSet, destination.name];
-        updateDestinationsSet(Array.from(new Set(destinations)))    
-        console.log("destination: ",destination);      console.log("destArr: ", destinations);   
+        if(destinationsSet?.length) return;
+        async function getDestinationsList() {
+            const response = await fetchDestinationsList();
+            updateDestinationsSet(response); console.log("destArrres: ", response );
+        }
+        getDestinationsList();
+        console.log("destArr outsideeeeeer: ", destinationsSet);
+    }, [])
+  
+    myUseEffect(() => { 
+        if(!destination) return;  
+        console.log(destination.lat, destination.lng)     
           setMapParams({
             lat: destination.lat,
             lng: destination.lng
@@ -106,7 +67,6 @@ export const SearchingMap: React.FC = () => {
                 <MapWrapper className="mapWrapper">
                     <Panel 
                         destinations={destinationsSet} 
-                        updateDestinationsSet={updateDestinationsSet}
                     />
                     <WorldMap
                         theme={theme}
@@ -134,3 +94,15 @@ export const SearchingMap: React.FC = () => {
 }
 
 
+let hooks: [][] = [];
+let id = 0;
+
+function myUseEffect(cb: Function, depArray: [{} | undefined]) {
+    const oldDepths = hooks[id];
+    let hasChanged = true;
+    if(oldDepths){
+        hasChanged = depArray.some((dep,i) => !Object.is(dep, oldDepths[i]))
+    } 
+    if(hasChanged) cb();
+    hooks[id] = depArray;
+}

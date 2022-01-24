@@ -7,7 +7,7 @@ import { BrowserInput, InputButton, BrowserWrapper} from "./styles/destinationBr
 
 interface DestinationBrowserProps{
     destinations: string[];
-    updateDestinationsSet: Dispatch<SetStateAction<string[]>>
+   // updateDestinationsSet: Dispatch<SetStateAction<string[]>>
 }
 
 interface SetPropositionValue{
@@ -53,9 +53,8 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
     }
 
     const handleClick = (e: MouseEvent<HTMLElement>) => { 
-        const valueCapitalized = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase()); console.log("capital", inputTypedValue);       
+        const valueCapitalized = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase());    
         const destination =  valueCapitalized;  //filtered[0] || inputTypedValue;      
-        props.updateDestinationsSet([...props.destinations, destination]) 
         setDestinastion(destination);
         setCountryName([]);
     }
