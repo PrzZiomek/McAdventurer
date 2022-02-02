@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Div } from "../../../ui/Div";
 
 export const PanelWrapper = styled(Div)`
-    width: 400px;
+    width: 30vw;
     height: 100%;
     z-index: 2;
     margin-left: ${(props) => props.showUpBar === false ? "-400px" : 0};

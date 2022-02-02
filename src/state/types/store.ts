@@ -1,14 +1,10 @@
+import { WikiDestination } from "../../dataModels/types";
+
 export interface Store{
    callApiReducer: {
       error: Error | null;
       isFetching: boolean;
-      destination: {
-         content: string,
-         images: string,
-         lat: number,
-         lng: number,
-         name: string
-      };
+      destination: WikiDestination;
       loading: boolean
    };
 }

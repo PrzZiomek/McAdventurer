@@ -1,8 +1,36 @@
-import { Destination } from "../dataModels/destinationsList";
+import { Destination, DestinationNameAndPos } from "../dataModels/types";
+import { fetchData } from "./models/dataRequest";
 import { ErrorObject } from "./models/ErrorObject";
 
 
-export const fetchDestinationsList = async (): Promise<Destination[]> => {
+
+export const fetchDestinationsList = async (): Promise<DestinationNameAndPos[] | void> => {
+   return fetchData<DestinationNameAndPos[] | void>(
+      "http://localhost:3000/api/destinationsList", {
+         method: "POST",   
+      }
+   ).catch((err) => console.log(err))
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+export const fetchDestinationsList = async (): Promise<DestinationNameAndPos[]> => {
    
    const res = await fetch("http://localhost:3000/api/destinationsList", {
       method: "POST",    
@@ -27,3 +55,5 @@ export const fetchDestinationsList = async (): Promise<Destination[]> => {
 
    return resJson;
 }
+
+*/

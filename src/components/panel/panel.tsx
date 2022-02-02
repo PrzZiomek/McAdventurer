@@ -1,4 +1,5 @@
 import { Dispatch, FC, SetStateAction, useState } from "react";
+import { DestinationNameAndPos } from "../../dataModels/types";
 
 import  {DestinationBrowser}  from "../destinationsBrowser/DestinationsBrowser";
 import { PanelToggleBar } from "./components/panelToggleBar";
@@ -6,7 +7,7 @@ import { PanelWrapper } from "./styles/panelStyles";
 
 
 interface Panel{
-    destinations: string[];
+    destinations: DestinationNameAndPos[];
   //  updateDestinationsSet: Dispatch<SetStateAction<string[]>>
 }
 

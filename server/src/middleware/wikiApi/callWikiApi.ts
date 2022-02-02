@@ -2,9 +2,11 @@ import { NextFunction, Request, Response } from "express";
 
 import { errorHandle } from "../../helpers/errorHandle";
 import { Destinations } from "../../models/Destination";
-import { Destination, WikiPage } from "../../models/types";
+import { Destination, DestinationTransitType, WikiPage } from "../../models/types";
 import { getDestinationData } from "./getDestinationData";
 
+
+// from destinationRequest
 
  export const callWikiApi = async (req: Request, res: Response, next: NextFunction) => {
     const name: string = res.locals.destinationName; 
@@ -18,7 +20,7 @@ import { getDestinationData } from "./getDestinationData";
       });
     }
     const { title, extract, coordinates, pageimage } = destinationRes;
-    const destination: Destination = {
+    const destination: DestinationTransitType = {
       name: title,
       content: extract,
       coordinates: {
@@ -30,11 +32,15 @@ import { getDestinationData } from "./getDestinationData";
     res.status(200).json({
       destination,
     });  
-    
+     
     res.locals.destination = destination; 
     next();
 };
-  
+
+// next to saveDestinationInDb
+
+
+
 
   /*
 parameters for extracts: exintro=1&explaintext=1&exlimit=20 (max exlimit is 20)

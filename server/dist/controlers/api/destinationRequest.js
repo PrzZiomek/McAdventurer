@@ -16,13 +16,24 @@ const destinationRequest = async (req, res, next) => {
         });
     }
     if (savedAlready === 1) {
-        const destination = await destinations.getOne(name).catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
+        const destination = await destinations
+            .getOne(name)
+            .catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
         if (destination) {
             res.status(200).json({
-                destination,
+                destination: {
+                    name: destination.NAME,
+                    content: destination.CONTENT,
+                    coordinates: {
+                        lat: destination.LAT,
+                        lng: destination.LNG
+                    },
+                    images: destination.IMAGES
+                },
             });
         }
         else {
+            console.log("else????");
             return res.status(422).send({
                 message: "database error"
             });
@@ -38,4 +49,5 @@ const destinationRequest = async (req, res, next) => {
     next();
 };
 exports.destinationRequest = destinationRequest;
+// next to callWikiApi
 //# sourceMappingURL=destinationRequest.js.map

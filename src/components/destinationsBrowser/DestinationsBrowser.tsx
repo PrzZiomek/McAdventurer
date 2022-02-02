@@ -2,11 +2,12 @@ import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEvent, Dispatch, SetSt
 import { connect, useDispatch, useSelector } from "react-redux";
 import { callApiForDestination } from "../../api/callApiForDestination";
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
+import { DestinationNameAndPos } from "../../dataModels/types";
 import { InputText } from "./components/InputText";
 import { BrowserInput, InputButton, BrowserWrapper} from "./styles/destinationBrowserStyle";
 
 interface DestinationBrowserProps{
-    destinations: string[];
+    destinations: DestinationNameAndPos[];
    // updateDestinationsSet: Dispatch<SetStateAction<string[]>>
 }
 
@@ -31,17 +32,21 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
 
     useDidMountEffect(() => dispatch(callApiForDestination(destination)), [destination])
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const input = e.currentTarget;
         const caretPosition = input.selectionStart as number;
         const value = input.value.toLowerCase();
         setInputTypedValue(value);
+
         const pickIfMatch = (name: string) =>{ 
             if(value.length > 2){    
                 return name.toLowerCase().slice(0,3) === value.slice(0,3);
             }       
         };     
-        const filtered = props.destinations.filter(pickIfMatch);       
+        const filtered = props.destinations
+            .map(dest => dest.name)
+            .filter(pickIfMatch);       
+
         setCountryName(filtered);       
         if(filtered[0]){
             setPropositionValue({
@@ -52,24 +57,26 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
         } 
     }
 
-    const handleClick = (e: MouseEvent<HTMLElement>) => { 
-        const valueCapitalized = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase());    
-        const destination =  valueCapitalized;  //filtered[0] || inputTypedValue;      
-        setDestinastion(destination);
+    const handleClick = (e: MouseEvent<HTMLElement>): void => { 
+        const valueCapitalized: string = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase());    
+        const destination: string =  valueCapitalized;  //filtered[0] || inputTypedValue;      
+        setDestinastion(destination); console.log("typed: ",destination );
+        
         setCountryName([]);
     }
 
-    const handleEnterClick = (e: KeyboardEvent<HTMLInputElement>) =>{
+    const handleEnterClick = (e: KeyboardEvent<HTMLInputElement>): void =>{
         if(e.key === "Enter"){
             setInputValue({
                 firstPart: filtered[0],
                 secondPart: "",
                 display: "none"
-            });    
+            });  
+            setDestinastion(filtered[0]);  
         }
     }
 
-    const setPropositionValue = ({ filtered, typed, letterNumber }: SetPropositionValue) => {
+    const setPropositionValue = ({ filtered, typed, letterNumber }: SetPropositionValue): void => {
         const firstPart = typed.slice(0, letterNumber);
         const secondPart = filtered.slice(letterNumber, filtered.length);     
         const valToCompare = filtered.toLowerCase().slice(0, letterNumber);      

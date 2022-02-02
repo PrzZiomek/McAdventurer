@@ -7,7 +7,7 @@ import { ToggleBar } from "../../../ui/ToggleBar"
 
 const PanelToggleBarStyled = styled(Div)`
     position: absolute;
-    right: -14px;
+    right: ${(props) => props.switchToggleArrow === false ? -18 : -15}px;
     top: 50%;
     color: #3e3e28;
     cursor: pointer;
@@ -15,8 +15,8 @@ const PanelToggleBarStyled = styled(Div)`
     width: 30px;
     height: 30px;
     background: linear-gradient(to bottom right,transparent 0%,transparent 50%,#F7F7F3 50%,#F7F7F3 100%);
-    border-right: 2px solid #3e3e28;
-    border-bottom: 2px solid #3e3e28; 
+    border-right: 3px solid #3e3e28;
+    border-bottom: 3px solid #3e3e28; 
     transform: rotate(${(props) => props.switchToggleArrow === false ? 315 : 135}deg) ; 
 `
 

@@ -2,7 +2,7 @@ import { strictEqual } from "assert";
 import { type } from "os";
 import { destinationRequest } from "../controlers/api/destinationRequest";
 import { db } from "../util/database";
-import { AllDestination, Destination } from "./types";
+import { AllDestination, Destination, DestinationTransitType } from "./types";
 
 type CountObj = { 'COUNT(*)': number }
 type ResArray = CountObj[];
@@ -34,7 +34,7 @@ export class Destinations {
     return contentItem[0]['COUNT(*)'];
   }
 
-  saveOne ({ name, content, coordinates, images }: Destination): void{
+  saveOne ({ name, content, coordinates , images }: DestinationTransitType): void{
     const lat = coordinates.lat === "unset" ? 0 : coordinates.lat;
     const lng = coordinates.lng === "unset" ? 0 : coordinates.lng; 
     db.execute(

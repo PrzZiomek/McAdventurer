@@ -1,18 +1,42 @@
 import { NextFunction, Request, Response } from "express";
+import { errorHandle } from "../helpers/errorHandle";
 import { Destinations } from "../models/Destination";
 import { Table } from "../models/enums";
-import { AllDestination, Destination, Locals } from "../models/types";
+import { AllDestination, Destination, DestinationNameAndPosition, Locals } from "../models/types";
 
+// from destinationListRequest 
 
 export const combinedDestinationsRequest = async (req: Request, res: Response, next: NextFunction) => {
-  const destinationsList =  res.locals.destinationsList as AllDestination[];
-  const destination = new Destinations(); 
-  const checkedDestinations = await destination.getAll(Table.Destination) as Destination[];
-  if (!checkedDestinations) {    
-   return res.status(422).send({
-     message: "database connection error" 
-   });
- } 
- res.status(200).send(dbRes);   
+    const destinationsList =  res.locals.destinationsList as AllDestination[];
+    const destination = new Destinations(); 
+
+    const checkedDestinations: void | AllDestination[] | Destination[] =
+      await destination
+          .getAll(Table.Destination)
+          .catch(err => next(errorHandle(err, 500))); 
+    
+      if (!checkedDestinations) {    
+        return res.status(422).send({
+          message: "database connection error" 
+        });
+  }
+  console.log("all: ", destinationsList[1]);
+  console.log("dest: ", checkedDestinations[1]);
+  const mergedDestsList = [...destinationsList, ...checkedDestinations] as (Destination & AllDestination)[];
+  const combinedDestsLists: DestinationNameAndPosition[] = combineDests(mergedDestsList)
+
+  res.status(200).send(combinedDestsLists);   
 }
 
+
+function combineDests(dests: (Destination & AllDestination)[]){
+  return dests.reduce((acc: DestinationNameAndPosition[], poz: Destination & AllDestination) => {
+       const obj = {
+           name: poz?.NAME ? poz?.NAME : poz?.CITY,
+           lat: poz?.LAT ? poz?.LAT : poz?.LAT ? poz?.LAT : "unset",
+           lng: poz.LNG ? poz.LNG : poz?.LNG ? poz?.LNG : "unset",
+       };
+       acc.push(obj);
+       return acc;
+   }, [])
+}
