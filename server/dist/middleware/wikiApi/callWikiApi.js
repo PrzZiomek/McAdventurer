@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.callWikiApi = void 0;
 const errorHandle_1 = require("../../helpers/errorHandle");
 const getDestinationData_1 = require("./getDestinationData");
+// from destinationRequest
 const callWikiApi = async (req, res, next) => {
     const name = res.locals.destinationName;
     const callWiki = res.locals.callWiki;
@@ -32,6 +33,7 @@ const callWikiApi = async (req, res, next) => {
     next();
 };
 exports.callWikiApi = callWikiApi;
+// next to saveDestinationInDb
 /*
 parameters for extracts: exintro=1&explaintext=1&exlimit=20 (max exlimit is 20)
 

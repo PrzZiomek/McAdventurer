@@ -5,8 +5,8 @@ export namespace I {
    export interface WorldMap{
         mapParams: H.geo.IPoint;
         setMapParams?: Dispatch<SetStateAction<{
-          lat: number,
-          lng: number  
+          lat: number | string,
+          lng: number | string
       }>>;
         theme: string;
         typed?: string

@@ -1,6 +1,27 @@
-import { ErrorObject } from "./models/ErrorObject";
+import { Destination } from "../dataModels/types";
+import { fetchData } from "./models/dataRequest";
 
-export const fetchDestination = async (name: string) => {
+
+
+export const fetchDestination = async (name: string): Promise<{destination: Destination}> => {
+    return fetchData<{destination: Destination}>(
+        "http://localhost:3000/api/destination", {
+            method: "POST",
+            body: JSON.stringify({
+                destination: { name }
+            })
+        }
+    )
+}
+
+
+
+
+
+
+
+/*
+export const fetchDestination = async (name: string): Promise<{destination: Destination}> => {
 
    const res = await fetch("http://localhost:3000/api/destination", {
       method: "POST",
@@ -28,3 +49,5 @@ export const fetchDestination = async (name: string) => {
    const resJson = res.json();
   return resJson;
 }
+
+*/

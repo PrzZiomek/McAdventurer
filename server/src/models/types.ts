@@ -1,20 +1,34 @@
 export interface Destination {
    type?: "Destination";
-   name: string;
-   content: string;
-   coordinates: {
-       lat: number | string,
-       lng: number | string,
-   };
-   images: string
+   NAME: string;
+   CONTENT: string;
+   LAT: number | string,
+   LNG: number | string,
+   IMAGES: string
 }
 
 export interface AllDestination {
- type?: "AllDestination";
- city: string;
- country: string;
- lat: string;
- lng: string;
+    type?: "AllDestination";
+    CITY: string;
+    COUNTRY: string;
+    LAT: string;
+    LNG: string;
+}
+
+export interface DestinationTransitType {
+    content: string,
+    images: string, 
+    coordinates: {
+      lat: number | string,
+      lng: number | string
+    }
+    name: string 
+  }
+
+export interface DestinationNameAndPosition {
+    name: string
+    lat: string | number,
+    lng: string | number,
 }
 
 export interface WikiPage {
@@ -34,7 +48,7 @@ export interface WikiPage {
 export interface Locals {
     destinationName: string;
     callWiki: boolean;
-    destination: Destination;
+    destination: Destination | DestinationTransitType;
     destinationsList: AllDestination[] | Destination[];
   
   }
