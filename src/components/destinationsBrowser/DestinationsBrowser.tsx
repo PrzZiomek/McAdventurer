@@ -3,11 +3,12 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { callApiForDestination } from "../../api/callApiForDestination";
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
 import { DestinationNameAndPos } from "../../dataModels/types";
+import { startFetchDestAction } from "../../state/actions/fetchDestinationActions";
 import { InputText } from "./components/InputText";
 import { BrowserInput, InputButton, BrowserWrapper} from "./styles/destinationBrowserStyle";
 
 interface DestinationBrowserProps{
-    destinations: DestinationNameAndPos[];
+    destinations: DestinationNameAndPos[] | undefined;
    // updateDestinationsSet: Dispatch<SetStateAction<string[]>>
 }
 
@@ -37,7 +38,7 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
         const caretPosition = input.selectionStart as number;
         const value = input.value.toLowerCase();
         setInputTypedValue(value);
-
+        if(!props.destinations) return;
         const pickIfMatch = (name: string) =>{ 
             if(value.length > 2){    
                 return name.toLowerCase().slice(0,3) === value.slice(0,3);
