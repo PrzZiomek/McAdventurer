@@ -7,7 +7,7 @@ import { PanelWrapper } from "./styles/panelStyles";
 
 
 interface Panel{
-    destinations: DestinationNameAndPos[];
+    destinations: DestinationNameAndPos[] | undefined;
   //  updateDestinationsSet: Dispatch<SetStateAction<string[]>>
 }
 

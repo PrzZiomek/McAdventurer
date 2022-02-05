@@ -1,4 +1,4 @@
-import { FETCH_FAIL, FETCH_START, FETCH_SUCCESS } from "../actions/actionTypes";
+import { FETCH_FAIL_DEST_LIST, FETCH_START_DEST_LIST, FETCH_SUCCESS_DEST_LIST } from "../actions/actionTypes";
 
 type Action = {
    type:string,
@@ -6,29 +6,28 @@ type Action = {
 }
 
 const initialState = {
-   destination: null,
-   isFetching: false,
+   destinations: null,
    error: null
 }
 
-export const callApiReducer = (state = initialState, action: Action) => {
+export const getDestinationList = (state = initialState, action: Action) => {
    switch (action.type){
-       case FETCH_START:
+       case FETCH_START_DEST_LIST:
            return{
                ...state,
                loading: true,
            };
-       case FETCH_SUCCESS:
+       case FETCH_SUCCESS_DEST_LIST:
            return{
                ...state,
                loading:false,
-               destination: action.payload
+               destinatios: action.payload
            };
-       case FETCH_FAIL: 
+       case FETCH_FAIL_DEST_LIST: 
            return{
                ...state,
                loading: false,
-               destination: {},
+               destinations: {},
                error: action.payload
            }
        default:

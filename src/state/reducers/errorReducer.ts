@@ -1,4 +1,4 @@
-import { type } from "os";
+import { GET_ERROR, SET_ERROR } from "../actions/actionTypes";
 
 const initialState = {
   error: null, 
@@ -6,6 +6,7 @@ const initialState = {
 };
 
 type actionType = { 
+   type: string,
    payload: {
       message?: string;
       content: object
@@ -13,8 +14,8 @@ type actionType = {
 };
 
 
-export const errorReducer = (state = initialState, action: actionType) => {
-   if(state.error){
+export const errorReducer = (state = initialState, action: actionType) => { 
+   if(action?.payload?.content){  
       return {
          ...state,
          isError: true,
