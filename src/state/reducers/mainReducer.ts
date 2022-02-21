@@ -1,13 +1,15 @@
 import { combineReducers } from "redux";
 
-import { callApiReducer } from "./callApiReducer";
-import { errorReducer } from "./errorReducer";
+import { getDestination } from "./getDestination";
+import { getErrors } from "./getErrors";
 import { getDestinationList } from "./getDestinationList";
+import { displayErrorModal } from "./displayErrorModal";
 
 
 export const reducers = combineReducers({
-   callApiReducer,
+   getDestination,
    getDestinationList,
-   errorReducer
+   getErrors,
+   displayErrorModal
 })
 

@@ -1,6 +1,5 @@
 import { FC, LegacyRef, MouseEventHandler, MutableRefObject } from "react";
 
-
 export interface DivProps{
     /* Required by default */
     className?: string;     
@@ -18,6 +17,8 @@ export interface DivProps{
     showUpBar?: boolean;
     /* used in Panel toggle bar arrow  */
     switchToggleArrow?: boolean;
+    /* used in ErrorModal */
+    showModal?: boolean;
 }
 
 
@@ -26,7 +27,6 @@ export const DivWrapper: FC<DivProps> = (props) => {
 
     const setActualRef = (props: DivProps) => {
         if(props.mapRef) return props.mapRef;
-    //    if(props.mainWrapperRef) return props.mainWrapperRef;
     }
  
     return(

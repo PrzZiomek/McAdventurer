@@ -21,7 +21,7 @@ export const getDestinationList = (state = initialState, action: Action) => {
            return{
                ...state,
                loading:false,
-               destinatios: action.payload
+               destinations: action.payload
            };
        case FETCH_FAIL_DEST_LIST: 
            return{

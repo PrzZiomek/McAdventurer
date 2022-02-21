@@ -38,15 +38,20 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
         const caretPosition = input.selectionStart as number;
         const value = input.value.toLowerCase();
         setInputTypedValue(value);
-        if(!props.destinations) return;
-        const pickIfMatch = (name: string) =>{ 
-            if(value.length > 2){    
-                return name.toLowerCase().slice(0,3) === value.slice(0,3);
-            }       
+        if(!props.destinations?.length) return;   
+
+        const pickIfMatch = (name: string): boolean | undefined => { 
+            for(let i = 30; i > 0; i--){
+                if(value.length > i){    
+                    const piece = i + 1;
+                    return name.toLowerCase().slice(0, piece) === value.slice(0, piece);
+                } 
+            }        
         };     
-        const filtered = props.destinations
+
+        const filtered: string[] = props.destinations
             .map(dest => dest.name)
-            .filter(pickIfMatch);       
+            .filter(pickIfMatch);        //console.log(filtered);        
 
         setCountryName(filtered);       
         if(filtered[0]){
@@ -59,21 +64,21 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
     }
 
     const handleClick = (e: MouseEvent<HTMLElement>): void => { 
+        if(inputTypedValue.length < 1) return;
         const valueCapitalized: string = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase());    
         const destination: string =  valueCapitalized;  //filtered[0] || inputTypedValue;      
-        setDestinastion(destination); console.log("typed: ",destination );
+        setDestinastion(destination); //console.log("typed: ",destination );
         
         setCountryName([]);
     }
 
-    const handleEnterClick = (e: KeyboardEvent<HTMLInputElement>): void =>{
-        if(e.key === "Enter"){
+    const handleEnterClick = (e: KeyboardEvent<HTMLInputElement>): void => {
+        if(e.key === "Enter" || e.code === "ArrowRight"){
             setInputValue({
                 firstPart: filtered[0],
                 secondPart: "",
                 display: "none"
             });  
-            setDestinastion(filtered[0]);  
         }
     }
 
@@ -94,7 +99,7 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
     return (
         <BrowserWrapper> 
             <BrowserInput 
-                className="browserInput"
+                id="browserInput"
                 visibleText={filtered[0] ? false : true} 
                 handleChange={handleChange}
                 handleEnterClick={handleEnterClick}

@@ -7,6 +7,7 @@ interface Props{
     visibleText?: boolean;
     handleEnterClick?: KeyboardEventHandler<HTMLInputElement>;
     type?: string;
+    id?: string;
 }
 
 export const Input: FC <Props> = (props) => (

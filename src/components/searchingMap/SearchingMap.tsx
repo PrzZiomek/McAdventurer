@@ -1,70 +1,84 @@
 import React, { Dispatch, MouseEvent, useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux";
+import { createSelector } from 'reselect'
+import { createCachedSelector } from 're-reselect';
 
 import { MapThemesMenu } from "../mapThemesMenu/mapThemesMenu";
 import { Panel } from "../panel/Panel";
 import { MapWrapper } from "./styles/searchingMapStyles";
 import { WorldMap } from "../worldMap/WorldMap";
-import { useDispatch, useSelector } from "react-redux";
 import { Store } from "../../state/types";
-import { ErrorPanel } from "./styles/errorPanel";
 import { Destination, DestinationNameAndPos, WikiDestination } from "../../dataModels/types";
 import { startFetchDestListAction } from "../../state/actions/fetchDestinationActions";
-
+import { ErrorModal } from "./components/errorModal/errorModal";
+import { deepEqual } from "assert";
 
 //type MouseEventHandler<T = Element> = (event: MouseEvent<T, globalThis.MouseEvent>) => void
 
 type numbOrStr = number | string;
+type ErrorObject = { isError: boolean, content: Error };
+type ErrorName = "getDestinationList" | "getDestination" | "worldMapAPI"
+type PartialRecord<K extends string, T> = { [P in K]?: T };
+
+type ErrorCollection = PartialRecord<ErrorName, ErrorObject>
+
 
 export const SearchingMap: React.FC = () => {
 
     const [theme, setTheme] = useState("normal.day");
-    const [error, setErrorFlag] = useState({isError: false, msg: new Error()});
-    const [destListError, setDestListErrorFlag] = useState({isError: false, msg: new Error()});
-    const [mapParams, setMapParams] =  useState<{lat: numbOrStr, lng: numbOrStr  }>({
+    const dispatch: Dispatch<({ type: string })> = useDispatch();
+    const [errors, setError] =  useState<ErrorCollection>({ }); 
+    const [destinationList, setDestsList] = useState<DestinationNameAndPos[]>([]);
+    const [destination, setDestination] = useState<WikiDestination>()
+    const [mapParams, setMapParams] =  useState<{ lat: numbOrStr, lng: numbOrStr }>({
         lat: 0,
         lng: 0  
     });
+    
+     useSelector((state: Store) => { 
+        const stateErr = state.getErrors.error;
+        if(stateErr && !errors.worldMapAPI?.isError){
+            setError({ worldMapAPI: { isError: true, content: stateErr } });
+            return; 
+        } 
+    }) 
 
-    const dispatch: Dispatch<any> = useDispatch();
-
-    const destinationList: DestinationNameAndPos[] | undefined = useSelector((state: Store) => {  
-        const stateErr = state.getDestinationList.error; 
-
-        if(stateErr){
-            !destListError.isError && setDestListErrorFlag({isError: true, msg: stateErr}); 
+    useSelector((state: Store) => { 
+        if(state.getDestinationList.loading !== false || destinationList?.length) return;
+        const stateErr = state.getDestinationList.error;         //console.log("getDestinationList", state.getDestinationList);  
+        if(stateErr && !errors.getDestinationList?.isError){
+            setError({ getDestinationList: { isError: true, content: stateErr } }); 
             return;
-        }     
-
-        const destList = state.getDestinationList.destinations; //console.log("getDestinationList ", state.getDestinationList);  
-        return destList;        
-    })
+        }   
+        setDestsList(state.getDestinationList.destinations)                                    
+    }) 
  
-    const destination: WikiDestination | undefined = useSelector((state: Store) => { 
-        const stateErr = state.callApiReducer.error;  
-
-        if(stateErr){
-            !error.isError && setErrorFlag({isError: true, msg: stateErr}); 
-            return;
-        }         
-        const destination = state.callApiReducer.destination;  console.log("desttrttttt", destination);        
-        return destination
+     useSelector((state: Store) => { 
+            if(state.getDestination.loading !== false ||
+               destination?.name === state.getDestination.destination.name
+               ) return;
+             const stateErr = state.getDestination.error;   console.log("dest",destination); 
+            if(stateErr && !errors.getDestination?.isError){
+                setError({ getDestination: { isError: true, content: stateErr } }); 
+                return;
+            } setDestination(state.getDestination.destination)  
     })
 
-    useEffect(() => { 
-        dispatch(startFetchDestListAction())
+    myUseEffect(() => { 
+        dispatch(startFetchDestListAction()) 
     }, [])
   
     useEffect(() => { 
-        if(!destination) return;  console.log("selected destination: ", destination);
+        if(!destination) return;         
         const { coordinates } = destination;
         let lat: numbOrStr = coordinates?.lat;
         let lng: numbOrStr = coordinates?.lng;  
 
-        if((isNotNumber(coordinates.lat) || isNotNumber(coordinates.lng)) && destinationList){                                                                                                                                                                                                                                                         //if((!castedDestination.lat || (castedDestination as Destination).lat === "unset") ||                                                                                                                  // (!castedDestination.lng || (castedDestination as Destination).lng === "unset")){
+        if((isNotNumber(coordinates.lat) || isNotNumber(coordinates.lng)) && destinationList){                                                                                                                                                                                                                                                                                                                                                           
             const dest = destinationList.find(dest => dest.name === destination.name);
             if(!dest) return;
-            const latNumb: number = isNotNumber(dest?.lat) ? 0 : dest?.lat as number;         //  (!castedDestination.lng || (castedDestination as Destination).lng === "unset")){ 
-            const lngNumb: number = isNotNumber(dest?.lat) ? 0 : dest?.lat as number;        //(!dest?.lng || typeof dest?.lng === "string") ? 0 : dest?.lng;
+            const latNumb: number = isNotNumber(dest?.lat) ? 0 : dest?.lat as number;        
+            const lngNumb: number = isNotNumber(dest?.lat) ? 0 : dest?.lat as number;      
             lat =  latNumb;
             lng = lngNumb; 
         }
@@ -72,47 +86,44 @@ export const SearchingMap: React.FC = () => {
         setMapParams({
             lat,
             lng,
-        })         
-    }, [destination?.name]) 
+        });     
+        
+    }, [destination?.name]);  console.log("namw", destination?.name); 
 
     const onChangeTheme = (e: MouseEvent<HTMLImageElement, globalThis.MouseEvent>) => {
         const themeElement = e.target as HTMLImageElement;    
         setTheme(themeElement.id)
     }
 
-    const pageContentOrErrorStatement = () => {
-        if(!error.isError){
-            const mapParamsAsNumbers = { lat: +mapParams.lat, lng: +mapParams.lng };
-            if(destListError.isError){ 
-                alert("err!"); 
-                console.log("api communication error: ", destListError.msg);       
-            } 
-             return (  
-                <MapWrapper className="mapWrapper">
-                    <Panel 
-                        destinations={destinationList} 
-                    />
-                    <WorldMap
-                        theme={theme}
-                        setMapParams={setMapParams}
-                        mapParams={mapParamsAsNumbers}
-                    />
-                    <MapThemesMenu onChangeTheme={onChangeTheme}/>
-                </MapWrapper>
-             )
-        }else{ 
-            console.log("error message: ", error.msg);
-            return (
-                <ErrorPanel>
-                    <h1>Błąd serwera!</h1>
-                </ErrorPanel>
-            )
-        }
+    const errorInformation = (): JSX.Element | null => {
+        let Information: JSX.Element | null = null;
+        const isError: boolean = Object.entries(errors).some(([_, err]) => err.isError);
+        if(isError){      
+            Information = <ErrorModal />        
+            console.log("list of errors: ", errors);
+        }; 
+        return Information;
     }
-     
+
+    const destList = destinationList?.length ? destinationList : []; 
+    
+    const mapParamsAsNumbers = { lat: +mapParams.lat, lng: +mapParams.lng };
+
     return  (
         <>
-          {pageContentOrErrorStatement()}
+          {errorInformation()}
+
+          <MapWrapper className="mapWrapper">
+                <Panel 
+                    destinations={destList} 
+                />
+                <WorldMap
+                    theme={theme}
+                    setMapParams={setMapParams}
+                    mapParams={mapParamsAsNumbers}
+                />
+                <MapThemesMenu onChangeTheme={onChangeTheme}/>
+          </MapWrapper>
        </>
      )
 }
@@ -124,7 +135,7 @@ export const SearchingMap: React.FC = () => {
 let hooks: [][] = [];
 let id = 0;
 
-function myUseEffect(cb: Function, depArray: [{} | undefined]) {
+function myUseEffect(cb: Function, depArray: []) {
     const oldDepths = hooks[id];
     let hasChanged = true;
     if(oldDepths){
