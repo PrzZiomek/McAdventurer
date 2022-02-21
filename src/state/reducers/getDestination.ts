@@ -11,7 +11,7 @@ const initialState = {
    error: null
 }
 
-export const callApiReducer = (state = initialState, action: Action) => {
+export const getDestination = (state = initialState, action: Action) => {
    switch (action.type){
        case FETCH_START:
            return{

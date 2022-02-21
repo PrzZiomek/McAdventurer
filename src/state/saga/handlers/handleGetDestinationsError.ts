@@ -2,7 +2,7 @@ import { call, put } from "redux-saga/effects";
 import { SET_ERROR } from "../../actions/actionTypes";
 import { setErrorAction } from "../../actions/errorActions";
 
-
+/*
 export function * handleGetDestinationsError(action: unknown, getDataFunction: Function){
    try{
 
@@ -17,3 +17,5 @@ export function * handleGetDestinationsError(action: unknown, getDataFunction: F
       )
    }
 }
+
+*/

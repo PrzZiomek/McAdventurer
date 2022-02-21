@@ -14,7 +14,7 @@ interface Panel{
 
 export const Panel: FC<Panel> = (props) =>{
 
-    const [toggleState, setToggler] = useState(true);
+    const [toggleState, setToggler] = useState(true); 
 
     return (
         <PanelWrapper id="panel" showUpBar={toggleState}>

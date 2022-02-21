@@ -1,27 +1,22 @@
 import { type } from "os";
-import { Component, Dispatch, FC, ReactNode, SetStateAction } from "react";
+import { FC } from "react";
 import { StyledComponent } from "styled-components";
 import { DivProps } from "./Div";
+import { ToggleBarWithChildren } from "./types";
 
 
-export interface ToggleBar{
-    toggle: Dispatch<SetStateAction<boolean>>; 
-    toggleState: boolean;
-    switchToggleArrow?: boolean;
-}
+export const ToggleBar = (props: ToggleBarWithChildren) => {
 
-type ToggleBarWithChildren = ToggleBar & { children?: ReactNode };
-
-
-export const ToggleBar = (props: ToggleBarWithChildren) => 
-
-    (StyledComponent: StyledComponent<FC<DivProps>, any, {}, never>)  => {
+   return (StyledComponent: StyledComponent<FC<DivProps>, any, {}, never>): JSX.Element  => {
 
         const handleClick = () => {
-            props.toggle(!props.toggleState)
+            props.toggle(!props.toggleState);
+            
         }
 
         return(
             <StyledComponent {...props} onClick={handleClick} > {props.children} </StyledComponent>
         ) 
     }
+
+}

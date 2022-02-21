@@ -1,4 +1,6 @@
-import React, { useState, FC, useEffect, useRef, MutableRefObject } from "react"
+import React, { useState, FC, useEffect, useRef, MutableRefObject, Dispatch } from "react"
+import { useDispatch } from "react-redux";
+import  errorActionCreator  from "../../generalHandlers/errorActionCreator";
 import { useCreateMap } from "./customHooks/useCreateMap";
 import { createDomMarker } from "./helpers/createDomMarker";
 
@@ -11,9 +13,9 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
 
     const mapRef: MutableRefObject<null> = useRef(null);
     
-    const [map] = useCreateMap(mapRef, [
-      () => setMarker
-    ])
+    const [map]: (H.Map | undefined)[]  = useCreateMap(mapRef, [() => setMarker]);
+
+    const dispatch: Dispatch<any> = useDispatch();
       
     useEffect(() => {
       const layer = layerWithTheme(props.theme); 
@@ -40,43 +42,42 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
       })               
     }
 
-    const mapPlatform = (): H.service.Platform => {
-        return new H.service.Platform({
-            apikey: "zcdFfY4BuFMsIIBqpduLOVk5k6frv77VEhxqsATGbjI",        
-        });
-    }
 
     const layerWithTheme = (theme: string): H.map.layer.TileLayer | undefined => { 
-        const platform = mapPlatform();
-        if(!mapPlatform) return; 
-        const tiles = platform.getMapTileService({'type': 'base'});
-        const layer = tiles.createTileLayer(
-            'maptile',
-            theme,
-            256, 
-            'png',
-            ); 
-        return layer;
+        try{
+            const platform = new H.service.Platform({ apikey: "zcdFfY4BuFMsIIBqpduLOVk5k6frv77VEhxqsATGbjI" });
+            if(!platform) return; 
+            const tiles = platform.getMapTileService({'type': 'base'});
+            const layer = tiles.createTileLayer(
+                'maptile',
+                theme,
+                256, 
+                'png',
+                ); 
+            return layer;
+        }
+        catch(err){
+          console.log("error when setting map params: ", err);        
+        }      
     }
 
-  /*  const moveMapTo = (map: H.Map | null): void =>{
-        if(!map) return; 
-        map.setCenter(props.mapParams);
-    }
-*/
     const setMarker = (map: H.Map | null): void  =>{ 
       try{
-        if(!map) return; 
-        map.setCenter(props.mapParams);
-        const domIcon = createDomMarker();    
-        const calibratedParams = { lat: props.mapParams.lat + 0.25, lng: props.mapParams.lng  }       
-        var bearsMarker = new H.map.DomMarker(calibratedParams, {
-          icon: domIcon
-        });
-        map.setZoom(10);
-        map.addObject(bearsMarker);
-      }catch (err){
-          console.log("Error when setting map params in setMarker function: ", err);         
+          if(!map) return; 
+          map.setCenter(props.mapParams);
+          const domIcon = createDomMarker();    
+          const calibratedParams = { lat: props.mapParams.lat + 0.25, lng: props.mapParams.lng  }       
+          var bearsMarker = new H.map.DomMarker(calibratedParams, {
+            icon: domIcon
+          });
+          map.setZoom(10);
+          map.addObject(bearsMarker);
+      }
+      catch (err){
+          dispatch(errorActionCreator({
+            message: "Error when setting map params in setMarker function",
+            content: err as Error
+          }))    
       }
     }
     

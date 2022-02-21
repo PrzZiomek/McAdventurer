@@ -6,12 +6,12 @@ import { Span } from "../../../ui/Span";
 //import "../../styles/variables/panel.scss";
 
 export const BrowserWrapper = styled.div`
-  width: 95%;
+  width: 90%;
   height: 45px;
   position: absolute;
   display:flex;
-  left: 2.5%;
-  top: 10px;
+  left: 4.8%;
+  top: 12px;
 `;
 
 export const BrowserInput = styled(Input)`
@@ -33,6 +33,10 @@ export const InputTextWrapper = styled(Div)`
     left: 10px;
     top: 50%; 
 
+    span {
+     white-space: nowrap;
+    }
+
     span:nth-child(2){
       color: #aa9d98;
     }
@@ -46,8 +50,7 @@ export const InputButton = styled(Button)`
       color:#6F6F49;    //  #3E3E28;
       text-transform: uppercase;
       padding-left: 8px;
-      letter-spacing: 1px;
-      font-size: 1.5rem;
+      font-size: 1rem;
       border: none;
       background-color: transparent;
       transition: 0.2s;

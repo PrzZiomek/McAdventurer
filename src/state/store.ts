@@ -9,6 +9,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 export const store = createStore(reducers, applyMiddleware(
    sagaMiddleware,
+   thunk
 ))
 
 sagaMiddleware.run(sagasWatcher)
