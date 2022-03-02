@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 
 
-export const useDidMountEffect = (func: Function, value: [unknown]) => {
+export function useDidMountEffect(func: Function, value: [unknown]){
 
     const prev = useRef(false);
 

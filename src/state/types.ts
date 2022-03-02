@@ -1,13 +1,13 @@
 import { DestinationNameAndPos, WikiDestination } from "../dataModels/types";
 
-interface GetDestinationReducer {
+export interface GetDestinationReducer {
    error: Error | null;
    isFetching: boolean;
    destination: WikiDestination;
    loading: boolean
 }
 
-interface GetDestinationListReducer{
+export interface GetDestinationListReducer{
       error: Error | null;
       isFetching: boolean;
       destinations: DestinationNameAndPos[];
@@ -25,4 +25,10 @@ export interface Store{
    getErrors: GetErrorsReducer,
    getDestinationList: GetDestinationListReducer
    
+}
+
+export enum StoreProps {
+   GetDestination = "getDestination",
+   GetErrors = "getErrors",
+   GetDestinationList = "getDestinationList"
 }

@@ -1,4 +1,4 @@
-import { takeLatest, takeEvery } from "redux-saga/effects";
+import { takeLatest, takeEvery, takeLeading } from "redux-saga/effects";
 import { call, put } from "redux-saga/effects";
 
 import { FETCH_START, FETCH_START_DEST_LIST, GET_ERROR, OPEN_MODAL, SET_ERROR } from "../actions/actionTypes";
@@ -7,5 +7,5 @@ import { getDestinationsList } from "./handlers/getDestinationsList";
 
 
 export function* sagasWatcher(){
-   yield takeEvery(FETCH_START_DEST_LIST, getDestinationsList);
+   yield takeLeading(FETCH_START_DEST_LIST, getDestinationsList);
 }
