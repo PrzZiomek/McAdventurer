@@ -16,8 +16,6 @@ const combinedDestinationsRequest = async (req, res, next) => {
             message: "database connection error"
         });
     }
-    console.log("all: ", destinationsList[1]);
-    console.log("dest: ", checkedDestinations[1]);
     const mergedDestsList = [...destinationsList, ...checkedDestinations];
     const combinedDestsLists = combineDests(mergedDestsList);
     res.status(200).send(combinedDestsLists);
@@ -26,6 +24,7 @@ exports.combinedDestinationsRequest = combinedDestinationsRequest;
 function combineDests(dests) {
     return dests.reduce((acc, poz) => {
         const obj = {
+            country: poz.COUNTRY ? poz.COUNTRY : poz.CONTENT.slice(0, 20),
             name: (poz === null || poz === void 0 ? void 0 : poz.NAME) ? poz === null || poz === void 0 ? void 0 : poz.NAME : poz === null || poz === void 0 ? void 0 : poz.CITY,
             lat: (poz === null || poz === void 0 ? void 0 : poz.LAT) ? poz === null || poz === void 0 ? void 0 : poz.LAT : (poz === null || poz === void 0 ? void 0 : poz.LAT) ? poz === null || poz === void 0 ? void 0 : poz.LAT : "unset",
             lng: poz.LNG ? poz.LNG : (poz === null || poz === void 0 ? void 0 : poz.LNG) ? poz === null || poz === void 0 ? void 0 : poz.LNG : "unset",

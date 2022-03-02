@@ -20,7 +20,7 @@ export const BrowserInput = styled(Input)`
     border-radius: 7px;
     font-size: 1.3rem; 
     box-shadow: inset 0 0 8px #3E3E28;
-    color: ${(props) => props.visibleText ? "#3e3e28" : "transparent"};
+    color: "#3e3e28";
     border: none; 
     padding-left: 10px;
   `;

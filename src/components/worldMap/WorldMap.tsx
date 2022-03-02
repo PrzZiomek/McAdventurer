@@ -56,8 +56,11 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
                 ); 
             return layer;
         }
-        catch(err){
-          console.log("error when setting map params: ", err);        
+        catch(err){ 
+          dispatch(errorActionCreator({
+            message: "Error when setting map params with map layer",
+            content: err as Error
+          }))     
         }      
     }
 

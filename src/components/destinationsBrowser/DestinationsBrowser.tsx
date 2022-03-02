@@ -1,9 +1,11 @@
 import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEvent, Dispatch, SetStateAction } from "react";
 import { connect, useDispatch, useSelector } from "react-redux";
+
 import { callApiForDestination } from "../../api/callApiForDestination";
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
 import { DestinationNameAndPos } from "../../dataModels/types";
 import { startFetchDestAction } from "../../state/actions/fetchDestinationActions";
+import { DestinationsHintsList } from "./components/destinationsHintsList";
 import { InputText } from "./components/InputText";
 import { BrowserInput, InputButton, BrowserWrapper} from "./styles/destinationBrowserStyle";
 
@@ -40,23 +42,23 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
         setInputTypedValue(value);
         if(!props.destinations?.length) return;   
 
-        const pickIfMatch = (name: string): boolean | undefined => { 
+        const pickIfMatch = ({name}): boolean | undefined => { 
             for(let i = 30; i > 0; i--){
                 if(value.length > i){    
-                    const piece = i + 1;
+                    const piece = i + 1;        
                     return name.toLowerCase().slice(0, piece) === value.slice(0, piece);
                 } 
             }        
         };     
 
         const filtered: string[] = props.destinations
-            .map(dest => dest.name)
-            .filter(pickIfMatch);        //console.log(filtered);        
+            .filter(dest => dest)
+            .filter(pickIfMatch);        console.log("filtered",filtered);        
 
         setCountryName(filtered);       
         if(filtered[0]){
             setPropositionValue({
-                filtered: filtered[0],
+                filtered: filtered[0].name,
                 typed: value,
                 letterNumber: caretPosition
             }); 
@@ -100,12 +102,11 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
         <BrowserWrapper> 
             <BrowserInput 
                 id="browserInput"
-                visibleText={filtered[0] ? false : true} 
                 handleChange={handleChange}
                 handleEnterClick={handleEnterClick}
             />
             <InputButton handleClick={handleClick} >search</InputButton>
-            { showInputTextUntilNotMatch(filtered[0]) }
+           <DestinationsHintsList destinations={filtered} /> 
         </BrowserWrapper>
     )
 }

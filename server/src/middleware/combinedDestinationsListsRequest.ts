@@ -20,8 +20,7 @@ export const combinedDestinationsRequest = async (req: Request, res: Response, n
           message: "database connection error" 
         });
   }
-  console.log("all: ", destinationsList[1]);
-  console.log("dest: ", checkedDestinations[1]);
+ 
   const mergedDestsList = [...destinationsList, ...checkedDestinations] as (Destination & AllDestination)[];
   const combinedDestsLists: DestinationNameAndPosition[] = combineDests(mergedDestsList)
 
@@ -30,13 +29,14 @@ export const combinedDestinationsRequest = async (req: Request, res: Response, n
 
 
 function combineDests(dests: (Destination & AllDestination)[]){
-  return dests.reduce((acc: DestinationNameAndPosition[], poz: Destination & AllDestination) => {
-       const obj = {
-           name: poz?.NAME ? poz?.NAME : poz?.CITY,
-           lat: poz?.LAT ? poz?.LAT : poz?.LAT ? poz?.LAT : "unset",
-           lng: poz.LNG ? poz.LNG : poz?.LNG ? poz?.LNG : "unset",
-       };
-       acc.push(obj);
-       return acc;
-   }, [])
+    return dests.reduce((acc: DestinationNameAndPosition[], poz: Destination & AllDestination) => {
+        const obj = {
+            country: poz.COUNTRY ? poz.COUNTRY : poz.CONTENT.slice(0, 20),
+            name: poz?.NAME ? poz?.NAME : poz?.CITY,
+            lat: poz?.LAT ? poz?.LAT : poz?.LAT ? poz?.LAT : "unset",
+            lng: poz.LNG ? poz.LNG : poz?.LNG ? poz?.LNG : "unset",
+        };
+        acc.push(obj);
+        return acc;
+    }, [])
 }
