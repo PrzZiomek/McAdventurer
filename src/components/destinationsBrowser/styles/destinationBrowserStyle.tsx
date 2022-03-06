@@ -5,24 +5,39 @@ import { Input } from "../../../ui/Input";
 import { Span } from "../../../ui/Span";
 //import "../../styles/variables/panel.scss";
 
-export const BrowserWrapper = styled.div`
+export const BrowserWrapper = styled(Div)`
+  display:flex;
   width: 90%;
   height: 45px;
   position: absolute;
-  display:flex;
   left: 4.8%;
   top: 12px;
+  border-radius: 7px;
+  background: white;
+  box-shadow: inset 0 0 8px #3e3e28;
+
+  &::after{
+    display: ${(props) => props.showHints ? "block" : "none"};
+    content: "";
+    position: absolute;
+    left: 1%;
+    top: 80%;
+    width: 98%;
+    height: 10px;
+    background-color: white;
+    border-radius: 70px 70px 0 0;
+  }
 `;
 
 export const BrowserInput = styled(Input)`
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 56%;
+    margin-left: 11px;
+    margin-top: 3%;
     border-radius: 7px;
-    font-size: 1.3rem; 
-    box-shadow: inset 0 0 8px #3E3E28;
-    color: "#3e3e28";
-    border: none; 
-    padding-left: 10px;
+    font-size: 1rem; 
+    color:#3e3e28;
+    border: none;     
   `;
 
 export const InputTextWrapper = styled(Div)`
