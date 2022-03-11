@@ -3,18 +3,19 @@ import { useDispatch } from "react-redux";
 
 import { callApiForDestination } from "../../api/callApiForDestination";
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
+import { DestinationNameAndPos } from "../../dataModels/types";
 import { DestinationsHintsList } from "./components/destinationsHintsList";
-import { BrowserInput, InputButton, BrowserWrapper} from "./styles/destinationBrowserStyle";
+import { BrowserInput, InputButton, DestinationsBrowserStyles} from "./styles/destinationBrowserStyle";
 
 interface DestinationBrowserProps{
-    destinations: { name: string, country: string }[] | undefined;
+    destinations: DestinationNameAndPos[] | undefined;
    // updateDestinationsSet: Dispatch<SetStateAction<string[]>>
 }
 
 
 export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
 
-    const [filtered, setFiltered] = useState<{ name: string, country: string }[]>([]);
+    const [filtered, setFiltered] = useState<DestinationNameAndPos[]>([]);
     const [inputTypedValue, setInputTypedValue] = useState<string>("");
     const [chosenHintValue, setChosenHintValue] = useState<string>("");
     const [destination, setDestinastion] = useState<string>("");
@@ -37,7 +38,7 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
             }        
         };     
 
-        const filtered: { name: string, country: string }[] = props.destinations
+        const filtered: DestinationNameAndPos[] = props.destinations
             .filter(pickIfMatch)
             .slice(0, 30);              
 
@@ -66,7 +67,7 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
         /> : null; 
       
     return (
-        <BrowserWrapper> 
+        <DestinationsBrowserStyles> 
              <BrowserInput 
                 id="browserInput"
                 handleChange={handleChange}
@@ -74,7 +75,7 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
             />       
             <InputButton handleClick={handleSearchClick} >search</InputButton>
             {showHints}
-        </BrowserWrapper>
+        </DestinationsBrowserStyles>
     )
 }
  

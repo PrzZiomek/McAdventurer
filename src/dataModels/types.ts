@@ -7,6 +7,7 @@ export interface Destination {
 
 export interface DestinationNameAndPos {
    type?: "DestinationNameAndPos";
+   country: string;
    name: string;
    lat: string | number;
    lng: string | number;

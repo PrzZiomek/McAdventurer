@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Div } from "../../../ui/Div";
 
 
-export const HintsListStyled = styled(Div)`
+export const HintsListStyles = styled(Div)`
    position: absolute;
    top: 70%;
    left: 0;

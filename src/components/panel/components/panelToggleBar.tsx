@@ -7,7 +7,7 @@ import { ToggleBarProps } from "../../../ui/types"
 
 type propsType = ThemedStyledProps<PropsWithChildren<DivProps> , any>
 
-const PanelToggleBarStyled = styled(Div)`
+const PanelToggleBarStyles = styled(Div)`
     position: absolute;
     right: ${(props: propsType) => props.switchToggleArrow === false ? -18 : -15}px;
     top: 50%;
@@ -23,6 +23,6 @@ const PanelToggleBarStyled = styled(Div)`
 `
 
 export const PanelToggleBar: FC<ToggleBarProps> = (props: PropsWithChildren<ToggleBarProps>) =>{
-    return ToggleBar(props)(PanelToggleBarStyled);
+    return ToggleBar(props)(PanelToggleBarStyles);
 }  
 

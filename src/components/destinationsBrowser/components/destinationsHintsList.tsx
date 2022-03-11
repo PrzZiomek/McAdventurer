@@ -1,9 +1,10 @@
 import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEvent, Dispatch, SetStateAction } from "react";
+import { DestinationNameAndPos } from "../../../dataModels/types";
 import { HintsButtonStyled } from "../styles/hintsButtonStyled";
-import { HintsListStyled } from "../styles/hintsListStyled";
+import { HintsListStyles } from "../styles/hintsListStyles";
 
 interface DestinationsHintsListProps {
-   destinations: { name: string, country: string }[];
+   destinations: DestinationNameAndPos[];
    handleClick(e: MouseEvent<HTMLButtonElement>): void;
    showHints: boolean;
 }
@@ -23,8 +24,8 @@ export const DestinationsHintsList: FC<DestinationsHintsListProps> = (props) => 
    });
 
    return (
-      <HintsListStyled id="hintsList">
+      <HintsListStyles id="hintsList">
          <ul> {list} </ul>
-      </HintsListStyled>
+      </HintsListStyles>
    )
 }

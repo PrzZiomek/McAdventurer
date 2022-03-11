@@ -1,7 +1,7 @@
 import React, { FC, MouseEventHandler, useState } from "react"
 import { ThemesToggleBar } from "./components/ThemesToggleBar";
 import { Theme } from "./models/Theme";
-import { ThemesMenu, ThemesMenuWrapper  } from "./styles/mapThemesMenuStyles";
+import { ThemesMenu, MapThemesMenuStyles  } from "./styles/mapThemesMenuStyles";
 
 
 interface MapThemesMenu{
@@ -31,9 +31,9 @@ export const MapThemesMenu:FC<MapThemesMenu> = (props) => {
         />);
         
     return (
-        <ThemesMenuWrapper className="themesBar">
+        <MapThemesMenuStyles className="themesBar">
             <ThemesToggleBar toggle={setToggler} toggleState={toggleState}>Themes</ThemesToggleBar>
             <ThemesMenu className="themesMenu" showUpBar={toggleState}> {thumbnails} </ThemesMenu>
-        </ThemesMenuWrapper>
+        </MapThemesMenuStyles>
     )
 }

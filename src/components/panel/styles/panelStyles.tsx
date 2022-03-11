@@ -1,16 +1,17 @@
 import styled from "styled-components";
 import { Div } from "../../../ui/Div";
 
-export const PanelWrapper = styled(Div)`
+export const PanelStyles = styled(Div)`
     width: 30vw;
-    height: 100%;
+    height: 100%; 
     min-height: 400px;
+    min-width: 250px;
     z-index: 2;
     margin-left: ${(props) => props.showUpBar === false ? "-400px" : 0};
     color: #3e3e28;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    background-color: #F7F7F3;
+    background-color:  ${({theme}) => theme.colors.panel.general.backgroundColor };
     position: relative;
     transition: 0.5s;
     box-shadow: 3px 0px 15px #3E3E28;

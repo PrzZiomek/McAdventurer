@@ -5,7 +5,7 @@ import { Input } from "../../../ui/Input";
 import { Span } from "../../../ui/Span";
 //import "../../styles/variables/panel.scss";
 
-export const BrowserWrapper = styled(Div)`
+export const DestinationsBrowserStyles = styled(Div)`
   display:flex;
   width: 90%;
   height: 45px;
@@ -75,8 +75,3 @@ export const InputButton = styled(Button)`
         color: #C7C7A9;
     }
 `;
-
-export const InputTextSpan = styled(Span)`
-  text-transform: ${(props)=> props.textTransform ? props.textTransform  : "none"};
-  display: ${(props)=>props.display ? props.display  : "inline"};
-`

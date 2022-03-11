@@ -1,16 +1,26 @@
 import { Store } from "../state/types";
 
+type ErrorObject = { isError: true, content: Error }[] & { isError: false }[]
 
-export const storeErrorHandler = (key: string) => (store: Store) => { 
-   const checkIfLoading: boolean = key === "getDestinationList" || key === "getDestination";
-   const stateErr = store[key].error;
 
-   if(checkIfLoading && store[key as "getDestinationList"].loading !== false) 
-      return;
+export const storeErrorHandler = (keys: string[]) => (store: Store) => { 
 
-   if(stateErr){
-      return { isError: true, content: stateErr };
-   }
+   return keys.reduce((acc: ErrorObject, key: string) => {
 
-   return { isError: false };
+     // const checkIfLoading: boolean = key === "getDestinationList" || key === "getDestination";
+      const stateErr = store[key].error;
+    //  console.log("acc", acc);
+      
+     // if(checkIfLoading && store[key as "getDestinationList"].loading !== false) 
+     //    return;
+   
+      if(stateErr){
+         acc!.push({ isError: true, content: stateErr });
+      }
+   
+      acc!.push({ isError: false });
+      return acc;
+
+   }, []) 
+
 }
