@@ -1,16 +1,18 @@
 import React, { Dispatch, MouseEvent, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
+import { ThemedStyledProps, ThemeProvider, useTheme } from "styled-components";
 
 import { MapThemesMenu } from "../mapThemesMenu/mapThemesMenu";
 import { Panel } from "../panel/Panel";
-import { MapWrapper } from "./styles/searchingMapStyles";
+import { SearchingMapStyles } from "./styles/SearchingMapStyles";
 import { WorldMap } from "../worldMap/WorldMap";
 import { Store, StoreProps } from "../../state/types";
-import { DestinationNameAndPos, WikiDestination } from "../../dataModels/types";
 import { startFetchDestListAction } from "../../state/actions/fetchDestinationActions";
 import { ErrorModal } from "./components/errorModal/errorModal";
 import { myUseEffect } from "../../customHooks/myUseEffect";
 import { storeErrorHandler } from "../../generalHandlers/storeErrorHandler";
+import * as themes from "../../styles/themes/schema.json";
+import { DestinationNameAndPos, WikiDestination } from "../../dataModels/types";
 
 //type MouseEventHandler<T = Element> = (event: MouseEvent<T, globalThis.MouseEvent>) => void
 // type useState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>];
@@ -26,24 +28,25 @@ type ErrorCollection = PartialRecord<ErrorName, ErrorObject>
 export const SearchingMap: React.FC = () => {
 
     const [theme, setTheme] = useState("normal.day");
+    const [styleTheme, setStyleTheme] = useState<object>(themes.default.data.day);
     const dispatch: Dispatch<({ type: string })> = useDispatch();
     const [mapParams, setMapParams] =  useState<{ lat: numbOrStr, lng: numbOrStr }>({
         lat: 0,
         lng: 0  
-    });
-    
-    const worldMapAPIError = useSelector(storeErrorHandler(StoreProps.GetErrors));
+    });  
 
-    const destinationListError = useSelector(storeErrorHandler(StoreProps.GetDestinationList));
-  
-    const destinationList = useSelector((state: Store) => { 
+    const errors: { isError: true; content: Error; }[] & { isError: false; }[] = useSelector(storeErrorHandler([
+        StoreProps.GetErrors,
+        StoreProps.GetDestinationList,
+        StoreProps.GetDestination
+    ]));
+      
+    const destinationList: DestinationNameAndPos[] | undefined = useSelector((state: Store) => { 
         if(state.getDestinationList.loading !== false) return;
         return state.getDestinationList.destinations;                                   
     }) 
 
-    const destinationError = useSelector(storeErrorHandler(StoreProps.GetDestination));
-
-    const destination = useSelector((state: Store) => { 
+    const destination: WikiDestination | undefined = useSelector((state: Store) => { 
         if(state.getDestination.loading !== false) return;
         return state.getDestination.destination;                                                         //  destination?.name === state.getDestination.destination.name                                                                                //setDestination(state.getDestination.destination)  
     })
@@ -81,26 +84,27 @@ export const SearchingMap: React.FC = () => {
 
     const errorInformation = (): JSX.Element | null => {
         let Information: JSX.Element | null = null; 
-        const mapError = worldMapAPIError ? worldMapAPIError : { isError: false };
-        const destListError = destinationListError ? destinationListError : { isError: false };
-        const destError = destinationError ? destinationError : { isError: false };
-        const isError: boolean = [mapError, destListError, destError].some(obj => obj.isError);   
+        if(!errors) return null;
+        const checkedErrors = errors.map(err => err ? err : { isError: false });
+        const isError: boolean = checkedErrors.some(obj => obj.isError);   
+
         if(isError){      
             Information = <ErrorModal />        
-            console.log("list of errors: ", {mapError, destListError, destError});
+            console.log("list of errors: ", errors);
         }; 
+
         return Information;
     }
 
-    const destList = destinationList?.length ? destinationList : []; 
-    
+    const destList: DestinationNameAndPos[] = destinationList?.length ? destinationList : []; 
     const mapParamsAsNumbers = { lat: +mapParams.lat, lng: +mapParams.lng };
 
-    return  (
-        <>
-          {errorInformation()}
+    return  ( 
+        <ThemeProvider theme={styleTheme}>
+            <SearchingMapStyles id="mapWrapper">   
 
-          <MapWrapper className="mapWrapper">
+                {errorInformation()}  
+
                 <Panel 
                     destinations={destList} 
                 />
@@ -109,9 +113,10 @@ export const SearchingMap: React.FC = () => {
                     setMapParams={setMapParams}
                     mapParams={mapParamsAsNumbers}
                 />
+
                 <MapThemesMenu onChangeTheme={onChangeTheme}/>
-          </MapWrapper>
-       </>
+            </SearchingMapStyles>
+        </ThemeProvider>
      )
 }
 

@@ -1,5 +1,0 @@
-@use "sass:map";
-
-@import "../colorMaps/panel";
-
- $panelInputBorderColor: map.get($panelColors, "black-alabaster");

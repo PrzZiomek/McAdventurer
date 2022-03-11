@@ -3,8 +3,7 @@ import { DestinationNameAndPos } from "../../dataModels/types";
 
 import  {DestinationBrowser}  from "../destinationsBrowser/DestinationsBrowser";
 import { PanelToggleBar } from "./components/panelToggleBar";
-import { PanelWrapper } from "./styles/panelStyles";
-
+import { PanelStyles } from "./styles/panelStyles";
 
 interface Panel{
     destinations: DestinationNameAndPos[] | undefined;
@@ -12,12 +11,12 @@ interface Panel{
 }
 
 
-export const Panel: FC<Panel> = (props) =>{
+export const Panel: FC<Panel> = (props) => {
 
     const [toggleState, setToggler] = useState(true); 
 
     return (
-        <PanelWrapper id="panel" showUpBar={toggleState}>
+        <PanelStyles id="panel" showUpBar={toggleState}>
              <DestinationBrowser 
                 destinations={props.destinations}
              />
@@ -26,6 +25,6 @@ export const Panel: FC<Panel> = (props) =>{
                 toggle={setToggler} 
                 toggleState={toggleState}
              />
-        </PanelWrapper>
-       )
+        </PanelStyles>
+   )
 } 

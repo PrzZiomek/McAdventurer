@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Div } from "../../../ui/Div";
 
 
-export const ThemesMenuWrapper = styled(Div)`
+export const MapThemesMenuStyles = styled(Div)`
    position: absolute;
    bottom:0;
    right: 0;

@@ -24,7 +24,6 @@ export interface Store{
    getDestination: GetDestinationReducer;
    getErrors: GetErrorsReducer,
    getDestinationList: GetDestinationListReducer
-   
 }
 
 export enum StoreProps {
