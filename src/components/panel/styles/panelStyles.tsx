@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { panelColor } from "../../../styles/themes/accessors";
 import { Div } from "../../../ui/Div";
 
 export const PanelStyles = styled(Div)`
@@ -8,11 +9,11 @@ export const PanelStyles = styled(Div)`
     min-width: 250px;
     z-index: 2;
     margin-left: ${(props) => props.showUpBar === false ? "-400px" : 0};
-    color: #3e3e28;
+    color:  ${panelColor("text")};
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    background-color:  ${({theme}) => theme.colors.panel.general.backgroundColor };
+    background-color: ${panelColor("background")}; 
     position: relative;
     transition: 0.5s;
-    box-shadow: 3px 0px 15px #3E3E28;
+    box-shadow: 3px 0px 15px ${panelColor("text")}; 
 `;

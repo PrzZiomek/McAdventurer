@@ -8,12 +8,9 @@
                   "searchButton": {
                      "text": "#6F6F49"
                   },
-                  "general": {
-                     "secondaryText": "#aa9d98",
-                     "boxShadow": "#3e3e28",
-                     "backgroundColor": "#F7F7F3"
-                  }
-                  
+                  "secondaryText": "#aa9d98",
+                  "background": "#F7F7F3",
+                  "text": "#3e3e28"  
                }       
             }
          },

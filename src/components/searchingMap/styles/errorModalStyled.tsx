@@ -21,6 +21,7 @@ export const ErrorModalStyled = styled(DivWrapper)`
 
     h1{
         padding: 15px;
+        padding-bottom: 10px;
     }
 `;
 

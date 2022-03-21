@@ -42,6 +42,9 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
       })               
     }
 
+    useEffect(() => {
+      
+    })
 
     const layerWithTheme = (theme: string): H.map.layer.TileLayer | undefined => { 
         try{
@@ -64,16 +67,16 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
         }      
     }
 
-    const setMarker = (map: H.Map | null): void  =>{ 
+    const setMarker = (map: H.Map | null): void  => { 
       try{
           if(!map) return; 
           map.setCenter(props.mapParams);
           const domIcon = createDomMarker();    
-          const calibratedParams = { lat: props.mapParams.lat + 0.25, lng: props.mapParams.lng  }       
+          const calibratedParams = { lat: props.mapParams.lat, lng: props.mapParams.lng  }       
           var bearsMarker = new H.map.DomMarker(calibratedParams, {
             icon: domIcon
           });
-          map.setZoom(10);
+          map.setZoom(5);
           map.addObject(bearsMarker);
       }
       catch (err){
