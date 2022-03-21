@@ -6,13 +6,15 @@ import { MapThemesMenu } from "../mapThemesMenu/mapThemesMenu";
 import { Panel } from "../panel/Panel";
 import { SearchingMapStyles } from "./styles/SearchingMapStyles";
 import { WorldMap } from "../worldMap/WorldMap";
-import { Store, StoreProps } from "../../state/types";
+import { Store } from "../../state/types";
 import { startFetchDestListAction } from "../../state/actions/fetchDestinationActions";
 import { ErrorModal } from "./components/errorModal/errorModal";
 import { myUseEffect } from "../../customHooks/myUseEffect";
 import { storeErrorHandler } from "../../generalHandlers/storeErrorHandler";
 import * as themes from "../../styles/themes/schema.json";
 import { DestinationNameAndPos, WikiDestination } from "../../dataModels/types";
+import { StoreProps } from "../../enums";
+import { currentLocation, currentLocationAction, startLocationAction } from "../../state/actions/currentLocationAction";
 
 //type MouseEventHandler<T = Element> = (event: MouseEvent<T, globalThis.MouseEvent>) => void
 // type useState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>];
@@ -22,20 +24,25 @@ type ErrorObject = { isError: boolean, content: Error };
 type ErrorName = "getDestinationList" | "getDestination" | "worldMapAPI"
 type PartialRecord<K extends string, T> = { [P in K]?: T };
 
-type ErrorCollection = PartialRecord<ErrorName, ErrorObject>
+type ErrorsCollection = { isError: true; content: Error; }[] & { isError: false; }[];
 
 
 export const SearchingMap: React.FC = () => {
 
-    const [theme, setTheme] = useState("normal.day");
-    const [styleTheme, setStyleTheme] = useState<object>(themes.default.data.day);
+    const [theme, setTheme] = useState<string>("normal.day");
+    const [styleTheme, setStyleTheme] = useState<JSON>(themes.default.data.day);
     const dispatch: Dispatch<({ type: string })> = useDispatch();
     const [mapParams, setMapParams] =  useState<{ lat: numbOrStr, lng: numbOrStr }>({
         lat: 0,
         lng: 0  
     });  
 
-    const errors: { isError: true; content: Error; }[] & { isError: false; }[] = useSelector(storeErrorHandler([
+    myUseEffect(() => { 
+        dispatch(startFetchDestListAction());
+        dispatch(startLocationAction()) 
+    }, [dispatch])
+
+    const errors: ErrorsCollection = useSelector(storeErrorHandler([
         StoreProps.GetErrors,
         StoreProps.GetDestinationList,
         StoreProps.GetDestination
@@ -44,16 +51,20 @@ export const SearchingMap: React.FC = () => {
     const destinationList: DestinationNameAndPos[] | undefined = useSelector((state: Store) => { 
         if(state.getDestinationList.loading !== false) return;
         return state.getDestinationList.destinations;                                   
-    }) 
+    });
+
+    const currentLocation = useSelector((state: Store) => { 
+        return state.getCoordinates;
+    });
 
     const destination: WikiDestination | undefined = useSelector((state: Store) => { 
         if(state.getDestination.loading !== false) return;
         return state.getDestination.destination;                                                         //  destination?.name === state.getDestination.destination.name                                                                                //setDestination(state.getDestination.destination)  
     })
- 
-    myUseEffect(() => { 
-        dispatch(startFetchDestListAction()) 
-    }, [dispatch])
+
+    useEffect(() => {
+        setMapParams(currentLocation)
+    }, [currentLocation])
   
     useEffect(() => { 
         if(!destination) return;         
@@ -66,7 +77,7 @@ export const SearchingMap: React.FC = () => {
             if(!dest) return;
             const latNumb: number = isNotNumber(dest?.lat) ? 0 : dest?.lat as number;        
             const lngNumb: number = isNotNumber(dest?.lat) ? 0 : dest?.lat as number;      
-            lat =  latNumb;
+            lat = latNumb;
             lng = lngNumb; 
         }
 

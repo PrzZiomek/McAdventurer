@@ -22,3 +22,7 @@ export const OPEN_MODAL = "OPEN";
 
 export const CLOSE_MODAL = "CLOSE";
 
+
+export const SET_COORDINATES = "SET_COORDINATES";
+
+export const START_COORDINATES_LOADING = "START_COORDINATES_LOADING";

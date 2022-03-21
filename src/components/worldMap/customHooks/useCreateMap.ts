@@ -17,13 +17,9 @@ export function useCreateMap(mapRef: MutableRefObject<null>, [ mapviewchangeCb ]
 
           const platform  = new H.service.Platform({
             apikey: "zcdFfY4BuFMsIIBqpduLOVk5k6frv77VEhxqsATGbjI",        
-            }); 
+         }); 
           const defaultLayers = platform.createDefaultLayers();
-          hMap = new H.Map(mapRef.current, defaultLayers.vector.normal.map, {
-               center: {lat: 0, lng: 0},
-               zoom: 0,
-               pixelRatio: window.devicePixelRatio || 1,
-          }); 
+          hMap = new H.Map(mapRef.current, defaultLayers.vector.normal.map); 
 
          hMap.addEventListener('mapviewchange',() => {});
          hMap.addEventListener('resize', () => hMap.getViewPort().resize());

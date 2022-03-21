@@ -19,15 +19,15 @@ interface GetErrorsReducer{
    isError: boolean
 }
 
-export interface Store{
-   [key: string]: GetErrorsReducer | GetDestinationReducer | GetDestinationListReducer; 
-   getDestination: GetDestinationReducer;
-   getErrors: GetErrorsReducer,
-   getDestinationList: GetDestinationListReducer
+interface GetCoordinatesReducer{
+      lng: number,
+      lat: number
 }
 
-export enum StoreProps {
-   GetDestination = "getDestination",
-   GetErrors = "getErrors",
-   GetDestinationList = "getDestinationList"
+export interface Store{
+   [key: string]: GetErrorsReducer | GetDestinationReducer | GetDestinationListReducer | GetCoordinatesReducer; 
+   getDestination: GetDestinationReducer;
+   getErrors: GetErrorsReducer,
+   getDestinationList: GetDestinationListReducer,
+   getCoordinates: GetCoordinatesReducer
 }

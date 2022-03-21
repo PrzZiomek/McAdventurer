@@ -40,7 +40,7 @@ export const HintsListStyles = styled(Div)`
       border-radius: 7px;
    }
    ::-webkit-scrollbar-thumb {
-      background: #888;
+      background: #3e3e28;
       border-radius: 7px;
    }
 `

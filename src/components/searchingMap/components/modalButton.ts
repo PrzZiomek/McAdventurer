@@ -9,8 +9,6 @@ export const ModalButton = styled(Div)`
     display: inline-block;
     cursor: pointer;
     color: #6F6F49;
-    position: relative;
-    top: 10px;
     font-weight: bold;
     padding: 8px 25px;
     font-size: 0.9rem;

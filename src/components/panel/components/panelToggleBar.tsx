@@ -17,8 +17,8 @@ const PanelToggleBarStyles = styled(Div)`
     width: 30px;
     height: 30px;
     background: linear-gradient(to bottom right,transparent 0%,transparent 50%,#F7F7F3 50%,#F7F7F3 100%);
-    border-right: 3px solid #3e3e28;
-    border-bottom: 3px solid #3e3e28; 
+    border-right: 3px solid #6F6F49;
+    border-bottom: 3px solid #6F6F49; 
     transform: rotate(${(props: propsType) => props.switchToggleArrow === false ? 315 : 135}deg) ; 
 `
 
