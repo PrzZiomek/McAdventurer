@@ -1,13 +1,5 @@
-import { Destination, DestinationNameAndPos } from "../dataModels/types";
+import {  DestinationNameAndPos } from "../generalTypes/apiResponse";
 import { fetchData } from "./models/dataRequest";
-import { ErrorObject } from "./models/ErrorObject";
-import { store } from "../state/store";
-import { Action } from "redux";
-import  {getErrorAction, setErrorAction} from "../state/actions/errorActions";
-import { asyncActionCreator } from "./asyncActionCreator";
-import { Dispatch } from "react";
-
-// : Promise<DestinationNameAndPos[] | void> 
 
 export const fetchDestinationsList = async () => {
    return fetchData<DestinationNameAndPos[] | void>(
@@ -17,16 +9,6 @@ export const fetchDestinationsList = async () => {
    )
 }
 
-
-
-/*.catch((err) => 
-       dispatch(asyncActionCreator(errorAction({
-            message: "error occured when fetching Destinations list from API",
-            content: err
-            }) 
-         )
-      )                       
-   )*/
 
 
 

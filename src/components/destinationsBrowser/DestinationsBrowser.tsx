@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { callApiForDestination } from "../../api/callApiForDestination";
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
-import { DestinationNameAndPos } from "../../dataModels/types";
+import { DestinationNameAndPos } from "../../generalTypes/apiResponse";
 import { DestinationsHintsList } from "./components/destinationsHintsList";
 import { BrowserInput, InputButton, DestinationsBrowserStyles} from "./styles/destinationBrowserStyle";
 

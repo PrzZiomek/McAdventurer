@@ -8,3 +8,4 @@ export const locationAction = (res: object = {}) => ({
    type: SET_COORDINATES,
    payload: res
 })
+

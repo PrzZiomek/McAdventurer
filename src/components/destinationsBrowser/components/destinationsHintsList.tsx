@@ -1,5 +1,5 @@
 import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEvent, Dispatch, SetStateAction } from "react";
-import { DestinationNameAndPos } from "../../../dataModels/types";
+import { DestinationNameAndPos } from "../../../generalTypes/apiResponse";
 import { HintsButtonStyled } from "../styles/hintsButtonStyled";
 import { HintsListStyles } from "../styles/hintsListStyles";
 
