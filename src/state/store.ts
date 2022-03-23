@@ -4,12 +4,15 @@ import createSagaMiddleware from "@redux-saga/core";
 
 import { reducers } from "./reducers/mainReducer";
 import { sagasWatcher } from "./saga/rootSaga";
+import { errorReporter } from "./middlewares/errorReporter";
+
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = createStore(reducers, applyMiddleware(
+   errorReporter,
    sagaMiddleware,
-   thunk
+   thunk,
 ))
 
 sagaMiddleware.run(sagasWatcher)

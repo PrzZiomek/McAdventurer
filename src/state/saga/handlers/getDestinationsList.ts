@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { fetchDestinationsList } from "../../../api/fetchDestinationsList";
-import { DestinationNameAndPos } from "../../../dataModels/types";
+import { DestinationNameAndPos } from "../../../generalTypes/apiResponse";
 import { failFetchDestListAction, successFetchDestListAction } from "../../actions/fetchDestinationActions";
 
 

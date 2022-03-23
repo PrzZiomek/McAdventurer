@@ -1,4 +1,4 @@
-import { DestinationNameAndPos, WikiDestination } from "../dataModels/types";
+import { DestinationNameAndPos, WikiDestination } from "../generalTypes/apiResponse";
 
 export interface GetDestinationReducer {
    error: Error | null;
@@ -31,3 +31,7 @@ export interface Store{
    getDestinationList: GetDestinationListReducer,
    getCoordinates: GetCoordinatesReducer
 }
+
+export type ErrorsCollection = { isError: true; content: Error; }[] & { isError: false; }[];
+export type ActionErrObj = { type: string, errors?: ErrorsCollection };
+

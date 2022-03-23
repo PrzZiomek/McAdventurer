@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction, useState } from "react";
-import { DestinationNameAndPos } from "../../dataModels/types";
+import { DestinationNameAndPos } from "../../generalTypes/apiResponse";
 
 import  {DestinationBrowser}  from "../destinationsBrowser/DestinationsBrowser";
 import { PanelToggleBar } from "./components/panelToggleBar";

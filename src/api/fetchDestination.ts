@@ -1,4 +1,4 @@
-import { Destination } from "../dataModels/types";
+import { Destination } from "../generalTypes/apiResponse";
 import { fetchData } from "./models/dataRequest";
 
 
