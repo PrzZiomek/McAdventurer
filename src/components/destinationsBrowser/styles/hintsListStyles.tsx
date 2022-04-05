@@ -3,22 +3,25 @@ import { Div } from "../../../ui/Div";
 
 
 export const HintsListStyles = styled(Div)`
-   position: absolute;
-   top: 70%;
-   left: 0;
    width: 100%;
+   margin: 0 7px;
+   margin-bottom: 8px;
    z-index: 100;
-   padding-left: 10px;
+   padding-left: 4px;
    background: white;
-   height: 80vh;
+   max-height: 80vh;
    overflow-y: scroll;
 
    ul{
       list-style: none;
    }
 
-   li {
+   li{
       margin-bottom: 5px;
+   }
+
+   li:last-child{
+      margin-bottom: 0px;
    }
 
    button{
@@ -33,14 +36,15 @@ export const HintsListStyles = styled(Div)`
 
    /** custom scroll styles */
    ::-webkit-scrollbar {
-      width: 5px;
+      width: 7px;
    }
    ::-webkit-scrollbar-track {
   // background: #f1f1f1;
       border-radius: 7px;
    }
    ::-webkit-scrollbar-thumb {
-      background: #3e3e28;
-      border-radius: 7px;
+      background: #C7C7A9;
+      cursor: pointer;
+      border-radius: 7px; 
    }
 `

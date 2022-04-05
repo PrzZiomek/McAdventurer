@@ -4,20 +4,15 @@ import { useDispatch } from "react-redux";
 import { callApiForDestination } from "../../api/callApiForDestination";
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
 import { DestinationNameAndPos } from "../../generalTypes/apiResponse";
+import { I } from "../worldMap/models/types/componentTypes";
 import { DestinationsHintsList } from "./components/destinationsHintsList";
-import { BrowserInput, InputButton, DestinationsBrowserStyles} from "./styles/destinationBrowserStyle";
-
-interface DestinationBrowserProps{
-    destinations: DestinationNameAndPos[] | undefined;
-   // updateDestinationsSet: Dispatch<SetStateAction<string[]>>
-}
+import { BrowserInputStyled, InputButtonStyled, DestinationsBrowserStyles} from "./styles/destinationBrowserStyle";
 
 
-export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
+export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
 
     const [filtered, setFiltered] = useState<DestinationNameAndPos[]>([]);
     const [inputTypedValue, setInputTypedValue] = useState<string>("");
-    const [chosenHintValue, setChosenHintValue] = useState<string>("");
     const [destination, setDestinastion] = useState<string>("");
     const dispatch = useDispatch();
 
@@ -56,7 +51,7 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
         const button = e.currentTarget;
         const destinationName = button.querySelector("span")!.textContent; //console.log("txtcont", destinationName);
         if(!destinationName) return;
-        setChosenHintValue(destinationName);
+        setInputTypedValue(destinationName);
     }
 
     const showHints: JSX.Element | null = filtered.length ? 
@@ -68,12 +63,12 @@ export const DestinationBrowser: FC<DestinationBrowserProps> = (props) => {
       
     return (
         <DestinationsBrowserStyles> 
-             <BrowserInput 
+             <BrowserInputStyled 
                 id="browserInput"
-                handleChange={handleChange}
-                value={(filtered.length &&  chosenHintValue) ? chosenHintValue : inputTypedValue}
+                onChange={handleChange}
+                value={inputTypedValue}
             />       
-            <InputButton handleClick={handleSearchClick} >search</InputButton>
+            <InputButtonStyled handleClick={handleSearchClick}>search</InputButtonStyled>
             {showHints}
         </DestinationsBrowserStyles>
     )

@@ -10,8 +10,8 @@ type Action = {
 }
 
 const initialState = {
-  lng: PolandLocation.Lng,
-  lat: PolandLocation.Lat
+  lng: 0,
+  lat: 0
 }
 
 export const getCoordinates = (state = initialState, action: Action) => {
@@ -20,7 +20,7 @@ export const getCoordinates = (state = initialState, action: Action) => {
            return{
                ...state,
               lat: action.payload.lat,
-              lng: action.payload.lat
+              lng: action.payload.lng
            };
        default:
            return { 

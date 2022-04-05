@@ -1,14 +1,11 @@
-import React, { FC, MouseEventHandler, useState } from "react"
+import React, { FC, useState } from "react"
+import { I } from "../worldMap/models/types/componentTypes";
 import { ThemesToggleBar } from "./components/ThemesToggleBar";
 import { Theme } from "./models/Theme";
 import { ThemesMenu, MapThemesMenuStyles  } from "./styles/mapThemesMenuStyles";
 
 
-interface MapThemesMenu{
-  onChangeTheme: MouseEventHandler<HTMLImageElement>;
-}
-
-export const MapThemesMenu:FC<MapThemesMenu> = (props) => {
+export const MapThemesMenu:FC<I.MapThemesMenu> = (props) => {
 
     const [toggleState, setToggler] = useState(false);
 

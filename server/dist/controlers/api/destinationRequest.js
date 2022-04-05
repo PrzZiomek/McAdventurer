@@ -20,6 +20,7 @@ const destinationRequest = async (req, res, next) => {
             .getOne(name)
             .catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
         if (destination) {
+            console.log({ lat: destination.LAT, lng: destination.LNG });
             res.status(200).json({
                 destination: {
                     name: destination.NAME,

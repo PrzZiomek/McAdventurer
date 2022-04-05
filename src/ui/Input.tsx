@@ -3,7 +3,7 @@ import { ChangeEventHandler, FC, KeyboardEventHandler, MouseEventHandler } from 
 interface Props{
     className?: string;
     color?: string;
-    handleChange: ChangeEventHandler<HTMLInputElement>;
+    onChange: ChangeEventHandler<HTMLInputElement>;
     visibleText?: boolean;
     handleEnterClick?: KeyboardEventHandler<HTMLInputElement>;
     type?: string;
@@ -16,7 +16,7 @@ export const Input: FC <Props> = (props) => (
         id={props.id}
         type="text"
         value={props.value}
-        onChange={props.handleChange}
+        onChange={props.onChange}
         className={props.className}
         onKeyDown={props.handleEnterClick}
      />
