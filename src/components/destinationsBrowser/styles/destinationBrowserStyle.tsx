@@ -7,11 +7,13 @@ import { Span } from "../../../ui/Span";
 
 export const DestinationsBrowserStyles = styled(Div)`
   display:flex;
+  flex-wrap: wrap;
   width: 90%;
   height: 45px;
+  height: auto;
   position: absolute;
   left: 4.8%;
-  top: 12px;
+  top: 16px;
   border-radius: 7px;
   background: white;
   box-shadow: inset 0 0 8px #3e3e28;
@@ -29,13 +31,15 @@ export const DestinationsBrowserStyles = styled(Div)`
   }
 `;
 
-export const BrowserInput = styled(Input)`
-    width: 90%;
+export const BrowserInputStyled = styled(Input)`
+    width: 70%;
     height: 56%;
+    height: 24px;
     margin-left: 11px;
     margin-top: 3%;
+    margin-bottom: 6px;
     border-radius: 7px;
-    font-size: 1rem; 
+    font-size: 1rem;
     color:#3e3e28;
     border: none;     
   `;
@@ -57,12 +61,12 @@ export const InputTextWrapper = styled(Div)`
     }
 `;
 
-export const InputButton = styled(Button)`
+export const InputButtonStyled = styled(Button)`
       position: absolute;
       right: 10px;
-      height: 100%;
-      cursor: pointer; 
-      color:#6F6F49;    //  #3E3E28;
+      height: 40px;
+      cursor: pointer;
+      color: #6F6F49;
       text-transform: uppercase;
       padding-left: 8px;
       font-size: 1rem;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Div, DivWrapper } from "../../../ui/Div";
 
 
-export const Map = styled(DivWrapper)`
+export const MapStyled = styled(DivWrapper)`
 
     margin-left: -25px;
     height: 100vh;

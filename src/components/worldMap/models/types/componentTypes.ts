@@ -1,22 +1,32 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, MouseEventHandler, SetStateAction } from "react";
+import { DestinationNameAndPos } from "../../../../generalTypes/apiResponse";
+import { Coordinates } from "../../../../generalTypes/others";
 
 export namespace I {
 
    export interface WorldMap{
-        mapParams: H.geo.IPoint;
-        setMapParams?: Dispatch<SetStateAction<{
-          lat: number | string,
-          lng: number | string
-      }>>;
-        theme: string;
-        typed?: string
+        mapParams?: H.geo.IPoint;
+        coords: {
+          lat: number;
+          lng: number;
+      },
+        setCoords?: Dispatch<SetStateAction<Coordinates>>;
+        typed?: string,
+        userLocationCoords: {
+          lat: number;
+          lng: number;
+        }
       }
 
-     export interface WorldMapWithData extends WorldMap{
-          handleMapViewChange: (e: Event) => void;
-          mapPlatform: () => H.service.Platform;
-          layerWithTheme: (theme: string) => H.map.layer.TileLayer | undefined;
-          moveMapTo: (map: H.Map | null) => void;
-          setMarker: (map: H.Map | null) => void;
-      }
+    export interface Panel{
+        destinations: DestinationNameAndPos[] | undefined;
+    }
+
+    export interface DestinationBrowser{
+      destinations: DestinationNameAndPos[] | undefined;
+    }
+  
+    export interface MapThemesMenu{
+      onChangeTheme: MouseEventHandler<HTMLImageElement>;
+    }
 }

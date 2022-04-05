@@ -28,7 +28,7 @@ export const destinationRequest = async (req: Request, res: Response, next: Next
         const destination: void | Destination = await destinations
             .getOne(name)
             .catch(err => next(errorHandle(err, 500)));
-        if(destination){     
+        if(destination){  console.log({lat: destination.LAT, lng: destination.LNG});   
             res.status(200).json({
                 destination: {
                   name: destination.NAME,
