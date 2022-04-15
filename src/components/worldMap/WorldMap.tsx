@@ -1,6 +1,5 @@
 import { useState, FC, useEffect, useRef, MutableRefObject, Dispatch, MouseEvent } from "react"
 import { useDispatch } from "react-redux";
-import { Action } from "redux";
 
 import  errorActionCreator  from "../../generalHandlers/errorActionCreator";
 import { MapThemesMenu } from "../mapThemesMenu/mapThemesMenu";
@@ -16,7 +15,7 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
 
     const mapRef: MutableRefObject<null> = useRef(null);
     const [theme, setTheme] = useState<string>("normal.day");
-    const [map, platform]: [H.Map, H.service.Platform]  = useCreateMap(mapRef);
+    const [map, platform]: [H.Map | undefined, H.service.Platform | undefined]  = useCreateMap(mapRef);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -62,7 +61,6 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
 
     const layerWithTheme = (theme: string): H.map.layer.TileLayer | undefined => { 
         try{
-            const platform = new H.service.Platform({ apikey: "zcdFfY4BuFMsIIBqpduLOVk5k6frv77VEhxqsATGbjI" });
             if(!platform) return; 
             const tiles = platform.getMapTileService({'type': 'base'});
             const layer = tiles.createTileLayer(

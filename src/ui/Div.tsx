@@ -1,7 +1,7 @@
 import { FC, LegacyRef, MouseEventHandler, MutableRefObject } from "react";
 
 export interface DivProps{
-    /** Required by default (!!!) */
+    /** Required by default */
     className?: string;     
     /** identifier */
     id?: string;
@@ -19,8 +19,11 @@ export interface DivProps{
     showUpBar?: boolean;
     /** used in Panel toggle bar arrow  */
     switchToggleArrow?: boolean;
-    /** used in ErrorModal */
-    showModal?: boolean;
+    /** to show Panel */
+    showPanel?: boolean;
+    toggleState?: boolean;
+    /** to change border on DestinatonBrowser input */
+    changeBorder?: boolean;
 }
 
 

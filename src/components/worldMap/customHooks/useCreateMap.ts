@@ -1,33 +1,29 @@
-//import { Hmac } from "crypto";
 import {useRef, MutableRefObject, useLayoutEffect} from "react";
 import { useDispatch } from "react-redux";
 import errorActionCreator from "../../../generalHandlers/errorActionCreator";
 
  
-export function useCreateMap(mapRef: MutableRefObject<null>): [H.Map, H.service.Platform]{
+export function useCreateMap(mapRef: MutableRefObject<null>): [H.Map | undefined, H.service.Platform | undefined]{
 
    const hMapRef = useRef<H.Map>();
-
+   const platformRef = useRef<H.service.Platform>();
    const dispatch = useDispatch();
-
-   const platform: H.service.Platform = new H.service.Platform({
-      apikey: "zcdFfY4BuFMsIIBqpduLOVk5k6frv77VEhxqsATGbjI",        
-   }); 
 
    useLayoutEffect(() =>{
       let hMap: H.Map;
       try{        
-          if(!mapRef.current) throw new Error("the world map is not settled yet!");
-          const defaultLayers = platform.createDefaultLayers();
-          hMap = new H.Map(mapRef.current, defaultLayers.vector.normal.map); 
-         hMap.addEventListener('mapviewchange',() => {});
+         if(!mapRef.current) throw new Error("the world map is not settled yet!");
+         platformRef.current = new H.service.Platform({
+            apikey: "zcdFfY4BuFMsIIBqpduLOVk5k6frv77VEhxqsATGbjI",        
+         }); 
+         const defaultLayers =  platformRef.current.createDefaultLayers();
+         hMap = new H.Map(mapRef.current, defaultLayers.vector.normal.map); 
          hMap.addEventListener('resize', () => hMap.getViewPort().resize());
          hMapRef.current = hMap;
          new H.mapevents.Behavior(new H.mapevents.MapEvents(hMap));  
 
          return () => { 
             hMap.dispose();
-            hMap.removeEventListener('mapviewchange', mapviewchangeCb);
          };
       }
       catch(err){
@@ -38,5 +34,5 @@ export function useCreateMap(mapRef: MutableRefObject<null>): [H.Map, H.service.
       } 
    }, [mapRef]); 
    
- return [hMapRef.current, platform]
+ return [hMapRef.current, platformRef.current]
 }

@@ -13,6 +13,7 @@ interface Props{
 
 export const Input: FC <Props> = (props) => (
     <input 
+        autoComplete="off"
         id={props.id}
         type="text"
         value={props.value}

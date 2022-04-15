@@ -20,10 +20,17 @@ export namespace I {
 
     export interface Panel{
         destinations: DestinationNameAndPos[] | undefined;
+        setShowPanel: Dispatch<SetStateAction<boolean>>
+        showPanel: boolean;
     }
+
+    export interface MapUtils {
+      destinations: DestinationNameAndPos[] | undefined;
+   }
 
     export interface DestinationBrowser{
       destinations: DestinationNameAndPos[] | undefined;
+      setShowPanel: Dispatch<SetStateAction<boolean>>
     }
   
     export interface MapThemesMenu{

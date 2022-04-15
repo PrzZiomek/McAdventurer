@@ -15,4 +15,6 @@ export const store = createStore(reducers, applyMiddleware(
    thunk,
 ))
 
+
 sagaMiddleware.run(sagasWatcher)
+

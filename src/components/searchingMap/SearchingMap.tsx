@@ -17,6 +17,7 @@ import { startLocationAction } from "../../state/actions/currentLocationAction";
 import { errorMonitAction } from "../../state/actions/errorActions";
 import { determineCoords } from "./helpers/determineCoords";
 import { Coordinates, NumbOrStr } from "../../generalTypes/others";
+import { MapUtils } from "../mapUtils";
 
 //type MouseEventHandler<T = Element> = (event: MouseEvent<T, globalThis.MouseEvent>) => void
 // type useState<S>(initialState: S | (() => S)): [S, Dispatch<SetStateAction<S>>];
@@ -87,13 +88,12 @@ export const SearchingMap: React.FC = () => {
     const destList: DestinationNameAndPos[] = destinationList?.length ? destinationList : []; 
     const coordsAsNumbers = { lat: +coords.lat, lng: +coords.lng };
     const userCoordsAsNumbers = { lat: +userLocationCoords.lat, lng: +userLocationCoords.lng };
+ 
     return  ( 
         <ThemeProvider theme={styleTheme}>
             <SearchingMapStyles id="mapWrapper">   
                 {errorInformation()}  
-                <Panel 
-                    destinations={destList} 
-                />
+                <MapUtils destinations={destList} /> 
                 <WorldMap
                     setCoords={setCoords}
                     coords={coordsAsNumbers}

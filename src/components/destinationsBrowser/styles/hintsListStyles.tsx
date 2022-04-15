@@ -6,10 +6,9 @@ export const HintsListStyles = styled(Div)`
    width: 100%;
    margin: 0 7px;
    margin-bottom: 8px;
-   z-index: 100;
-   padding-left: 4px;
+   padding-left: 9px;
    background: white;
-   max-height: 80vh;
+   max-height: 87vh;
    overflow-y: scroll;
 
    ul{
@@ -47,4 +46,10 @@ export const HintsListStyles = styled(Div)`
       cursor: pointer;
       border-radius: 7px; 
    }
-`
+
+ @media (min-width: 768px){
+   min-height: 200px;
+    max-height: 30vh;
+ }
+
+`;

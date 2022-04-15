@@ -6,7 +6,7 @@ import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
 import { DestinationNameAndPos } from "../../generalTypes/apiResponse";
 import { I } from "../worldMap/models/types/componentTypes";
 import { DestinationsHintsList } from "./components/destinationsHintsList";
-import { BrowserInputStyled, InputButtonStyled, DestinationsBrowserStyles} from "./styles/destinationBrowserStyle";
+import { BrowserInputStyled, InputButtonStyled, DestinationsBrowserStyled} from "./styles/destinationBrowserStyle";
 
 
 export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
@@ -14,6 +14,7 @@ export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
     const [filtered, setFiltered] = useState<DestinationNameAndPos[]>([]);
     const [inputTypedValue, setInputTypedValue] = useState<string>("");
     const [destination, setDestinastion] = useState<string>("");
+    const [changeBorder, setChangeBorder] = useState(false); 
     const dispatch = useDispatch();
 
     useDidMountEffect(() => dispatch(callApiForDestination(destination)), [destination])
@@ -44,7 +45,9 @@ export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
         if(inputTypedValue.length < 1) return;
         const valueCapitalized: string = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase());    
         const destination: string =  valueCapitalized;  
-        setDestinastion(destination); 
+        setDestinastion(destination);
+        props.setShowPanel(true);
+        setChangeBorder(true);
     }
 
     const handleHintClick = (e: MouseEvent<HTMLButtonElement>): void => {
@@ -52,6 +55,7 @@ export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
         const destinationName = button.querySelector("span")!.textContent; //console.log("txtcont", destinationName);
         if(!destinationName) return;
         setInputTypedValue(destinationName);
+        setFiltered([]);
     }
 
     const showHints: JSX.Element | null = filtered.length ? 
@@ -62,7 +66,7 @@ export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
         /> : null; 
       
     return (
-        <DestinationsBrowserStyles> 
+        <DestinationsBrowserStyled changeBorder={changeBorder}> 
              <BrowserInputStyled 
                 id="browserInput"
                 onChange={handleChange}
@@ -70,7 +74,7 @@ export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
             />       
             <InputButtonStyled handleClick={handleSearchClick}>search</InputButtonStyled>
             {showHints}
-        </DestinationsBrowserStyles>
+        </DestinationsBrowserStyled>
     )
 }
  

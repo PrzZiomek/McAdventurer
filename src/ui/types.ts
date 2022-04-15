@@ -6,6 +6,7 @@ export interface ToggleBarProps{
    toggle: Dispatch<SetStateAction<boolean>> | ToggleHandler; 
    toggleState: boolean;
    switchToggleArrow?: boolean;
+   className?: string;
 }
 
 export type ToggleBarWithChildren = ToggleBarProps & { children?: ReactNode };
