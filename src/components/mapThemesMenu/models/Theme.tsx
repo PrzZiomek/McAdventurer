@@ -7,7 +7,9 @@ export interface Theme{
 }
 
 export const Theme:FC<Theme> = ({theme, onChangeTheme}) => {
+
    const img = require('../themesPics/' + theme + '.thumb.png');
+   
    return( 
         <img 
             key={ theme } 

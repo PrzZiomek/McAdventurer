@@ -4,20 +4,24 @@ import { Div } from "../../../ui/Div";
 
 export const MapThemesMenuStyles = styled(Div)`
    position: absolute;
-   bottom:0;
+   top: 90px;
    right: 0;
-   width: 800px;
-` 
+   width: 75px;
+   z-index: 3;
+`; 
 
 export const ThemesMenu = styled(Div)`
     display: flex;
     flex-wrap: nowrap;
-    justify-content: flex-end;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
     transition: 0.5s;
-    margin-bottom: ${(props) => props.showUpBar === false ? "-44px" : 0};
+    margin-right: ${(props) => props.showUpBar === false ? "-44px" : 0};
 
     img{
-        width: 11%;
-        cursor: pointer;
+        height: 75px;
+        width: 100%;
     }
-`
+
+`;

@@ -8,6 +8,7 @@ import { ToggleBarProps } from "../../../ui/types";
 const ThemesToggleBarStyled = styled(Div)`
     left: calc(50% - 43px);
     bottom: 100%;
+    transform: rotate(-90deg);
     text-align: center;
     position: absolute;
     color: #3e3e28;

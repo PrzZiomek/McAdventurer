@@ -4,23 +4,24 @@ import { DestinationNameAndPos } from "../../generalTypes/apiResponse";
 import  {DestinationBrowser}  from "../destinationsBrowser/DestinationsBrowser";
 import { I } from "../worldMap/models/types/componentTypes";
 import { PanelToggleBar } from "./components/panelToggleBar";
-import { PanelStyles } from "./styles/panelStyles";
+import { PanelStyled } from "./styles/panelStyles";
 
-
+/*
 export const Panel: FC<I.Panel> = (props) => {
 
     const [toggleState, setToggler] = useState(true); 
 
     return (
-        <PanelStyles id="panel" showUpBar={toggleState}>
-             <DestinationBrowser 
-                destinations={props.destinations}
-             />
+        <PanelStyled 
+            id="panel" 
+            showPanel={props.showPanel}
+        >
              <PanelToggleBar 
+                className="toggleBar"
                 switchToggleArrow={toggleState} 
                 toggle={setToggler} 
                 toggleState={toggleState}
              />
-        </PanelStyles>
+        </PanelStyled>
    )
-} 
+} */

@@ -11,14 +11,15 @@ export const MapThemesMenu:FC<I.MapThemesMenu> = (props) => {
 
     const themes = [
         'normal.day',
-        'normal.day.grey',
+        'reduced.night',  
         'normal.day.transit',
         'normal.night',
-        'normal.night.grey',
-        'reduced.night',            
+        'normal.day.grey',
+        'normal.night.grey',                 
         'reduced.day',
-        'pedestrian.day',
         'pedestrian.night',
+        'pedestrian.day',
+        
     ];
     const thumbnails: JSX.Element[] = themes.map((theme, key) => // TO MEMO (?)
         <Theme 

@@ -20,10 +20,6 @@ app.use((_, res, next) => {
     next();
 });
 app.use(main_1.apiRoutes);
-/*
-const dest = new Destinations();
-dest.getAll().then(res => console.log(res))
-*/
 app.listen(port, () => {
     console.log(`Serverrrrr start!`);
 });

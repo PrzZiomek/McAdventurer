@@ -4,8 +4,20 @@ import { setStyles } from "../helpers/setStyles";
 export const createDestinationMarker = () => {
     const outerElement = document.createElement('div');
     const innerElement = document.createElement('div');
+    const pin = document.createElement('div');
     const wrapper = document.createElement('div');
     
+    setStyles(pin, {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      borderRadius:" 50%",
+      backgroundColor:"white", 
+      width: "8px",
+      height:"8px",
+    }); 
+
     setStyles(outerElement, {
     position: "absolute",
     top: "-50px",
@@ -29,6 +41,7 @@ export const createDestinationMarker = () => {
   })
 
   outerElement.appendChild(innerElement);
+  outerElement.appendChild(pin);
   wrapper.style.zIndex = "10";
   wrapper.appendChild(outerElement);
   
