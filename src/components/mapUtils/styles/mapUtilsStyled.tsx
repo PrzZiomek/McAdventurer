@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { callbackify } from "util";
 import { panelColor } from "../../../styles/themes/accessors";
 import { Div } from "../../../ui/Div";
 
 
-export const PanelStyled = styled(Div)`
+export const MapUtilsStyled = styled(Div)`
     position: absolute;
     width: 100vw;     // ${(props) => props.showPanel === true ? "100%" : 0};    
   //  min-width: 600px;

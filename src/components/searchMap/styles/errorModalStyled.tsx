@@ -9,7 +9,7 @@ export const ErrorModalStyled = styled(DivWrapper)`
     z-index: 1000;
     width: 300px;
     height: 170px;
-    top: 20%;
+    top: calc(50% - 85px);
     left: calc(50% - 150px);
     letter-spacing: 2px;
     background: white;

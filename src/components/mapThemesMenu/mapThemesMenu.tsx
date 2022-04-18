@@ -2,7 +2,7 @@ import React, { FC, useState } from "react"
 import { I } from "../worldMap/models/types/componentTypes";
 import { ThemesToggleBar } from "./components/ThemesToggleBar";
 import { Theme } from "./models/Theme";
-import { ThemesMenu, MapThemesMenuStyles  } from "./styles/mapThemesMenuStyles";
+import { ThemesMenu, MapThemesMenuStyled } from "./styles/mapThemesMenuStyles";
 
 
 export const MapThemesMenu:FC<I.MapThemesMenu> = (props) => {
@@ -29,9 +29,9 @@ export const MapThemesMenu:FC<I.MapThemesMenu> = (props) => {
         />);
         
     return (
-        <MapThemesMenuStyles className="themesBar">
+        <MapThemesMenuStyled className="themesBar">
             <ThemesToggleBar toggle={setToggler} toggleState={toggleState}>Themes</ThemesToggleBar>
             <ThemesMenu className="themesMenu" showUpBar={toggleState}> {thumbnails} </ThemesMenu>
-        </MapThemesMenuStyles>
+        </MapThemesMenuStyled>
     )
 }

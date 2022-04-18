@@ -3,7 +3,7 @@ import { Div, DivWrapper } from "../../../ui/Div";
 import  mainImage  from "../../../Belfast.jpg";
 
 
-export const SearchingMapStyles = styled(DivWrapper)`
+export const SearchMapStyled = styled(DivWrapper)`
     display: flex;
     width: 100vw;
     height: 100vh;
