@@ -48,7 +48,6 @@ export const HintsListStyles = styled(Div)`
    }
 
  @media (min-width: 768px){
-   min-height: 200px;
     max-height: 30vh;
  }
 

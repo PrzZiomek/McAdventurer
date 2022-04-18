@@ -1,4 +1,4 @@
-import { ErrorCollection } from "../components/searchingMap/SearchingMap";
+import { ErrorCollection } from "../components/searchMap/SearchMap";
 import { Store } from "../state/types";
 
 //type ErrorUseStateFields = [error: ErrorCollection, setError: React.Dispatch<React.SetStateAction<ErrorCollection>>];

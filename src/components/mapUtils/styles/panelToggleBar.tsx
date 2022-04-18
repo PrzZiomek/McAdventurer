@@ -26,8 +26,4 @@ export const PanelToggleBarStyled = styled(Div)`
     color: #C7C7A9;
 }
 `;
-/*
-export const PanelToggleBar: FC<ToggleBarProps> = (props: PropsWithChildren<ToggleBarProps>) =>{
-    return ToggleBar(props)(PanelToggleBarStyled);
-}  
-*/
+

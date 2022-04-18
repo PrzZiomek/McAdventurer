@@ -1,18 +1,21 @@
 import { Dispatch, MouseEventHandler, SetStateAction } from "react";
 import { DestinationNameAndPos } from "../../../../generalTypes/apiResponse";
-import { Coordinates } from "../../../../generalTypes/others";
 
 export namespace I {
 
    export interface WorldMap{
+        destinations: DestinationNameAndPos[] | undefined;
         mapParams?: H.geo.IPoint;
-        coords: {
+        coords?: {
           lat: number;
           lng: number;
       },
-        setCoords?: Dispatch<SetStateAction<Coordinates>>;
+        setCoords?: Dispatch<SetStateAction<{
+          lat: number;
+          lng: number;
+      }>>;
         typed?: string,
-        userLocationCoords: {
+        userLocationCoords?: {
           lat: number;
           lng: number;
         }

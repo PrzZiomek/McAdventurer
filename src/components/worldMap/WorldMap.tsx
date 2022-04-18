@@ -1,8 +1,12 @@
 import { useState, FC, useEffect, useRef, MutableRefObject, Dispatch, MouseEvent } from "react"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import  errorActionCreator  from "../../generalHandlers/errorActionCreator";
+import { WikiDestination } from "../../generalTypes/apiResponse";
+import { startLocationAction } from "../../state/actions/currentLocationAction";
+import { Store } from "../../state/types";
 import { MapThemesMenu } from "../mapThemesMenu/mapThemesMenu";
+import { determineCoords } from "../searchMap/helpers/determineCoords";
 import { useCreateMap } from "./customHooks/useCreateMap";
 import { createDestinationMarker } from "./mapMarker/createDestinationMarker";
 import { createHomeMarker } from "./mapMarker/createHomeMarker";
@@ -16,28 +20,60 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
     const mapRef: MutableRefObject<null> = useRef(null);
     const [theme, setTheme] = useState<string>("normal.day");
     const [map, platform]: [H.Map | undefined, H.service.Platform | undefined]  = useCreateMap(mapRef);
+    const [userLocationCoords, setUserLocationCoords] = useState({ lat: 0, lng: 0 }); 
+    const [coords, setCoords] =  useState({ lat: 0, lng: 0 });
     const dispatch = useDispatch();
+
+    useEffect(() => { 
+      dispatch(startLocationAction()) 
+    }, [dispatch])
 
     useEffect(() => {
       const layer = layerWithTheme(theme); 
       if(map && layer) map.setBaseLayer(layer); 
     }, [theme])
 
+    useEffect(() => {
+        
+    }, [props.destinations])
+
+    const destination: WikiDestination | undefined = useSelector((state: Store) => { 
+        if(state.getDestination.loading !== false) return;
+        return state.getDestination.destination;                                                         //  destination?.name === state.getDestination.destination.name                                                                                //setDestination(state.getDestination.destination)  
+    })
+
+    useEffect(() => { 
+        if(!destination || !props.destinations) return;         
+        const { lat, lng } = determineCoords(destination, props.destinations)
+       
+        setCoords({
+            lat,
+            lng,
+        });     
+        
+    }, [destination?.name]);  
+
     useEffect(() => { 
       if(!map) return;
-      const coords = props.userLocationCoords; 
-      createMarker(coords, createHomeMarker());   
-    }, [props.userLocationCoords])
+      createMarker(userLocationCoords, createHomeMarker());   
+    }, [userLocationCoords])
 
     useEffect(() => {
       if(!map) return;
-      const coords = props.coords;
       const unsetCoords: boolean = !coords.lat && !coords.lng;
       if(!map || unsetCoords) return;
       createMarker(coords, createDestinationMarker()) 
       map.setCenter(coords); 
       map.setZoom(5);  
     }, [props.coords])
+
+    const currentLocation = useSelector((state: Store) => { 
+      return state.getCoordinates;
+    });
+  
+    useEffect(() => {
+        setUserLocationCoords(currentLocation);  
+    }, [currentLocation])
 
     // unused for now
     const handleMapViewChange = (e: Event): void => {    
@@ -47,8 +83,8 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
       const lat = Math.trunc(lookAt.position.lat * 1E7) / 1E7;
       const lng = Math.trunc(lookAt.position.lng * 1E7) / 1E7;
       const zoom = Math.trunc(lookAt.zoom * 1E2) / 1E2;
-      if(!props.setCoords) return;
-      props.setCoords({
+      if(!setCoords) return;
+      setCoords({
           lat,
           lng,
       })               
@@ -101,7 +137,14 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
     return (
       <>
         <MapStyled mapRef={mapRef} ></MapStyled>
-        <MapThemesMenu onChangeTheme={onChangeTheme}/>
+        {
+          /*
+            to move off when new panel will be created
+
+             <MapThemesMenu onChangeTheme={onChangeTheme}/>
+          */
+        }
+       
       </>
     )
   }
