@@ -11,6 +11,7 @@ export interface GetDestinationListReducer{
       error: Error | null;
       isFetching: boolean;
       destinations: DestinationNameAndPos[];
+      destination: DestinationNameAndPos;
       loading: boolean
 }
 

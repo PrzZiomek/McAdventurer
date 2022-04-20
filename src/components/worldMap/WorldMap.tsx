@@ -5,8 +5,7 @@ import  errorActionCreator  from "../../generalHandlers/errorActionCreator";
 import { WikiDestination } from "../../generalTypes/apiResponse";
 import { startLocationAction } from "../../state/actions/currentLocationAction";
 import { Store } from "../../state/types";
-import { MapThemesMenu } from "../mapThemesMenu/mapThemesMenu";
-import { determineCoords } from "../searchMap/helpers/determineCoords";
+import { isNotNumber } from "../../utils/isNotNumber";
 import { useCreateMap } from "./customHooks/useCreateMap";
 import { createDestinationMarker } from "./mapMarker/createDestinationMarker";
 import { createHomeMarker } from "./mapMarker/createHomeMarker";
@@ -33,25 +32,42 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
       if(map && layer) map.setBaseLayer(layer); 
     }, [theme])
 
-    useEffect(() => {
-        
-    }, [props.destinations])
-
     const destination: WikiDestination | undefined = useSelector((state: Store) => { 
         if(state.getDestination.loading !== false) return;
         return state.getDestination.destination;                                                         //  destination?.name === state.getDestination.destination.name                                                                                //setDestination(state.getDestination.destination)  
     })
 
     useEffect(() => { 
-        if(!destination || !props.destinations) return;         
-        const { lat, lng } = determineCoords(destination, props.destinations)
-       
-        setCoords({
-            lat,
-            lng,
-        });     
-        
+        if(!destination || !props.destinations) return;  
+
+        const { coordinates } = destination;
+ 
+        if(isNotNumber(coordinates?.lat) || isNotNumber(coordinates?.lng)){ 
+              dispatch({
+                type: "FIND_DESTINATION",
+                payload: destination.name 
+              }) 
+          }else {        
+              setCoords({
+                lat: coordinates?.lat,
+                lng: coordinates?.lat
+              });    
+          }             
     }, [destination?.name]);  
+
+    const destinationCoords = useSelector((state: Store) => { 
+      console.log("destinationCoords",state.getDestinationList.destination);     
+      return state.getDestinationList.destination;
+    });
+
+    useEffect(() => { 
+        if(!destinationCoords) return;
+        setCoords({
+          lat: destinationCoords.lat as number,
+          lng: destinationCoords.lat as number
+        });    
+    }, [destinationCoords])
+
 
     useEffect(() => { 
       if(!map) return;
@@ -59,13 +75,12 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
     }, [userLocationCoords])
 
     useEffect(() => {
-      if(!map) return;
-      const unsetCoords: boolean = !coords.lat && !coords.lng;
+      const unsetCoords: boolean = isNotNumber(coords.lat) || isNotNumber(coords.lng);
       if(!map || unsetCoords) return;
       createMarker(coords, createDestinationMarker()) 
       map.setCenter(coords); 
       map.setZoom(5);  
-    }, [props.coords])
+    }, [coords])
 
     const currentLocation = useSelector((state: Store) => { 
       return state.getCoordinates;
