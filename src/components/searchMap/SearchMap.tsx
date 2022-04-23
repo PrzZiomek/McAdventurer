@@ -8,9 +8,7 @@ import { startFetchDestListAction } from "../../state/actions/fetchDestinationAc
 import { ErrorModal } from "./components/errorModal/errorModal";
 import { DestinationNameAndPos, WikiDestination } from "../../generalTypes/apiResponse";
 import { StoreProps } from "../../enums";
-import { startLocationAction } from "../../state/actions/currentLocationAction";
 import { errorMonitAction } from "../../state/actions/errorActions";
-import { determineCoords } from "./helpers/determineCoords";
 import { errorCollector } from "../../utils/errorCollector";
 import { MapUtils } from "../mapUtils/MapUtils";
 

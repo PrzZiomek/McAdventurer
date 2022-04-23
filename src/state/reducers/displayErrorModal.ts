@@ -1,9 +1,13 @@
-import { OPEN_MODAL } from "../actions/actionTypes"
+/*import { OPEN_MODAL } from "../actions/actionTypes"
 
 
 type Action = {
    type:string,
    payload: boolean 
+}
+
+type initialState = {
+   show: false
 }
 
 const initialState = {
@@ -22,3 +26,5 @@ export const displayErrorModal = (state = initialState, action: Action) => {
          }  
    }
 }
+
+*/
