@@ -1,11 +1,6 @@
 import { SET_ERROR } from "../actions/actionTypes";
 
-const initialState = {
-  error: null, 
-  isError: false
-};
-
-type actionType = { 
+type Action = { 
    type: string,
    payload: {
       message?: string;
@@ -13,7 +8,18 @@ type actionType = {
    } 
 };
 
-export const getErrors = (state = initialState, action: actionType) => {
+type InitialState = {
+   error: Error | null, 
+   isError: boolean
+ };
+
+
+const initialState: InitialState = {
+  error: null, 
+  isError: false
+};
+
+export const getErrors = (state = initialState, action: Action) => {
    switch (action.type){
       case SET_ERROR: 
          return {
@@ -26,20 +32,3 @@ export const getErrors = (state = initialState, action: actionType) => {
    }
 }
 
-/*
-export const getErrors = (state = initialState, action: actionType) => { 
-   if(action?.payload?.content){  
-      return {
-         ...state,
-         isError: true,
-         error: action.payload
-      }
-   }
-   else{
-      return {
-          isError: false
-      } 
-   }
-}
-
-*/

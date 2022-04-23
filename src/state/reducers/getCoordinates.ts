@@ -1,5 +1,4 @@
-import { PolandLocation } from "../../enums";
-import { FETCH_FAIL, FETCH_START, FETCH_SUCCESS, SET_COORDINATES } from "../actions/actionTypes";
+import { SET_COORDINATES } from "../actions/actionTypes";
 
 type Action = {
    type:string,
@@ -9,7 +8,13 @@ type Action = {
    } 
 }
 
-const initialState = {
+type InitialState = {
+    lng: number,
+    lat: number
+}
+
+
+const initialState: InitialState = {
   lng: 0,
   lat: 0
 }
