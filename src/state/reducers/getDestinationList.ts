@@ -38,9 +38,9 @@ export const getDestinationList = (state = initialState, action: Action) => {
                destinations: {},
                error: action.payload
            }
-        case "FIND_DESTINATION": 
+        case "FIND_DESTINATION": console.log("payload", action.payload);      
              return { 
-                destination: state.destinations.find(dest => dest.name === action.payload)
+                destination: state.destinations.find(dest => dest.name.toLowerCase  === action.payload.toLowerCase)
            }
        default:
            return state;

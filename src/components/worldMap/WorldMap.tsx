@@ -2,16 +2,14 @@ import { useState, FC, useEffect, useRef, MutableRefObject, Dispatch, MouseEvent
 import { useDispatch, useSelector } from "react-redux";
 
 import  errorActionCreator  from "../../generalHandlers/errorActionCreator";
-import { WikiDestination } from "../../generalTypes/apiResponse";
-import { startLocationAction } from "../../state/actions/currentLocationAction";
-import { Store } from "../../state/types";
-import { isNotNumber } from "../../utils/isNotNumber";
+import { useUserLocalization } from "./customHooks/useUserLocalization";
 import { useCreateMap } from "./customHooks/useCreateMap";
-import { createDestinationMarker } from "./mapMarker/createDestinationMarker";
-import { createHomeMarker } from "./mapMarker/createHomeMarker";
+import { createMarker } from "./helpers/createMarker";
+import { createDestinationMarkerIcon } from "./helpers/mapMarker/createDestinationMarkerIcon";
+import { createHomeMarkerIcon } from "./helpers/mapMarker/createHomeMarkerIcon";
 import { I } from "./models/types/componentTypes";
-import { isMapEvent } from "./models/types/mapEvents";
 import { MapStyled } from "./styles/worldMapStyles";
+import { useDestinationLocation } from "./customHooks/useDestinationLocaton";
 
 
 export const WorldMap: FC<I.WorldMap> = (props) => {
@@ -19,92 +17,26 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
     const mapRef: MutableRefObject<null> = useRef(null);
     const [theme, setTheme] = useState<string>("normal.day");
     const [map, platform]: [H.Map | undefined, H.service.Platform | undefined]  = useCreateMap(mapRef);
-    const [userLocationCoords, setUserLocationCoords] = useState({ lat: 0, lng: 0 }); 
-    const [coords, setCoords] =  useState({ lat: 0, lng: 0 });
     const dispatch = useDispatch();
-
-    useEffect(() => { 
-      dispatch(startLocationAction()) 
-    }, [dispatch])
+    const createMarkerInit = createMarker(map, dispatch);
+    const userLocationCoords = useUserLocalization();
+    const destinationCoords = useDestinationLocation(props.destinations);
 
     useEffect(() => {
       const layer = layerWithTheme(theme); 
       if(map && layer) map.setBaseLayer(layer); 
     }, [theme])
 
-    const destination: WikiDestination | undefined = useSelector((state: Store) => { 
-        if(state.getDestination.loading !== false) return;
-        return state.getDestination.destination;                                                         //  destination?.name === state.getDestination.destination.name                                                                                //setDestination(state.getDestination.destination)  
-    })
-
-    useEffect(() => { 
-        if(!destination || !props.destinations) return;  
-
-        const { coordinates } = destination;
- 
-        if(isNotNumber(coordinates?.lat) || isNotNumber(coordinates?.lng)){ 
-              dispatch({
-                type: "FIND_DESTINATION",
-                payload: destination.name 
-              }) 
-          }else {        
-              setCoords({
-                lat: coordinates?.lat,
-                lng: coordinates?.lat
-              });    
-          }             
-    }, [destination?.name]);  
-
-    const destinationCoords = useSelector((state: Store) => { 
-      console.log("destinationCoords",state.getDestinationList.destination);     
-      return state.getDestinationList.destination;
-    });
-
-    useEffect(() => { 
-        if(!destinationCoords) return;
-        setCoords({
-          lat: destinationCoords.lat as number,
-          lng: destinationCoords.lat as number
-        });    
+    useEffect(() => {
+      if(!map) return;
+      createMarkerInit(destinationCoords, createDestinationMarkerIcon()) 
     }, [destinationCoords])
-
 
     useEffect(() => { 
       if(!map) return;
-      createMarker(userLocationCoords, createHomeMarker());   
+      createMarkerInit(userLocationCoords, createHomeMarkerIcon());   
     }, [userLocationCoords])
-
-    useEffect(() => {
-      const unsetCoords: boolean = isNotNumber(coords.lat) || isNotNumber(coords.lng);
-      if(!map || unsetCoords) return;
-      createMarker(coords, createDestinationMarker()) 
-      map.setCenter(coords); 
-      map.setZoom(5);  
-    }, [coords])
-
-    const currentLocation = useSelector((state: Store) => { 
-      return state.getCoordinates;
-    });
-  
-    useEffect(() => {
-        setUserLocationCoords(currentLocation);  
-    }, [currentLocation])
-
-    // unused for now
-    const handleMapViewChange = (e: Event): void => {    
-      if(!isMapEvent(e, "mapviewchange")) return;         
-      if (!(e.newValue && e.newValue.lookAt)) return; 
-      const lookAt = e.newValue.lookAt;
-      const lat = Math.trunc(lookAt.position.lat * 1E7) / 1E7;
-      const lng = Math.trunc(lookAt.position.lng * 1E7) / 1E7;
-      const zoom = Math.trunc(lookAt.zoom * 1E2) / 1E2;
-      if(!setCoords) return;
-      setCoords({
-          lat,
-          lng,
-      })               
-    }
-
+ 
     const onChangeTheme = (e: MouseEvent<HTMLImageElement, globalThis.MouseEvent>) => {
       const themeElement = e.target as HTMLImageElement;    
       setTheme(themeElement.id)
@@ -128,25 +60,6 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
             content: err as Error
           }))     
         }      
-    }
-
-    const createMarker = (coords: { lat: number; lng: number; }, marker: H.map.DomIcon): void  => { 
-        try{ 
-            const unsetCoords: boolean = !coords.lat && !coords.lng;
-            if(!map || unsetCoords) return;
-            const bearsMarker: H.map.Object = new H.map.DomMarker(coords, {
-              icon: marker
-            });
-            map.addObject(bearsMarker); 
-            map.setCenter(coords); 
-            map.setZoom(5);
-        }
-        catch (err){
-            dispatch(errorActionCreator({
-              message: "Error when setting map params in setMarker function",
-              content: err as Error
-            }))    
-        }
     }
     
     return (

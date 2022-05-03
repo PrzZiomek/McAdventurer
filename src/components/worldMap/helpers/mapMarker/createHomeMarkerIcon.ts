@@ -1,7 +1,7 @@
-import { setStyles } from "../helpers/setStyles";
+import { setStyles } from "../setStyles";
 
 
-export const createHomeMarker = () => {
+export const createHomeMarkerIcon = () => {
    const element = document.createElement('div');
    const wrapper = document.createElement('div');
 

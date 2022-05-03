@@ -1,7 +1,7 @@
-import { setStyles } from "../helpers/setStyles";
+import { setStyles } from "../setStyles";
 
 
-export const createDestinationMarker = () => {
+export const createDestinationMarkerIcon = () => {
     const outerElement = document.createElement('div');
     const innerElement = document.createElement('div');
     const pin = document.createElement('div');
@@ -76,7 +76,7 @@ export const createDestinationMarker = () => {
     }
   });
 
-  return domIcon
+ return domIcon;
 }
 
 
