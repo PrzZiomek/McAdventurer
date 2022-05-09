@@ -18,6 +18,7 @@ const combinedDestinationsRequest = async (req, res, next) => {
     }
     const mergedDestsList = [...destinationsList, ...checkedDestinations];
     const combinedDestsLists = combineDests(mergedDestsList);
+    console.log("combinedDestsLists", combinedDestsLists);
     res.status(200).send(combinedDestsLists);
 };
 exports.combinedDestinationsRequest = combinedDestinationsRequest;

@@ -13,4 +13,3 @@ export const reducers = combineReducers({
    getCoordinates
 })
 
-//export type RootState = ReturnType<typeof reducers>

@@ -19,7 +19,7 @@ const destinationRequest = async (req, res, next) => {
         const destination = await destinations
             .getOne(name)
             .catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
-        if (destination) { //console.log({lat: destination.LAT, lng: destination.LNG});   ???
+        if (destination) {
             res.status(200).json({
                 destination: {
                     name: destination.NAME,
@@ -33,7 +33,6 @@ const destinationRequest = async (req, res, next) => {
             });
         }
         else {
-            console.log("else????");
             return res.status(422).send({
                 message: "database error"
             });

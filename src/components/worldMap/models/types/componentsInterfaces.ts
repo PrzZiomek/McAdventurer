@@ -3,7 +3,7 @@ import { DestinationNameAndPos } from "../../../../generalTypes/apiResponse";
 
 export namespace I {
 
-   export interface WorldMap{
+   export interface WorldMap {
         destinations: DestinationNameAndPos[] | undefined;
         mapParams?: H.geo.IPoint;
         coords?: {
@@ -33,10 +33,15 @@ export namespace I {
 
     export interface DestinationBrowser{
       destinations: DestinationNameAndPos[] | undefined;
-      setShowPanel: Dispatch<SetStateAction<boolean>>
+      setShowPanel?: Dispatch<SetStateAction<boolean>>
     }
   
     export interface MapThemesMenu{
       onChangeTheme: MouseEventHandler<HTMLImageElement>;
+    }
+
+    export interface DetailsPanel{
+      render: (data: any) => JSX.Element,
+      showPanel?: boolean;
     }
 }
