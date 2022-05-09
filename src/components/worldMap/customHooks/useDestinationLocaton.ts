@@ -17,7 +17,7 @@ export function useDestinationLocation(destinations: DestinationNameAndPos[] | u
   });
 
   useEffect(() => { 
-      if(!destinationCoords || isNotNumber(destinationCoords.lat) || isNotNumber(destinationCoords.lng)) return;
+      if(!destinationCoords || isNotNumber(destinationCoords.lat) || isNotNumber(destinationCoords.lng)) return; console.log("swcond cords", destinationCoords);
       setCoords({
         lat: +destinationCoords.lat,
         lng: +destinationCoords.lng 
@@ -31,6 +31,7 @@ export function useDestinationLocation(destinations: DestinationNameAndPos[] | u
 
   useEffect(() => { 
       if(!destination || !destinations) return;  
+console.log("coordinates", destination.coordinates);
 
       const { coordinates } = destination;
   

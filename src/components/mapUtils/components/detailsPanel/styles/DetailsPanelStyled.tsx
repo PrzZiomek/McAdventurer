@@ -1,17 +1,17 @@
 import styled from "styled-components";
-import { panelColor } from "../../../styles/themes/accessors";
-import { Div } from "../../../ui/Div";
+
+import { Div } from "../../../../../ui/Div";
+import { panelColor } from "../../../../../styles/themes/accessors";
 
 
-export const MapUtilsStyled = styled(Div)`
+export const DetailsPanelStyled = styled(Div)`
     position: absolute;
     width: 100vw;     // ${(props) => props.showPanel === true ? "100%" : 0};    
   //  min-width: 600px;
     min-height: 300px;
-    height: 30vh;
-   // min-height: ${(props) => props.showPanel === true ? "400px" : 0};
     left: 0;
-    bottom: ${(props) => props.showPanel === false ? "-30vh" : 0 };
+    bottom: ${(props) => { console.log("DetailsPanelStyled", props.showPanel);
+     return props.showPanel === false ? "-300px" : 0 }};
     z-index: 1;
     color:  ${panelColor("text")};
     border-top-right-radius: 20px;
@@ -36,7 +36,6 @@ export const MapUtilsStyled = styled(Div)`
         width: 350px;
     }
     
-   // High-res laptop or desktop: 1920 x 1080
 `;
 
 

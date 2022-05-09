@@ -1,5 +1,5 @@
 import { DestinationNameAndPos } from "../../generalTypes/apiResponse";
-import { FETCH_FAIL_DEST_LIST, FETCH_START_DEST_LIST, FETCH_SUCCESS_DEST_LIST } from "../actions/actionTypes";
+import { FETCH_FAIL_DEST_LIST, FETCH_START_DEST_LIST, FETCH_SUCCESS_DEST_LIST, FIND_DESTINATION } from "../actions/actionTypes";
 
 type Action = {
    type:string,
@@ -35,12 +35,12 @@ export const getDestinationList = (state = initialState, action: Action) => {
            return {
                ...state,
                loading: false,
-               destinations: {},
+               destinations: {}, 
                error: action.payload
            }
-        case "FIND_DESTINATION": console.log("payload", action.payload);      
+        case FIND_DESTINATION:  
              return { 
-                destination: state.destinations.find(dest => dest.name.toLowerCase  === action.payload.toLowerCase)
+                destination: state.destinations.find(dest => dest.name.toLowerCase()  === action.payload.toLowerCase())
            }
        default:
            return state;

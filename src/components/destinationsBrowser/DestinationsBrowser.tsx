@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { callApiForDestination } from "../../api/callApiForDestination";
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
 import { DestinationNameAndPos } from "../../generalTypes/apiResponse";
-import { I } from "../worldMap/models/types/componentTypes";
+import { I } from "../worldMap/models/types/componentsInterfaces";
 import { DestinationsHintsList } from "./components/destinationsHintsList";
 import { BrowserInputStyled, InputButtonStyled, DestinationsBrowserStyled} from "./styles/destinationBrowserStyle";
 
@@ -23,7 +23,7 @@ export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
         const input = e.currentTarget;
         const value = input.value.toLowerCase();
         setInputTypedValue(value);
-        if(!props.destinations?.length) return;   
+        if(props.destinations === undefined) return;   
 
         const pickIfMatch = ({name}: {name: string}): boolean | undefined => { 
             for(let i = 30; i > 0; i--){
@@ -38,7 +38,8 @@ export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
             .filter(pickIfMatch)
             .slice(0, 30);              
 
-        setFiltered(filtered);       
+        setFiltered(filtered);      
+       // console.log("props.destinations, ", props.destinations);
     }
 
     const handleSearchClick = (e: MouseEvent<HTMLElement>): void => { 
@@ -46,7 +47,7 @@ export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
         const valueCapitalized: string = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase());    
         const destination: string =  valueCapitalized;  
         setDestinastion(destination);
-        props.setShowPanel(true);
+    //    props.setShowPanel(true);
         setChangeBorder(true);
     }
 

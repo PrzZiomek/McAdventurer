@@ -6,15 +6,16 @@ const Destination_1 = require("../../models/Destination");
 const enums_1 = require("../../models/enums");
 const destinationListRequest = async (req, res, next) => {
     const destination = new Destination_1.Destinations();
-    const allAestination = await destination
+    const allDestination = await destination
         .getAll(enums_1.Table.Destinations_list)
         .catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
-    if (!allAestination) {
+    console.log("destinationListRequest", allDestination);
+    if (!allDestination) {
         return res.status(422).send({
             message: "database connection error"
         });
     }
-    res.locals.destinationsList = allAestination;
+    res.locals.destinationsList = allDestination;
     next();
 };
 exports.destinationListRequest = destinationListRequest;

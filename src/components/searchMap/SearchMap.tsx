@@ -30,14 +30,13 @@ export const SearchMap: React.FC = () => {
     useEffect(() => { 
         dispatch(errorMonitAction(errors));
     }, [errors.length])
-
     
-    const destinationList: DestinationNameAndPos[] | undefined = useSelector((state: Store) => { 
-        if(state.getDestinationList.loading !== false) return;
+    const destinationList: DestinationNameAndPos[] | undefined = useSelector((state: Store) => { console.log("state.getDestinationList", state.getDestinationList);
+        if(state.getDestinationList.loading !== false) return; 
         return state.getDestinationList.destinations;                                   
     });
 
-    const errorInformation = (): JSX.Element | null => {
+    const errorInformation = (): JSX.Element | null => { 
         let Information: JSX.Element | null = null; 
         if(!errors) return null;
 
@@ -51,7 +50,10 @@ export const SearchMap: React.FC = () => {
     }
 
     const destList: DestinationNameAndPos[] = destinationList?.length ? destinationList : []; 
- 
+    
+    console.log("destinationList", destinationList);
+    console.log("destList", destList);
+    
     return  ( 
 
             <SearchMapStyled id="mapWrapper">   

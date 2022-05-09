@@ -7,7 +7,7 @@ import { useCreateMap } from "./customHooks/useCreateMap";
 import { createMarker } from "./helpers/createMarker";
 import { createDestinationMarkerIcon } from "./helpers/mapMarker/createDestinationMarkerIcon";
 import { createHomeMarkerIcon } from "./helpers/mapMarker/createHomeMarkerIcon";
-import { I } from "./models/types/componentTypes";
+import { I } from "./models/types/componentsInterfaces";
 import { MapStyled } from "./styles/worldMapStyles";
 import { useDestinationLocation } from "./customHooks/useDestinationLocaton";
 
@@ -71,8 +71,7 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
 
              <MapThemesMenu onChangeTheme={onChangeTheme}/>
           */
-        }
-       
+        }      
       </>
     )
   }
