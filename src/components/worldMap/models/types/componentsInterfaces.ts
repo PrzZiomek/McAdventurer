@@ -35,6 +35,12 @@ export namespace I {
       destinations: DestinationNameAndPos[] | undefined;
       setShowPanel?: Dispatch<SetStateAction<boolean>>
     }
+
+    export interface DestinationsHints {
+      setInputTypedValue: Dispatch<SetStateAction<string>>;
+      setFiltered: Dispatch<SetStateAction<DestinationNameAndPos[]>>; 
+      filtered: DestinationNameAndPos[];
+    }
   
     export interface MapThemesMenu{
       onChangeTheme: MouseEventHandler<HTMLImageElement>;

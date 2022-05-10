@@ -11,8 +11,7 @@ export function* getDestinationsList(){
       const destList: Promise<void | DestinationNameAndPos[]> = yield fetchDestinationsList();
       yield put(successFetchDestListAction(destList))
    }
-   catch(err){
-      
+   catch(err){      
       yield put(failFetchDestListAction({
          message: "error when making destinations list request",
          content: err as Error

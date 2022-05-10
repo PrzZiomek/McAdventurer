@@ -1,11 +1,11 @@
-import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEvent, Dispatch, SetStateAction } from "react";
+import {  useState,  ChangeEvent, MouseEvent, FC } from "react";
 import { useDispatch } from "react-redux";
 
 import { callApiForDestination } from "../../api/callApiForDestination";
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
 import { DestinationNameAndPos } from "../../generalTypes/apiResponse";
 import { I } from "../worldMap/models/types/componentsInterfaces";
-import { DestinationsHintsList } from "./components/destinationsHintsList";
+import { DestinationsHints } from "./components/DestinationsHints";
 import { BrowserInputStyled, InputButtonStyled, DestinationsBrowserStyled} from "./styles/destinationBrowserStyle";
 
 
@@ -19,12 +19,20 @@ export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
 
     useDidMountEffect(() => dispatch(callApiForDestination(destination)), [destination])
 
+    const handleSearchClick = (e: MouseEvent<HTMLElement>): void => { 
+        if(inputTypedValue.length < 1) return;
+        const valueCapitalized: string = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase());    
+        const destination: string =  valueCapitalized;  
+        setDestinastion(destination);
+        setChangeBorder(true);
+    }
+  
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const input = e.currentTarget;
         const value = input.value.toLowerCase();
         setInputTypedValue(value);
         if(props.destinations === undefined) return;   
-
+    
         const pickIfMatch = ({name}: {name: string}): boolean | undefined => { 
             for(let i = 30; i > 0; i--){
                 if(value.length > i){    
@@ -33,48 +41,28 @@ export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
                 } 
             }        
         };     
-
+    
         const filtered: DestinationNameAndPos[] = props.destinations
             .filter(pickIfMatch)
             .slice(0, 30);              
-
+    
         setFiltered(filtered);      
-       // console.log("props.destinations, ", props.destinations);
+        // console.log("props.destinations, ", props.destinations);
     }
-
-    const handleSearchClick = (e: MouseEvent<HTMLElement>): void => { 
-        if(inputTypedValue.length < 1) return;
-        const valueCapitalized: string = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase());    
-        const destination: string =  valueCapitalized;  
-        setDestinastion(destination);
-    //    props.setShowPanel(true);
-        setChangeBorder(true);
-    }
-
-    const handleHintClick = (e: MouseEvent<HTMLButtonElement>): void => {
-        const button = e.currentTarget;
-        const destinationName = button.querySelector("span")!.textContent; //console.log("txtcont", destinationName);
-        if(!destinationName) return;
-        setInputTypedValue(destinationName);
-        setFiltered([]);
-    }
-
-    const showHints: JSX.Element | null = filtered.length ? 
-        <DestinationsHintsList
-            handleClick={handleHintClick} 
-            destinations={filtered} 
-            showHints={false}
-        /> : null; 
       
     return (
         <DestinationsBrowserStyled changeBorder={changeBorder}> 
-             <BrowserInputStyled 
-                id="browserInput"
-                onChange={handleChange}
-                value={inputTypedValue}
+            <BrowserInputStyled 
+                  id="browserInput"
+                  onChange={handleChange}
+                  value={inputTypedValue}
             />       
             <InputButtonStyled handleClick={handleSearchClick}>search</InputButtonStyled>
-            {showHints}
+            <DestinationsHints
+                setInputTypedValue={setInputTypedValue}
+                setFiltered={setFiltered}
+                filtered={filtered}
+            />
         </DestinationsBrowserStyled>
     )
 }
