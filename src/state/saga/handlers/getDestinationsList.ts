@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 import { fetchDestinationsList } from "../../../api/fetchDestinationsList";
-import { DestinationNameAndPos } from "../../../generalTypes/apiResponse";
+import { Destination } from "../../../generalTypes/apiResponse";
 import { failFetchDestListAction, successFetchDestListAction } from "../../actions/fetchDestinationActions";
 
 
@@ -8,7 +8,7 @@ import { failFetchDestListAction, successFetchDestListAction } from "../../actio
 export function* getDestinationsList(){
 
    try{
-      const destList: Promise<void | DestinationNameAndPos[]> = yield fetchDestinationsList();
+      const destList: Promise<void | Destination[]> = yield fetchDestinationsList();
       yield put(successFetchDestListAction(destList))
    }
    catch(err){      

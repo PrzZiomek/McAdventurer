@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { callApiForDestination } from "../../api/callApiForDestination";
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
-import { DestinationNameAndPos } from "../../generalTypes/apiResponse";
+import { Destination } from "../../generalTypes/apiResponse";
 import { I } from "../worldMap/models/types/componentsInterfaces";
 import { DestinationsHints } from "./components/DestinationsHints";
 import { BrowserInputStyled, InputButtonStyled, DestinationsBrowserStyled} from "./styles/destinationBrowserStyle";
@@ -11,7 +11,7 @@ import { BrowserInputStyled, InputButtonStyled, DestinationsBrowserStyled} from 
 
 export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
 
-    const [filtered, setFiltered] = useState<DestinationNameAndPos[]>([]);
+    const [filtered, setFiltered] = useState<Destination[]>([]);
     const [inputTypedValue, setInputTypedValue] = useState<string>("");
     const [destination, setDestinastion] = useState<string>("");
     const [changeBorder, setChangeBorder] = useState(false); 

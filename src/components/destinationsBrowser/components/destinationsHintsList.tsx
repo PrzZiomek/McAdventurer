@@ -1,10 +1,10 @@
 import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEvent, Dispatch, SetStateAction } from "react";
-import { DestinationNameAndPos } from "../../../generalTypes/apiResponse";
+import { Destination } from "../../../generalTypes/apiResponse";
 import { HintsButtonStyled } from "../styles/hintsButtonStyled";
 import { HintsListStyles } from "../styles/hintsListStyles";
 
 interface DestinationsHintsListProps {
-   destinations: DestinationNameAndPos[];
+   destinations: Destination[];
    handleClick(e: MouseEvent<HTMLButtonElement>): void;
    showHints: boolean;
 }

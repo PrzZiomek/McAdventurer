@@ -1,3 +1,4 @@
+import { Reducer } from "redux";
 import { SET_ERROR } from "../actions/actionTypes";
 
 type Action = { 
@@ -9,7 +10,7 @@ type Action = {
 };
 
 type InitialState = {
-   error: Error | null, 
+   error: Error | null | { message?: string; content: object }, 
    isError: boolean
  };
 
@@ -19,7 +20,7 @@ const initialState: InitialState = {
   isError: false
 };
 
-export const getErrors = (state = initialState, action: Action) => {
+export const getErrors: Reducer<InitialState, Action> = (state = initialState, action: Action) => {
    switch (action.type){
       case SET_ERROR: 
          return {
