@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { DestinationNameAndPos, WikiDestination } from "../../../generalTypes/apiResponse";
+import { Destination, WikiDestination } from "../../../generalTypes/apiResponse";
 import { FIND_DESTINATION } from "../../../state/actions/actionTypes";
 import { Store } from "../../../state/types";
 import { isNotNumber } from "../../../utils/isNotNumber";
 
 
-export function useDestinationLocation(destinations: DestinationNameAndPos[] | undefined): { lat: number; lng: number; } {
+export function useDestinationLocation(destinations: Destination[] | undefined): { lat: number; lng: number; } {
 
   const dispatch = useDispatch();
 

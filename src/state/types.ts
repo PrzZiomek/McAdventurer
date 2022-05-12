@@ -1,4 +1,4 @@
-import { DestinationNameAndPos, WikiDestination } from "../generalTypes/apiResponse";
+import { Destination, WikiDestination } from "../generalTypes/apiResponse";
 
 export interface GetDestinationReducer {
    error: Error | null;
@@ -10,8 +10,8 @@ export interface GetDestinationReducer {
 export interface GetDestinationListReducer{
       error: Error | null;
       isFetching: boolean;
-      destinations: DestinationNameAndPos[];
-      destination: DestinationNameAndPos;
+      destinations: Destination[];
+      destination: Destination;
       loading: boolean
 }
 

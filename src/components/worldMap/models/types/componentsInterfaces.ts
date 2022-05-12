@@ -1,10 +1,10 @@
 import { Dispatch, MouseEventHandler, SetStateAction } from "react";
-import { DestinationNameAndPos } from "../../../../generalTypes/apiResponse";
+import { Destination } from "../../../../generalTypes/apiResponse";
 
 export namespace I {
 
    export interface WorldMap {
-        destinations: DestinationNameAndPos[] | undefined;
+        destinations: Destination[] | undefined;
         mapParams?: H.geo.IPoint;
         coords?: {
           lat: number;
@@ -22,24 +22,24 @@ export namespace I {
       }
 
     export interface Panel{
-        destinations: DestinationNameAndPos[] | undefined;
+        destinations: Destination[] | undefined;
         setShowPanel: Dispatch<SetStateAction<boolean>>
         showPanel: boolean;
     }
 
     export interface MapUtils {
-      destinations: DestinationNameAndPos[] | undefined;
+      destinations: Destination[] | undefined;
    }
 
     export interface DestinationBrowser{
-      destinations: DestinationNameAndPos[] | undefined;
+      destinations: Destination[] | undefined;
       setShowPanel?: Dispatch<SetStateAction<boolean>>
     }
 
     export interface DestinationsHints {
       setInputTypedValue: Dispatch<SetStateAction<string>>;
-      setFiltered: Dispatch<SetStateAction<DestinationNameAndPos[]>>; 
-      filtered: DestinationNameAndPos[];
+      setFiltered: Dispatch<SetStateAction<Destination[]>>; 
+      filtered: Destination[];
     }
   
     export interface MapThemesMenu{

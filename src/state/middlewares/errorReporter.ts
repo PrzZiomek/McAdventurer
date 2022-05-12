@@ -14,7 +14,7 @@ export type Middleware<T, U extends AnyAction> =
   (action: U) => ReturnType<Dispatch<U>>
 ;
 
-export const errorReporter: Middleware<Store, object & {type: string}> = (store) => (next) => (action) => {
+export const errorReporter: Middleware<Store, object & {type: string}> = (_) => (next) => (action) => {
    try { 
       if(action.type === "ERROR_MONIT"){
          const errorsAction = (action as ActionErrObj).errors as ErrorsCollection;

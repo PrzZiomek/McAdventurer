@@ -46,4 +46,7 @@ module.exports = {
    // })
   ],
   stats: 'errors-only',
+  testMatch: [
+    '<rootDir>/src/**/*.test.ts',
+  ]
 }

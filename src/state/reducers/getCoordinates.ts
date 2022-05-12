@@ -1,3 +1,4 @@
+import { Reducer } from "redux";
 import { SET_COORDINATES } from "../actions/actionTypes";
 
 type Action = {
@@ -19,7 +20,7 @@ const initialState: InitialState = {
   lat: 0
 }
 
-export const getCoordinates = (state = initialState, action: Action) => {
+export const getCoordinates: Reducer<InitialState, Action> = (state = initialState, action: Action) => {
    switch (action.type){
        case SET_COORDINATES:
            return{
