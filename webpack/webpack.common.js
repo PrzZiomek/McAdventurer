@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const { LoaderOptionsPlugin } = require('webpack')
 
 module.exports = {
   entry: path.resolve(__dirname, '..', './src/index.tsx'),
@@ -41,12 +42,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '..', './src/index.html'),
     }),
-  //  new CopyPlugin({
-     // patterns: [{ from: 'source', to: 'dest' }]
-   // })
+    new LoaderOptionsPlugin({
+      // test: /\.xxx$/, // may apply this only for some modules
+      options: {
+        testMatch: [
+          '<rootDir>/src/**/**/*.test.ts',
+        ]
+      }
+    })
   ],
   stats: 'errors-only',
-  testMatch: [
-    '<rootDir>/src/**/*.test.ts',
-  ]
+ 
 }
