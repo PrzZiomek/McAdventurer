@@ -1,14 +1,13 @@
-import { assert } from "console";
-import { put } from "redux-saga/effects";
+import { put, PutEffect } from "redux-saga/effects";
 import { locationAction } from "../../actions/currentLocationAction";
 
+type OutgoingValue =  Promise<unknown> | PutEffect<{type: string; payload: object;}>
 
-export function* getCoordinates(): Generator {
+
+export function* getCoordinates(): Generator<OutgoingValue, void, GeolocationPosition> {
 
   try{
-    const pos = yield currentLocationResponse() 
-    const geoPosition = pos as GeolocationPosition;
-  
+    const geoPosition = yield currentLocationResponse(); 
     const lat: number = geoPosition.coords.latitude;
     const lng: number = geoPosition.coords.longitude;
     
@@ -20,11 +19,10 @@ export function* getCoordinates(): Generator {
 }
 
 
-function currentLocationResponse(){
+export function currentLocationResponse(){
     return new Promise((res, rej) => {
       navigator.geolocation.getCurrentPosition(res, rej);
     })
 }
 
 
-assert.

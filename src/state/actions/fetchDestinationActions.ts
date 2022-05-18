@@ -1,3 +1,4 @@
+import { Destination } from "../../generalTypes/apiResponse"
 import { 
    FETCH_FAIL_DEST,
    FETCH_FAIL_DEST_LIST,
@@ -27,12 +28,12 @@ export const startFetchDestListAction = () => ({
    type: FETCH_START_DEST_LIST
 })
 
-export const failFetchDestListAction = (err: {message: string, content: Error}) => ({
+export const failFetchDestListAction = (err: { message: string, content: Error }) => ({
    type: FETCH_FAIL_DEST_LIST,
    payload: err
 })
 
-export const successFetchDestListAction = (res: object) => ({
+export const successFetchDestListAction = (res: Destination[]) => ({
    type: FETCH_SUCCESS_DEST_LIST,
    payload: res
 })

@@ -8,5 +8,4 @@ import { getDestinationsList } from "./handlers/getDestinationsList";
 export function* sagasWatcher(){
    yield takeLatest(START_COORDINATES_LOADING, getCoordinates)
    yield takeLatest(FETCH_START_DEST_LIST, getDestinationsList);
-   
 }
