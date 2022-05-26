@@ -16,7 +16,7 @@ describe("testing destinationsList state", () => {
 
       return expectSaga(<SagaType>getDestinationsListMocked, fetchDestinations)
          .provide([
-            [call(fetchDestinations), destinations]
+            [matchers.call.fn(fetchDestinations), destinations]
          ])
          .put(successFetchDestListAction(destinations))
          .dispatch(startFetchDestListAction())

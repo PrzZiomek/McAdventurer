@@ -1,13 +1,16 @@
-import React, { FC, useState } from "react"
+ import { useState, FC, useEffect, useRef, MutableRefObject, Dispatch, MouseEvent } from "react"
+import { useDispatch } from "react-redux";
+
 import { I } from "../worldMap/models/types/componentsInterfaces";
 import { ThemesToggleBar } from "./components/ThemesToggleBar";
 import { Theme } from "./models/Theme";
 import { ThemesMenu, MapThemesMenuStyled } from "./styles/mapThemesMenuStyles";
 
 
-export const MapThemesMenu:FC<I.MapThemesMenu> = (props) => {
+export const MapThemesMenu:FC = () => {
 
     const [toggleState, setToggler] = useState(false);
+    const dispatch = useDispatch();
 
     const themes = [
         'normal.day',
@@ -21,11 +24,17 @@ export const MapThemesMenu:FC<I.MapThemesMenu> = (props) => {
         'pedestrian.day',
         
     ];
+
+    const onChangeTheme = (e: MouseEvent<HTMLImageElement, globalThis.MouseEvent>) => {
+        const themeElement = e.target as HTMLImageElement;    
+        dispatch({type: "SET_MAP_THEME", payload:  themeElement.id})
+      }
+
     const thumbnails: JSX.Element[] = themes.map((theme, key) => // TO MEMO (?)
         <Theme 
             theme={theme}
             key={key} 
-            onChangeTheme={props.onChangeTheme}
+            onChangeTheme={onChangeTheme}
         />);
         
     return (

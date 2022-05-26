@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { SET_COORDINATES } from "../actions/actionTypes";
+import { FAIL_COORDINATES_LOADING, SET_COORDINATES } from "../actions/actionTypes";
 
 type Action = {
    type:string,
@@ -28,6 +28,13 @@ export const getCoordinates: Reducer<InitialState, Action> = (state = initialSta
               lat: action.payload.lat,
               lng: action.payload.lng
            };
+        case FAIL_COORDINATES_LOADING:
+            return {
+                ...state,
+                lat: 0,
+                lng: 0, 
+                error: action.payload
+            }
        default:
            return { 
                ...state
