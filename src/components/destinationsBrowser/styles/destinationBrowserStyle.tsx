@@ -57,12 +57,12 @@ export const InputButtonStyled = styled(Button)`
       font-size: 1rem;
       border: none;
       background-color: transparent;
-      transition: 0.2s;
+      transition: 0.3s;
       letter-spacing: 1px;
 
       &:hover{
         color: #C7C7A9;
-    }
+      }
 
      //  Tablet: >= 768 x 1024 <=
      @media (min-width: 768px){

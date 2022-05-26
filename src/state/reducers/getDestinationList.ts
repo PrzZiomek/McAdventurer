@@ -38,8 +38,7 @@ export const getDestinationList: Reducer<InitialState, Action> = (state = initia
                loading: false,
                destinations: [], 
                error: action.payload
-           }
-           
+           }      
        default:
            return state;
    }

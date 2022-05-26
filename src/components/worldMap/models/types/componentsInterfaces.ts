@@ -42,10 +42,6 @@ export namespace I {
       filtered: Destination[];
     }
   
-    export interface MapThemesMenu{
-      onChangeTheme: MouseEventHandler<HTMLImageElement>;
-    }
-
     export interface DetailsPanel{
       render: (data: any) => JSX.Element,
       showPanel?: boolean;

@@ -10,17 +10,22 @@ import { createHomeMarkerIcon } from "./helpers/mapMarker/createHomeMarkerIcon";
 import { I } from "./models/types/componentsInterfaces";
 import { MapStyled } from "./styles/worldMapStyles";
 import { useDestinationLocation } from "./customHooks/useDestinationLocaton";
+import { Store } from "../../state/types";
 
 
-export const WorldMap: FC<I.WorldMap> = (props) => {
+ const WorldMap: FC<I.WorldMap> = (props) => {
 
     const mapRef: MutableRefObject<null> = useRef(null);
-    const [theme, setTheme] = useState<string>("normal.day");
+  //  const [theme, setTheme] = useState<string>("normal.day");
     const [map, platform]: [H.Map | undefined, H.service.Platform | undefined]  = useCreateMap(mapRef);
     const dispatch = useDispatch();
     const createMarkerInit = createMarker(map, dispatch);
     const userLocationCoords = useUserLocalization();
     const destinationCoords = useDestinationLocation(props.destinations);
+
+    const theme = useSelector((store: Store) => {
+      return store.getMapTheme.theme;
+    })
 
     useEffect(() => {
       const layer = layerWithTheme(theme); 
@@ -36,11 +41,6 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
       if(!map) return;
       createMarkerInit(userLocationCoords, createHomeMarkerIcon());   
     }, [userLocationCoords])
- 
-    const onChangeTheme = (e: MouseEvent<HTMLImageElement, globalThis.MouseEvent>) => {
-      const themeElement = e.target as HTMLImageElement;    
-      setTheme(themeElement.id)
-    }
 
     const layerWithTheme = (theme: string): H.map.layer.TileLayer | undefined => { 
         try{
@@ -64,16 +64,10 @@ export const WorldMap: FC<I.WorldMap> = (props) => {
     
     return (
       <>
-        <MapStyled mapRef={mapRef} ></MapStyled>
-        {
-          /*
-            to move off when new panel will be created
-
-             <MapThemesMenu onChangeTheme={onChangeTheme}/>
-          */
-        }      
+        <MapStyled mapRef={mapRef} />
       </>
     )
   }
 
+  export default WorldMap;
        

@@ -6,20 +6,17 @@ import { panelColor } from "../../../../../styles/themes/accessors";
 
 export const DetailsPanelStyled = styled(Div)`
     position: absolute;
-    width: 100vw;     // ${(props) => props.showPanel === true ? "100%" : 0};    
-  //  min-width: 600px;
+    width: 100vw;   
     min-height: 300px;
-    left: 0;
-    bottom: ${(props) => { console.log("DetailsPanelStyled", props.showPanel);
-     return props.showPanel === false ? "-300px" : 0 }};
+    left: 18px;
+    bottom: ${(props) => props.showPanel === false ? "-300px" : 0 };
     z-index: 1;
     color:  ${panelColor("text")};
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
     background-color: ${panelColor("background")}; 
     transition: 0.5s;
-    box-shadow: 3px 0px 10px ${panelColor("text")}; 
-    color: #3e3e28;
+    box-shadow: inset 0 0 8px ${panelColor("text")}; 
     background-color: #F7F7F3; 
 
     .toggleBar{
@@ -33,7 +30,7 @@ export const DetailsPanelStyled = styled(Div)`
     }
 
     @media (min-width: 1024px){
-        width: 350px;
+        width: 400px;
     }
     
 `;

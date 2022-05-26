@@ -1,5 +1,5 @@
 import { put, PutEffect } from "redux-saga/effects";
-import { locationAction } from "../../actions/currentLocationAction";
+import { failLocationAction, locationAction } from "../../actions/currentLocationAction";
 
 type OutgoingValue =  Promise<unknown> | PutEffect<{type: string; payload: object;}>
 
@@ -14,7 +14,10 @@ export function* getCoordinates(): Generator<OutgoingValue, void, GeolocationPos
     yield put(locationAction({lat, lng}))
   }
   catch(err){
-      console.log("error when getting user geolocation: ", err);     
+    yield put(failLocationAction({
+      message: "geolocation coordinates not obtained",
+      content: err as Error
+   }))    
   } 
 }
 

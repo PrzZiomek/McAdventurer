@@ -42,7 +42,7 @@ export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
             }        
         };     
     
-        const filtered: DestinationNameAndPos[] = props.destinations
+        const filtered: Destination[] = props.destinations
             .filter(pickIfMatch)
             .slice(0, 30);              
     

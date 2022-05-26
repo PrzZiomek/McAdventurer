@@ -1,16 +1,25 @@
-import React, { Dispatch, useEffect, useState } from "react"
+import React, { Dispatch, ExoticComponent, FC, LazyExoticComponent, PropsWithChildren, ReactElement, Suspense, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 
 import { SearchMapStyled } from "./styles/SearchMapStyles";
-import { WorldMap } from "../worldMap/WorldMap";
 import { ActionErrObj, ErrorsCollection, Store } from "../../state/types";
 import { startFetchDestListAction } from "../../state/actions/fetchDestinationActions";
 import { ErrorModal } from "./components/errorModal/errorModal";
-import { DestinationNameAndPos, WikiDestination } from "../../generalTypes/apiResponse";
 import { StoreProps } from "../../enums";
 import { errorMonitAction } from "../../state/actions/errorActions";
 import { errorCollector } from "../../utils/errorCollector";
 import { MapUtils } from "../mapUtils/MapUtils";
+import { Destination } from "../../generalTypes/apiResponse";
+import { I } from "../worldMap/models/types/componentsInterfaces";
+import world from "../worldMap/WorldMap";
+
+const WorldMap: LazyExoticComponent<FC<I.WorldMap>> = React.lazy(() => import("../worldMap/WorldMap"));
+
+const LazyWorldMap = (props: PropsWithChildren<I.WorldMap>) => (
+    <Suspense fallback={ <div>Loading the map...</div> }>
+        <WorldMap {...props}/>
+    </Suspense>
+)
 
 
 export const SearchMap: React.FC = () => {
@@ -31,7 +40,7 @@ export const SearchMap: React.FC = () => {
         dispatch(errorMonitAction(errors));
     }, [errors.length])
     
-    const destinationList: DestinationNameAndPos[] | undefined = useSelector((state: Store) => { console.log("state.getDestinationList", state.getDestinationList);
+    const destinationList: Destination[] | undefined = useSelector((state: Store) => { console.log("state.getDestinationList", state.getDestinationList);
         if(state.getDestinationList.loading !== false) return; 
         return state.getDestinationList.destinations;                                   
     });
@@ -49,10 +58,7 @@ export const SearchMap: React.FC = () => {
         return Information;
     }
 
-    const destList: DestinationNameAndPos[] = destinationList?.length ? destinationList : []; 
-    
-    console.log("destinationList", destinationList);
-    console.log("destList", destList);
+    const destList: Destination[] = destinationList?.length ? destinationList : [];  
     
     return  ( 
 
@@ -62,9 +68,9 @@ export const SearchMap: React.FC = () => {
 
                 <MapUtils destinations={destList} /> 
 
-                <WorldMap
+                <LazyWorldMap
                     destinations={destList}
-                />      
+                /> 
 
             </SearchMapStyled>  
      )

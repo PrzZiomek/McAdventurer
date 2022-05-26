@@ -1,4 +1,5 @@
 import { Destination, WikiDestination } from "../generalTypes/apiResponse";
+import { getMapTheme } from "./reducers/getMapTheme";
 
 export interface GetDestinationReducer {
    error: Error | null;
@@ -25,12 +26,17 @@ interface GetCoordinatesReducer{
       lat: number
 }
 
+interface GetMapThemeReducer{
+   theme: string,
+}
+
 export interface Store{
-   [key: string]: GetErrorsReducer | GetDestinationReducer | GetDestinationListReducer | GetCoordinatesReducer; 
+   [key: string]: GetErrorsReducer | GetDestinationReducer | GetDestinationListReducer | GetCoordinatesReducer | GetMapThemeReducer; 
    getDestination: GetDestinationReducer;
    getErrors: GetErrorsReducer,
    getDestinationList: GetDestinationListReducer,
-   getCoordinates: GetCoordinatesReducer
+   getCoordinates: GetCoordinatesReducer,
+   getMapTheme: GetMapThemeReducer
 }
 
 export type ErrorsCollection = { isError: true; content: Error; }[] & { isError: false; }[];
