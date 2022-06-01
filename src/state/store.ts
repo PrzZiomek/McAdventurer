@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import createSagaMiddleware from "@redux-saga/core";
 
 import { reducers } from "./reducers/mainReducer";
-import { sagasWatcher } from "./saga/rootSaga";
+import { sagasWatcher } from "./saga/sagasWatcher";
 import { errorReporter } from "./middlewares/errorReporter";
 
 

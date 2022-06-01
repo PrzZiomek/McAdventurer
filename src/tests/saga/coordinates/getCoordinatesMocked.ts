@@ -1,5 +1,5 @@
 import { call, CallEffect, put, PutEffect } from "redux-saga/effects";
-import { startLocationAction, locationAction, failLocationAction } from "../../../state/actions/currentLocationAction";
+import { startLocationAction, locationAction, failLocationAction } from "../../../state/actions/actions/currentLocation";
 import { coordinates, fetchCoordinates } from "../../data";
 
 type OutgoingValue = CallEffect<typeof coordinates> | PutEffect<{type: string; payload: object;}>

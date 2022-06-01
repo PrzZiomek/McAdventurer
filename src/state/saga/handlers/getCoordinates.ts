@@ -1,5 +1,5 @@
 import { put, PutEffect } from "redux-saga/effects";
-import { failLocationAction, locationAction } from "../../actions/currentLocationAction";
+import { failLocationAction, locationAction } from "../../actions/actions/currentLocation";
 
 type OutgoingValue =  Promise<unknown> | PutEffect<{type: string; payload: object;}>
 

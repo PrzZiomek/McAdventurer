@@ -2,8 +2,7 @@ import { FC, PropsWithChildren } from "react"
 import styled, { ThemedStyledProps } from "styled-components"
 
 import { Div, DivProps } from "../../../ui/Div"
-import { ToggleBar } from "../../../ui/ToggleBar"
-import { ToggleBarProps } from "../../../ui/types"
+
 
 type propsType = ThemedStyledProps<PropsWithChildren<DivProps> , any>
 

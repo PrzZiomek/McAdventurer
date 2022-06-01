@@ -1,4 +1,4 @@
-import { setErrorAction } from "../state/actions/errorActions";
+import { setErrorAction } from "../state/actions/actions/handleError";
 
 type Action = {
       type: string,

@@ -1,9 +1,9 @@
 import { call, CallEffect, put, PutEffect, take, TakeEffect, takeLatest } from 'redux-saga/effects';
 import { expectSaga, SagaType } from 'redux-saga-test-plan';
 import { sagasWatcherMocked } from './sagasWatcherMocked';
-import { successFetchDestListAction, startFetchDestAction, startFetchDestListAction } from '../../../state/actions/fetchDestinationActions';
+import { successFetchDestListAction, startFetchDestListAction } from '../../../state/actions/actions/fetchDestinationListActions';
 import { coordinates, destinations, fetchCoordinates, fetchDestinations } from '../../data';
-import { locationAction, startLocationAction } from '../../../state/actions/currentLocationAction';
+import { locationAction, startLocationAction } from '../../../state/actions/actions/currentLocation';
 
 
 describe("testing user coordinates state", () => {

@@ -1,9 +1,9 @@
 import {  useState,  ChangeEvent, MouseEvent, FC } from "react";
 import { useDispatch } from "react-redux";
 
-import { callApiForDestination } from "../../api/callApiForDestination";
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
 import { Destination } from "../../generalTypes/apiResponse";
+import { FETCH_START} from "../../state/actions/actionTypes";
 import { I } from "../worldMap/models/types/componentsInterfaces";
 import { DestinationsHints } from "./components/DestinationsHints";
 import { BrowserInputStyled, InputButtonStyled, DestinationsBrowserStyled} from "./styles/destinationBrowserStyle";
@@ -17,7 +17,7 @@ export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
     const [changeBorder, setChangeBorder] = useState(false); 
     const dispatch = useDispatch();
 
-    useDidMountEffect(() => dispatch(callApiForDestination(destination)), [destination])
+    useDidMountEffect(() => dispatch({type: FETCH_START.DEST, name: destination}), [destination])
 
     const handleSearchClick = (e: MouseEvent<HTMLElement>): void => { 
         if(inputTypedValue.length < 1) return;

@@ -11,7 +11,7 @@ export const DetailsPanel: FC<I.DetailsPanel> = (props) => {
 
    const destinationName: string | undefined = useSelector((state: Store) => { 
       if(state.getDestination.loading !== false) return;
-      return state.getDestination.destination.name;                                                                                                                                    //setDestination(state.getDestination.destination)  
+      return state.getDestination.data?.name;                                                                                                                                    //setDestination(state.getDestination.destination)  
    })
 
    useEffect(() => {
