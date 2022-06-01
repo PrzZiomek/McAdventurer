@@ -4,7 +4,7 @@ import { throwError } from 'redux-saga-test-plan/providers';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import { coordinates, fetchCoordinates } from '../../data';
-import { failLocationAction, locationAction, startLocationAction } from '../../../state/actions/currentLocationAction';
+import { failLocationAction, locationAction, startLocationAction } from '../../../state/actions/actions/currentLocation';
 import { getCoordinatesMocked } from './getCoordinatesMocked';
 import { getCoordinates } from '../../../state/reducers/getCoordinates';
 

@@ -1,7 +1,7 @@
 import { call, put, PutEffect } from "redux-saga/effects";
 import { fetchDestinationsList } from "../../../api/fetchDestinationsList";
 import { Destination } from "../../../generalTypes/apiResponse";
-import { failFetchDestListAction, successFetchDestListAction } from "../../actions/fetchDestinationActions";
+import { failFetchDestListAction, successFetchDestListAction } from "../../actions/actions/fetchDestinationListActions";
 
 
 type OutgoingValue =  

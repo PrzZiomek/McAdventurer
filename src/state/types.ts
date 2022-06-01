@@ -1,18 +1,17 @@
 import { Destination, WikiDestination } from "../generalTypes/apiResponse";
-import { getMapTheme } from "./reducers/getMapTheme";
+import { getMapTheme } from "./reducers/sliceReducers/getMapTheme";
 
 export interface GetDestinationReducer {
    error: Error | null;
    isFetching: boolean;
-   destination: WikiDestination;
+   data: WikiDestination;
    loading: boolean
 }
 
 export interface GetDestinationListReducer{
       error: Error | null;
       isFetching: boolean;
-      destinations: Destination[];
-      destination: Destination;
+      data: Destination[];
       loading: boolean
 }
 
@@ -22,8 +21,10 @@ interface GetErrorsReducer{
 }
 
 interface GetCoordinatesReducer{
+   data: {
       lng: number,
       lat: number
+   }
 }
 
 interface GetMapThemeReducer{

@@ -2,7 +2,7 @@ import { call, CallEffect, put, PutEffect, take, TakeEffect, takeLatest } from '
 
 import { Destination } from '../../../generalTypes/apiResponse';
 import { fetchDestinations } from '../../data';
-import { successFetchDestListAction, startFetchDestListAction, failFetchDestListAction } from '../../../state/actions/fetchDestinationActions';
+import { successFetchDestListAction, startFetchDestListAction, failFetchDestListAction } from '../../../state/actions/actions/fetchDestinationListActions';
 
 
 type OutgoingValue = 

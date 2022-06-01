@@ -16,7 +16,6 @@ import { Store } from "../../state/types";
  const WorldMap: FC<I.WorldMap> = (props) => {
 
     const mapRef: MutableRefObject<null> = useRef(null);
-  //  const [theme, setTheme] = useState<string>("normal.day");
     const [map, platform]: [H.Map | undefined, H.service.Platform | undefined]  = useCreateMap(mapRef);
     const dispatch = useDispatch();
     const createMarkerInit = createMarker(map, dispatch);

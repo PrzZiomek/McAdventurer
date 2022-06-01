@@ -6,7 +6,7 @@ import { getDestinationList } from '../../../state/reducers/getDestinationList';
 import { getDestinationsListMocked } from './getDestinationsListMocked';
 import { put, call } from 'redux-saga/effects';
 import { destinations, fetchDestinations } from '../../data';
-import { successFetchDestListAction, startFetchDestListAction, failFetchDestListAction } from '../../../state/actions/fetchDestinationActions';
+import { successFetchDestListAction, startFetchDestListAction, failFetchDestListAction } from '../../../state/actions/actions/fetchDestinationListActions';
  
 
 describe("testing destinationsList state", () => {

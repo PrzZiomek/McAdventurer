@@ -13,7 +13,7 @@ export function useDestinationLocation(destinations: Destination[] | undefined):
   const [ coords, setCoords] =  useState({ lat: 0, lng: 0 });
 
   const destinationCoords = useSelector((state: Store) => { 
-    return state.getDestinationList.destination;
+    return state.getDestinationList.data;
   });
 
   useEffect(() => { 
@@ -26,7 +26,7 @@ export function useDestinationLocation(destinations: Destination[] | undefined):
 
   const destination: WikiDestination | undefined = useSelector((state: Store) => { 
     if(state.getDestination.loading !== false) return;
-    return state.getDestination.destination;                                                                                                                                    //setDestination(state.getDestination.destination)  
+    return state.getDestination.data;                                                                                                                                    //setDestination(state.getDestination.destination)  
   })
 
   useEffect(() => { 
