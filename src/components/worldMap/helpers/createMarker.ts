@@ -1,7 +1,7 @@
 import { Dispatch, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import errorActionCreator from "../../../generalHandlers/errorActionCreator";
-import { isNotNumber } from "../../../utils/isNotNumber";
+import { isNotNumber } from "../../../helpers/isNotNumber";
 
 
 export const createMarker = (map: H.Map | undefined, dispatch: Dispatch<any>) => {

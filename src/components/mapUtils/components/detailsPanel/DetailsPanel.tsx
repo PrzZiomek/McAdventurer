@@ -1,29 +1,55 @@
 import { useState, FC, useEffect } from "react"
 import { useSelector } from "react-redux";
+import { WikiDestination } from "../../../../generalTypes/apiResponse";
+import { noCoordinates } from "../../../../helpers/noCoordinates";
 import { Store } from "../../../../state/types";
 import { I } from "../../../worldMap/models/types/componentsInterfaces";
+import { DetailsContent } from "./components/detailsContent/DetailsContent";
 import { DetailsPanelStyled } from "./styles/DetailsPanelStyled";
+
+export interface DetailsPanelRenderProps {
+   showPanel: boolean
+   detailsContentProps: {
+      localizationError: JSX.Element | null,
+      destinationName: string | undefined
+   }, 
+}
 
 
 export const DetailsPanel: FC<I.DetailsPanel> = (props) => {
 
    const [showPanel, setShowPanel] = useState(false); 
 
-   const destinationName: string | undefined = useSelector((state: Store) => { 
+   const destination: WikiDestination | undefined = useSelector((state: Store) => { 
       if(state.getDestination.loading !== false) return;
-      return state.getDestination.data?.name;                                                                                                                                    //setDestination(state.getDestination.destination)  
+      return state.getDestination.data;                                                                                                                                    //setDestination(state.getDestination.destination)  
    })
 
    useEffect(() => {
-      setShowPanel(!!destinationName); 
-    }, [destinationName])
+      setShowPanel(!!destination?.name); 
+    }, [destination?.name])
+
+   const getLocalizationError = (): JSX.Element | null => {
+      if(!destination?.coordinates || noCoordinates(destination?.coordinates)){
+         return <h3>coordinates not found</h3>;
+      }  
+      return null;
+   } 
+
+   const renderProps: DetailsPanelRenderProps = {
+      showPanel,
+      detailsContentProps: {
+          localizationError: getLocalizationError(),
+          destinationName: destination?.name
+      }, 
+    }
 
    return (
       <DetailsPanelStyled 
-         id="panel" 
+         id="detailsPanel" 
          showPanel={showPanel}
       >
-         {props.render({showPanel})}
+        {props.render(renderProps)}
       </DetailsPanelStyled>
    )
 }
