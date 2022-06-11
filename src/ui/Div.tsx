@@ -1,4 +1,4 @@
-import { FC, LegacyRef, MouseEventHandler, MutableRefObject } from "react";
+import { FC, ForwardedRef, LegacyRef, MouseEventHandler, MutableRefObject, RefObject } from "react";
 
 export interface DivProps{
     /** Required by default */
@@ -10,10 +10,10 @@ export interface DivProps{
     /** used with expanding hintsList in Panel */
     showHints?: boolean;
     /** used in DivWrapper to apply proper ref to individual div  */
-    actualRef?: MutableRefObject<null> | LegacyRef<HTMLDivElement> 
+    actualRef?: MutableRefObject<null> | LegacyRef<HTMLDivElement> | ForwardedRef<unknown> | RefObject<HTMLDivElement | unknown>
     /** to get map element ref  */
     mapRef?: MutableRefObject<null>;
-    /** used in ToggleBar  */                                                                       //   mainWrapperRef?: (el: HTMLDivElement) => void;
+    /** used in ToggleBar  */                                                                      
     onClick?: MouseEventHandler<HTMLDivElement>;
     /** used to show and hide Panel and themes  */
     showUpBar?: boolean;
@@ -21,6 +21,7 @@ export interface DivProps{
     switchToggleArrow?: boolean;
     /** to show Panel */
     showPanel?: boolean;
+    /** to switching visibility state of modals, panels etc. */
     toggleState?: boolean;
     /** to change border on DestinatonBrowser input */
     changeBorder?: boolean;

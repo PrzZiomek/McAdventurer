@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Destination, WikiDestination } from "../../../generalTypes/apiResponse";
 import { FIND_DESTINATION } from "../../../state/actions/actionTypes";
 import { Store } from "../../../state/types";
-import { isNotNumber } from "../../../utils/isNotNumber";
+import { isNotNumber } from "../../../helpers/isNotNumber";
 
 
 export function useDestinationLocation(destinations: Destination[] | undefined): { lat: number; lng: number; } {
@@ -31,7 +31,6 @@ export function useDestinationLocation(destinations: Destination[] | undefined):
 
   useEffect(() => { 
       if(!destination || !destinations) return;  
-console.log("coordinates", destination.coordinates);
 
       const { coordinates } = destination;
   

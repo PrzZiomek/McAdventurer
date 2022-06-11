@@ -7,7 +7,7 @@ import { startFetchDestListAction } from "../../state/actions/actions/fetchDesti
 import { ErrorModal } from "./components/errorModal/errorModal";
 import { StoreProps } from "../../enums";
 import { errorMonitAction } from "../../state/actions/actions/handleError";
-import { errorCollector } from "../../utils/errorCollector";
+import { errorCollector } from "../../helpers/errorCollector";
 import { MapUtils } from "../mapUtils/MapUtils";
 import { Destination } from "../../generalTypes/apiResponse";
 import { I } from "../worldMap/models/types/componentsInterfaces";

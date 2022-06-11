@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getFromLocalStorage, setToLocalStorage } from '../utils/storage';
+import { getFromLocalStorage, setToLocalStorage } from '../helpers/storage';
 import {data as themes} from "../styles/themes/schema";
  
-export const myUseTheme = <T>() => { 
+export function myUseTheme<T>() { 
    try{
       const [theme, setTheme] = useState(themes?.day);
       const [themeLoaded, setThemeLoaded] = useState(false);
