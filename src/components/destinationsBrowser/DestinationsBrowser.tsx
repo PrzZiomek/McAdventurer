@@ -1,15 +1,19 @@
-import {  useState,  ChangeEvent, MouseEvent, FC } from "react";
+import {  useState,  ChangeEvent, MouseEvent, FC, Dispatch, SetStateAction } from "react";
 import { useDispatch } from "react-redux";
 
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
 import { Destination } from "../../generalTypes/apiResponse";
 import { FETCH_START} from "../../state/actions/actionTypes";
-import { I } from "../worldMap/models/types/componentsInterfaces";
 import { DestinationsHints } from "./components/DestinationsHints";
 import { BrowserInputStyled, InputButtonStyled, DestinationsBrowserStyled} from "./styles/destinationBrowserStyle";
 
 
-export const DestinationBrowser: FC<I.DestinationBrowser> = (props) => {
+export interface DestinationBrowser{
+    destinations: Destination[] | undefined;
+    setShowPanel?: Dispatch<SetStateAction<boolean>>
+  }
+
+export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
 
     const [filtered, setFiltered] = useState<Destination[]>([]);
     const [inputTypedValue, setInputTypedValue] = useState<string>("");

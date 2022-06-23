@@ -1,10 +1,16 @@
-import {  useState,  ChangeEvent, MouseEvent, FC, KeyboardEvent, Dispatch, SetStateAction } from "react";
-import { useDispatch } from "react-redux";
-import { I } from "../../worldMap/models/types/componentsInterfaces";
+import {  MouseEvent, FC, Dispatch, SetStateAction } from "react";
+import { Destination } from "../../../generalTypes/apiResponse";
 import { DestinationsHintsList } from "./destinationsHintsList";
 
 
-export const DestinationsHints: FC<I.DestinationsHints> = (props) => {
+export interface IDestinationsHints {
+   setInputTypedValue: Dispatch<SetStateAction<string>>;
+   setFiltered: Dispatch<SetStateAction<Destination[]>>; 
+   filtered: Destination[];
+ }
+
+
+export const DestinationsHints: FC<IDestinationsHints> = (props) => {
 
    const handleHintClick = (e: MouseEvent<HTMLButtonElement>): void => {
       const button = e.currentTarget;
