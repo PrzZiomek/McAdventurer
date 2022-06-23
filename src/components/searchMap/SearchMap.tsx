@@ -1,4 +1,4 @@
-import React, { Dispatch, FC, LazyExoticComponent, PropsWithChildren, Suspense, useEffect } from "react"
+import React, { Dispatch, FC, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux";
 
 import { SearchMapStyled } from "./styles/SearchMapStyles";
@@ -10,19 +10,11 @@ import { errorMonitAction } from "../../state/actions/actions/handleError";
 import { errorCollector } from "../../helpers/errorCollector";
 import { MapUtils } from "../mapUtils/MapUtils";
 import { Destination } from "../../generalTypes/apiResponse";
-import { I } from "../worldMap/models/types/componentsInterfaces";
+import { WorldMap } from "../worldMap/WorldMap";
 
 
-const WorldMap: LazyExoticComponent<FC<I.WorldMap>> = React.lazy(() => import("../worldMap/WorldMap"));
 
-const LazyWorldMap = (props: PropsWithChildren<I.WorldMap>) => (
-    <Suspense fallback={ <div>Loading the map...</div> }>
-        <WorldMap {...props}/>
-    </Suspense>
-)
-
-
-export const SearchMap: React.FC = () => {
+export const SearchMap: FC = () => {
 
     const storeItemsNames = [StoreProps.GetErrors, StoreProps.GetDestinationList, StoreProps.GetDestination];
 
@@ -68,7 +60,7 @@ export const SearchMap: React.FC = () => {
 
                 <MapUtils destinations={destList} /> 
 
-                <LazyWorldMap
+                <WorldMap
                     destinations={destList}
                 /> 
 

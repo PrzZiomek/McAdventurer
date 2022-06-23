@@ -1,7 +1,6 @@
  import { useState, FC, useEffect, useRef, MutableRefObject, Dispatch, MouseEvent } from "react"
 import { useDispatch } from "react-redux";
 
-import { I } from "../worldMap/models/types/componentsInterfaces";
 import { ThemesToggleBar } from "./components/ThemesToggleBar";
 import { Theme } from "./models/Theme";
 import { ThemesMenu, MapThemesMenuStyled } from "./styles/mapThemesMenuStyles";

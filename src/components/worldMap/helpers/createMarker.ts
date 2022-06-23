@@ -6,17 +6,18 @@ import { isNotNumber } from "../../../helpers/isNotNumber";
 
 export const createMarker = (map: H.Map | undefined, dispatch: Dispatch<any>) => {
 
-   return (coords: { lat: number | null; lng: number | null; }, marker: H.map.DomIcon)  => { 
+   return (coords: { lat: number | null; lng: number | null; }, marker: H.map.DomIcon): H.map.Object | undefined  => { 
       
-      try{ //console.log("coords im createM",  coords);
+      try{ 
          const unsetCoords: boolean = isNotNumber(coords.lat) || isNotNumber(coords.lng);
           if(unsetCoords || !map) return;
           const bearsMarker: H.map.Object = new H.map.DomMarker(coords as H.geo.IPoint , {
             icon: marker
-          });
+          }); 
           map.addObject(bearsMarker); 
           map.setCenter(coords as H.geo.IPoint); 
           map.setZoom(5);
+          return bearsMarker;
       }
       catch (err){
           dispatch(errorActionCreator({

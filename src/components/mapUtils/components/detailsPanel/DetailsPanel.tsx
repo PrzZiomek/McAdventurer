@@ -3,9 +3,13 @@ import { useSelector } from "react-redux";
 import { WikiDestination } from "../../../../generalTypes/apiResponse";
 import { noCoordinates } from "../../../../helpers/noCoordinates";
 import { Store } from "../../../../state/types";
-import { I } from "../../../worldMap/models/types/componentsInterfaces";
-import { DetailsContent } from "./components/detailsContent/DetailsContent";
 import { DetailsPanelStyled } from "./styles/DetailsPanelStyled";
+
+
+export interface IDetailsPanel{
+   render: (data: any) => JSX.Element,
+   showPanel?: boolean;
+ }
 
 export interface DetailsPanelRenderProps {
    showPanel: boolean
@@ -16,7 +20,7 @@ export interface DetailsPanelRenderProps {
 }
 
 
-export const DetailsPanel: FC<I.DetailsPanel> = (props) => {
+export const DetailsPanel: FC<IDetailsPanel> = (props) => {
 
    const [showPanel, setShowPanel] = useState(false); 
 

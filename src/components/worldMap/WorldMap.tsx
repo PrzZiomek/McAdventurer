@@ -1,4 +1,4 @@
-import { useState, FC, useEffect, useRef, MutableRefObject, Dispatch, MouseEvent } from "react"
+import { useState, FC, useEffect, useRef, MutableRefObject, Dispatch, MouseEvent, SetStateAction } from "react"
 import { useDispatch, useSelector } from "react-redux";
 
 import  errorActionCreator  from "../../generalHandlers/errorActionCreator";
@@ -7,16 +7,34 @@ import { useCreateMap } from "./customHooks/useCreateMap";
 import { createMarker } from "./helpers/createMarker";
 import { createDestinationMarkerIcon } from "./helpers/mapMarker/createDestinationMarkerIcon";
 import { createHomeMarkerIcon } from "./helpers/mapMarker/createHomeMarkerIcon";
-import { I } from "./models/types/componentsInterfaces";
 import { MapStyled } from "./styles/worldMapStyles";
 import { useDestinationLocation } from "./customHooks/useDestinationLocaton";
 import { Store } from "../../state/types";
+import { Destination } from "../../generalTypes/apiResponse";
 
+export interface IWorldMap {
+  destinations: Destination[] | undefined;
+  mapParams?: H.geo.IPoint;
+  coords?: {
+    lat: number;
+    lng: number;
+},
+  setCoords?: Dispatch<SetStateAction<{
+    lat: number;
+    lng: number;
+}>>;
+  typed?: string,
+  userLocationCoords?: {
+    lat: number;
+    lng: number;
+  }
+}
 
- const WorldMap: FC<I.WorldMap> = (props) => {
+ export const WorldMap: FC<IWorldMap> = (props) => {
 
     const mapRef: MutableRefObject<null> = useRef(null);
     const [map, platform]: [H.Map | undefined, H.service.Platform | undefined]  = useCreateMap(mapRef);
+    const [currentMarker, setCurentMarker] = useState<H.map.Object | undefined>();
     const dispatch = useDispatch();
     const createMarkerInit = createMarker(map, dispatch);
     const userLocationCoords = useUserLocalization();
@@ -33,7 +51,9 @@ import { Store } from "../../state/types";
 
     useEffect(() => {
       if(!map) return;
-      createMarkerInit(destinationCoords, createDestinationMarkerIcon()) 
+      if(currentMarker) map.removeObject(currentMarker);
+      const marker = createMarkerInit(destinationCoords, createDestinationMarkerIcon());
+      setCurentMarker(marker);
     }, [destinationCoords])
 
     useEffect(() => { 
@@ -68,5 +88,4 @@ import { Store } from "../../state/types";
     )
   }
 
-  export default WorldMap;
-       
+
