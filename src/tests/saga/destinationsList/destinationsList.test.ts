@@ -2,19 +2,19 @@ import { expectSaga, SagaType } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { throwError } from 'redux-saga-test-plan/providers';
 
-import { getDestinationList } from '../../../state/reducers/getDestinationList';
-import { getDestinationsListMocked } from './getDestinationsListMocked';
 import { put, call } from 'redux-saga/effects';
 import { destinations, fetchDestinations } from '../../data';
 import { successFetchDestListAction, startFetchDestListAction, failFetchDestListAction } from '../../../state/actions/actions/fetchDestinationListActions';
+import { getDestinationsList } from '../../../state/saga/handlers/getDestinationsList';
+import { DEST_LIST } from '../../../state/actions/actionTypes';
+import { getApiData } from '../../../state/reducers/highOrderReducers/getApiData';
  
 
 describe("testing destinationsList state", () => {
 
-
    it("test Saga generator", () => {
 
-      return expectSaga(<SagaType>getDestinationsListMocked, fetchDestinations)
+      return expectSaga(() => getDestinationsList(fetchDestinations))
          .provide([
             [matchers.call.fn(fetchDestinations), destinations]
          ])
@@ -27,17 +27,17 @@ describe("testing destinationsList state", () => {
    it('state from reducer when fetch is successfull', async () => {
 
       const initialState = {
-         destinations: [],
+         data: null,
          error: null,
          destination: null,
       }
 
-      const { storeState } = await expectSaga(getDestinationsListMocked)
-         .withReducer(getDestinationList, initialState)
+      const { storeState } = await expectSaga(() => getDestinationsList(fetchDestinations))
+         .withReducer(getApiData(DEST_LIST), initialState)
          .run()
 
       expect(storeState).toEqual({
-         destinations: destinations,
+         data: destinations,
          error: null,
          destination: null,
          loading: false
@@ -50,7 +50,7 @@ describe("testing destinationsList state", () => {
    
       const error = new Error('error when making destinations list request');
    
-      return expectSaga(<SagaType>getDestinationsListMocked, fetchDestinations)
+      return expectSaga(() => getDestinationsList(fetchDestinations))
          .provide([
             [call(fetchDestinations), throwError(error)]
          ])

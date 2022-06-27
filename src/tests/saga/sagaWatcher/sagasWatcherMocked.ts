@@ -1,12 +1,12 @@
 import { takeLatest } from 'redux-saga/effects';
 
 import { FETCH_START } from '../../../state/actions/actionTypes';
-import { getDestinationsListMocked } from "../destinationsList/getDestinationsListMocked";
 import { getCoordinates } from "../../../state/saga/handlers/getCoordinates";
-import { getCoordinatesMocked } from '../coordinates/getCoordinatesMocked';
+import { fetchCoordinates, fetchDestinations } from '../../data';
+import { getDestinationsList } from '../../../state/saga/handlers/getDestinationsList';
 
  
 export function* sagasWatcherMocked(){
-   yield takeLatest(FETCH_START.DEST_LIST, getDestinationsListMocked);
-   yield takeLatest(FETCH_START.COORDINATES, getCoordinatesMocked)
+   yield takeLatest(FETCH_START.DEST_LIST, () => getDestinationsList(fetchDestinations));
+   yield takeLatest(FETCH_START.COORDINATES,() => getCoordinates(fetchCoordinates))
 }
