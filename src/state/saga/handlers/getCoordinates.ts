@@ -1,13 +1,13 @@
-import { put, PutEffect } from "redux-saga/effects";
+import { call, CallEffect, put, PutEffect } from "redux-saga/effects";
 import { failLocationAction, locationAction } from "../../actions/actions/currentLocation";
 
-type OutgoingValue =  Promise<unknown> | PutEffect<{type: string; payload: object;}>
+type OutgoingValue =  CallEffect<unknown> | PutEffect<{type: string; payload: object;}>
 
 
-export function* getCoordinates(): Generator<OutgoingValue, void, GeolocationPosition> {
+ export function* getCoordinates(fetchData: () => Promise<unknown>): Generator<OutgoingValue, void, GeolocationPosition> {
 
   try{
-    const geoPosition = yield currentLocationResponse(); 
+    const geoPosition = yield call(fetchData); 
     const lat: number = geoPosition.coords.latitude;
     const lng: number = geoPosition.coords.longitude;
     
@@ -20,6 +20,9 @@ export function* getCoordinates(): Generator<OutgoingValue, void, GeolocationPos
    }))    
   } 
 }
+
+
+export const getCoordinatesFn = () => getCoordinates(currentLocationResponse)
 
 
 export function currentLocationResponse(){

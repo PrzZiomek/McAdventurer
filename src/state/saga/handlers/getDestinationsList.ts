@@ -1,11 +1,11 @@
-import { call, put, PutEffect } from "redux-saga/effects";
+import { call, CallEffect, put, PutEffect } from "redux-saga/effects";
 import { fetchDestinationsList } from "../../../api/fetchDestinationsList";
 import { Destination } from "../../../generalTypes/apiResponse";
 import { failFetchDestListAction, successFetchDestListAction } from "../../actions/actions/fetchDestinationListActions";
 
 
 type OutgoingValue =  
-Promise<void | Destination[]> |
+CallEffect<void | Destination[]> |
 PutEffect<{ type: string; payload: Destination[] ; }> | 
 PutEffect<
    { type: string;
@@ -15,10 +15,10 @@ PutEffect<
       };
    }>
 
-export function* getDestinationsList(): Generator<OutgoingValue, void, Destination[]>{
+export function* getDestinationsList(fetchData: () => Promise<void | Destination[]>): Generator<OutgoingValue, void, Destination[]>{
 
    try{
-      const destList = yield fetchDestinationsList();
+      const destList = yield call(fetchData) ;
       yield put(successFetchDestListAction(destList))
    }
    catch(err){      
@@ -29,3 +29,5 @@ export function* getDestinationsList(): Generator<OutgoingValue, void, Destinati
    }
  
 }
+
+export const getDestinationsListFn = () => getDestinationsList(fetchDestinationsList);

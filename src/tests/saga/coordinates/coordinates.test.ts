@@ -3,21 +3,25 @@ import { expectSaga, SagaType } from 'redux-saga-test-plan';
 import { throwError } from 'redux-saga-test-plan/providers';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import { coordinates, fetchCoordinates } from '../../data';
+import { coordinates, fetchCoordinates, geoPosition } from '../../data';
 import { failLocationAction, locationAction, startLocationAction } from '../../../state/actions/actions/currentLocation';
-import { getCoordinatesMocked } from './getCoordinatesMocked';
-import { getCoordinates } from '../../../state/reducers/getCoordinates';
+import { getApiData } from '../../../state/reducers/highOrderReducers/getApiData';
+import { COORDINATES } from '../../../state/actions/actionTypes';
+import { getCoordinates } from '../../../state/saga/handlers/getCoordinates';
 
 
 describe("testing user coordinates state", () => {
 
    it("test Saga generator", () => {
 
-      return expectSaga(<SagaType>getCoordinatesMocked)
+      return expectSaga(() => getCoordinates(fetchCoordinates))
          .provide([
-            [call(fetchCoordinates), coordinates]
+            [matchers.call.fn(fetchCoordinates), geoPosition]
          ])
-         .put(locationAction(coordinates))
+         .put(locationAction({
+            lat:  geoPosition.coords.latitude,
+            lng: geoPosition.coords.longitude
+         }))
          .dispatch(startLocationAction())
          .run();  
    });
@@ -26,15 +30,22 @@ describe("testing user coordinates state", () => {
    it("state from reducer when fetch is successfull", async () => {
 
       const initialState = {
-         lng: 0,
-         lat: 0
+         data: null,
+         error: null
+       };
+       const successState = {
+         data: coordinates,
+         error: null,
+         loading: false,
        }
 
-      const { storeState } = await expectSaga(<SagaType>getCoordinatesMocked)
-         .withReducer(getCoordinates, initialState)
+      const getCoordinatesReducer = getApiData(COORDINATES);
+
+      const { storeState } = await expectSaga(() => getCoordinates(fetchCoordinates))
+         .withReducer(getCoordinatesReducer, initialState)
          .run()
 
-      expect(storeState).toEqual(coordinates)
+      expect(storeState).toEqual(successState)
 
    })
 
@@ -42,7 +53,7 @@ describe("testing user coordinates state", () => {
    
       const error = new Error('geolocation coordinates not obtained');
       
-      expectSaga(getCoordinatesMocked)
+      expectSaga(() => getCoordinates(fetchCoordinates))
          .provide([
             [matchers.call.fn(fetchCoordinates), throwError(error)]
          ])
