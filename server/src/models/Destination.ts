@@ -30,7 +30,8 @@ export class Destinations {
 
   async checkIfSavedAlready(name: string): Promise<number>{    
     const content = await this.getDBData(`SELECT COUNT(*) FROM destination WHERE name = '${name}'`)
-    const contentItem = content[0] as ResArray;
+    const contentItem = content[0] as ResArray; console.log("contentItem", contentItem);
+    
     return contentItem[0]['COUNT(*)'];
   }
 

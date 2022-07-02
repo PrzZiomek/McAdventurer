@@ -1,7 +1,6 @@
+import { fetchRes } from '../../helpers/fetch';
 import { WikiPage } from '../../models/types';
 
-const fetch = (...args: unknown[]) => import('node-fetch').then(({default: fetch}) => fetch(...args));
-const fetchRes = async (url: string) => await fetch(url).then(res => res.json())   
 
 interface WikiApiResponse{
     query: { 

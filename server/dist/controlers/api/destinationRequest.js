@@ -4,21 +4,17 @@ exports.destinationRequest = void 0;
 const errorHandle_1 = require("../../helpers/errorHandle");
 const Destination_1 = require("../../models/Destination");
 const destinationRequest = async (req, res, next) => {
-    const name = req.body.destination.name;
+    const name = req.body.destination.name.trim();
     let callWiki = false;
     const destinations = new Destination_1.Destinations();
     const savedAlready = await destinations
         .checkIfSavedAlready(name)
         .catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
-    if (savedAlready == null) {
-        return res.status(422).send({
-            message: "database connection error"
-        });
-    }
-    if (savedAlready === 1) {
+    if (savedAlready >= 1) {
         const destination = await destinations
             .getOne(name)
             .catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
+        console.log("dest !!!!", destination);
         if (destination) {
             res.status(200).json({
                 destination: {
@@ -30,11 +26,6 @@ const destinationRequest = async (req, res, next) => {
                     },
                     images: destination.IMAGES
                 },
-            });
-        }
-        else {
-            return res.status(422).send({
-                message: "database error"
             });
         }
         callWiki = false;

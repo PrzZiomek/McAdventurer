@@ -1,14 +1,15 @@
-import { ChangeEventHandler, FC, KeyboardEventHandler, MouseEventHandler } from "react";
+import { ChangeEventHandler, FC, FocusEventHandler, KeyboardEventHandler, MouseEventHandler } from "react";
 
 interface Props{
     className?: string;
     color?: string;
-    onChange: ChangeEventHandler<HTMLInputElement>;
+    onChange: ChangeEventHandler;
     visibleText?: boolean;
-    handleEnterClick?: KeyboardEventHandler<HTMLInputElement>;
+    handleEnterClick?: KeyboardEventHandler;
     type?: string;
     id?: string;
     value?: string;
+    onFocus?: FocusEventHandler
 }
 
 export const Input: FC <Props> = (props) => (
@@ -20,5 +21,6 @@ export const Input: FC <Props> = (props) => (
         onChange={props.onChange}
         className={props.className}
         onKeyDown={props.handleEnterClick}
+        onFocus={props.onFocus}
      />
 )

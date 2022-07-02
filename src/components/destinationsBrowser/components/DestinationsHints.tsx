@@ -7,6 +7,7 @@ export interface IDestinationsHints {
    setInputTypedValue: Dispatch<SetStateAction<string>>;
    setFiltered: Dispatch<SetStateAction<Destination[]>>; 
    filtered: Destination[];
+   cachedValues: {name: string}[];
  }
 
 
@@ -18,7 +19,7 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
       if(!destinationName) return;
       props.setInputTypedValue(destinationName);
       props.setFiltered([]);
-  }
+  }; 
 
   const showHints = (): JSX.Element | null =>  props.filtered.length ? 
       <DestinationsHintsList
@@ -27,8 +28,19 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
           showHints={false}  
       /> : null; 
 
+
+   const hasCached = props.cachedValues.some(val => val.name);
+
+   const showCached = (): JSX.Element | null => hasCached ? 
+      <DestinationsHintsList
+         handleClick={handleHintClick} 
+         destinations={props.cachedValues} 
+         showHints={false}  
+      /> : null; 
+
    return(
      <>
+         {showCached()}
          {showHints()}
       </>
    )

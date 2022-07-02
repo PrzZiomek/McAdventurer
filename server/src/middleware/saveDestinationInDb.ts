@@ -5,15 +5,32 @@ import { DestinationTransitType } from "../models/types";
 // from callWikiApi
 
 export const saveDestinationInDb = async (req: Request, res: Response, next: NextFunction) => {
-    const callWiki: boolean = res.locals.callWiki; 
-    if(!callWiki) return;  
-    const {name, content, coordinates, images } = res.locals.destination as DestinationTransitType;      
+   const callWiki = res.locals.callWiki;
+   if(!callWiki) return;
+  
+    const {name, content, coordinates, images } = { ...res.locals.destination } as DestinationTransitType;      
     const destinations = new Destinations(); 
     destinations.saveOne({
         name,
         content,
         coordinates,
-        images
+        images: images || ""
     })
-    next()
+
+    if(coordinates.lat || coordinates.lng){  
+      res.status(200).json({
+         destination: {
+            name,
+            content,
+            coordinates
+         },
+      });
+   }
+
+  /*  if(coordinates.lat || coordinates.lng){
+      const destName = encodeURIComponent(name);
+      res.redirect(`/?name=${destName}`);
+      res.redirect('/api/destination-resend');
+    }
+*/
 }
