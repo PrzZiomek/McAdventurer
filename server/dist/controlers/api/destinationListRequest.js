@@ -9,7 +9,7 @@ const destinationListRequest = async (req, res, next) => {
     const allDestination = await destination
         .getAll(enums_1.Table.Destinations_list)
         .catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
-    console.log("destinationListRequest", allDestination);
+    // console.log("destinationListRequest", allDestination );
     if (!allDestination) {
         return res.status(422).send({
             message: "database connection error"

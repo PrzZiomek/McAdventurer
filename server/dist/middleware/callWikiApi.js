@@ -39,7 +39,7 @@ const callWikiApi = async (req, res, next) => {
         ]);
         const pageId = contentRes.query.pageids[0];
         const content = contentRes.query.pages[pageId];
-        console.log(content);
+       // console.log(content);
     }
     catch (ex) {
         console.log(ex); // TO DO   

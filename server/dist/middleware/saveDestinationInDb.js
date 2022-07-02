@@ -7,15 +7,29 @@ const saveDestinationInDb = async (req, res, next) => {
     const callWiki = res.locals.callWiki;
     if (!callWiki)
         return;
-    const { name, content, coordinates, images } = res.locals.destination;
+    const { name, content, coordinates, images } = Object.assign({}, res.locals.destination);
     const destinations = new Destination_1.Destinations();
     destinations.saveOne({
         name,
         content,
         coordinates,
-        images
+        images: images || ""
     });
-    next();
+    if (coordinates.lat || coordinates.lng) {
+        res.status(200).json({
+            destination: {
+                name,
+                content,
+                coordinates
+            },
+        });
+    }
+    /*  if(coordinates.lat || coordinates.lng){
+        const destName = encodeURIComponent(name);
+        res.redirect(`/?name=${destName}`);
+        res.redirect('/api/destination-resend');
+      }
+  */
 };
 exports.saveDestinationInDb = saveDestinationInDb;
 //# sourceMappingURL=saveDestinationInDb.js.map

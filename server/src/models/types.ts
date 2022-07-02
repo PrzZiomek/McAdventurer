@@ -17,7 +17,7 @@ export interface AllDestination {
 
 export interface DestinationTransitType {
     content: string,
-    images: string, 
+    images?: string, 
     coordinates: {
       lat: number | string,
       lng: number | string
@@ -48,7 +48,7 @@ export interface WikiPage {
 export interface Locals {
     destinationName: string;
     callWiki: boolean;
-    destination: Destination | DestinationTransitType;
+    destination: DestinationTransitType;
     destinationsList: AllDestination[] | Destination[];
   
   }

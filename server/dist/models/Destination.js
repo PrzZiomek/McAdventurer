@@ -24,6 +24,7 @@ class Destinations {
     async checkIfSavedAlready(name) {
         const content = await this.getDBData(`SELECT COUNT(*) FROM destination WHERE name = '${name}'`);
         const contentItem = content[0];
+        console.log("contentItem", contentItem);
         return contentItem[0]['COUNT(*)'];
     }
     saveOne({ name, content, coordinates, images }) {

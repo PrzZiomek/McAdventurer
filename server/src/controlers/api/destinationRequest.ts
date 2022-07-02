@@ -10,25 +10,19 @@ declare module 'express' {
 }
 
 export const destinationRequest = async (req: Request, res: Response, next: NextFunction) => {
-    const name = req.body.destination.name; 
+    const name: string = req.body.destination.name.trim(); 
     let callWiki = false;
-    const destinations = new Destinations(); 
-
+    const destinations = new Destinations();   
+  
     const savedAlready: number | void = await destinations
             .checkIfSavedAlready(name)
             .catch(err => next(errorHandle(err, 500)));
 
-    if (savedAlready == null) {    
-      return res.status(422).send({
-        message: "database connection error"
-      });
-    } 
-
-    if(savedAlready === 1){
+    if(savedAlready >= 1){
         const destination: void | Destination = await destinations
             .getOne(name)
-            .catch(err => next(errorHandle(err, 500)));
-        if(destination){  
+            .catch(err => next(errorHandle(err, 500))); console.log("dest !!!!", destination);
+       if(destination){  
             res.status(200).json({
                 destination: {
                   name: destination.NAME,
@@ -40,10 +34,6 @@ export const destinationRequest = async (req: Request, res: Response, next: Next
                   images: destination.IMAGES
                 },
               });
-        }else{ 
-            return res.status(422).send({
-              message: "database error"
-            });
         }
         callWiki = false;  
     };

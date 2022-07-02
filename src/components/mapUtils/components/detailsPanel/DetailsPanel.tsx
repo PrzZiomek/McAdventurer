@@ -25,8 +25,9 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
    const [showPanel, setShowPanel] = useState(false); 
 
    const destination: WikiDestination | undefined = useSelector((state: Store) => { 
-      if(state.getDestination.loading !== false) return;
-      return state.getDestination.data;                                                                                                                                    //setDestination(state.getDestination.destination)  
+      if(state.getDestination.loading !== false) return; console.log("received getDestination", state.getDestination);
+      return state.getDestination.data;          
+                                                                                                                               //setDestination(state.getDestination.destination)  
    })
 
    useEffect(() => {
