@@ -30,9 +30,11 @@ interface DestinationRes {
  export const callPositionstackApi = async (req: Request, res: Response, next: NextFunction) => {
 
    const destination = res.locals.destination;
-   const hasDestinationCoords: boolean = destination.coordinates.lat !== "unset" || destination.coordinates.lng !== "unset"; 
+   const hasDestinationCoords: boolean = (destination.coordinates?.lat !== "unset" || 
+      !destination.coordinates?.lat) || 
+      (destination.coordinates?.lng !== "unset" || !destination.coordinates?.lng);
 
-   if(!hasDestinationCoords){
+   if(!hasDestinationCoords){  
       const params = {
          access_key: '8b7251d9992206506bbf41cdf3c3dd13',
          query: destination.name
@@ -42,7 +44,7 @@ interface DestinationRes {
          if(!destinationRes.data) return;
          const firstDest = destinationRes.data.data[0]; // to do - support of multiple same name destinations handling!
          res.locals.destination = {
-            content: `${firstDest.region}, ${firstDest.county}`,
+            content: `${firstDest.region ? firstDest.region : ""}, ${firstDest.county ? firstDest.county : ""}`,
             name: firstDest.name,
             coordinates: {
                lat: firstDest.latitude,

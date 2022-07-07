@@ -2,25 +2,40 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.callWikiApi = void 0;
 const errorHandle_1 = require("../../helpers/errorHandle");
+const Destination_1 = require("../../models/Destination");
 const getDestinationData_1 = require("./getDestinationData");
 // from destinationRequest
 const callWikiApi = async (req, res, next) => {
     const name = res.locals.destinationName;
     const callWiki = res.locals.callWiki;
+    const destAction = new Destination_1.Destinations();
+    const coords = { lat: "", lon: "" };
+    let destination = { coordinates: null };
     if (!callWiki)
         return;
     const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${name}&prop=extracts|coordinates|pageimages&exintro&explaintext&format=json&exintro=1&indexpageids`;
     const destinationRes = await (0, getDestinationData_1.getDestinationData)(url).catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
+    console.log("wikiSest@@@", destinationRes);
     const { title, extract, coordinates, pageimage } = destinationRes;
-    const destination = {
-        name: title,
-        content: extract,
-        coordinates: {
-            lat: coordinates ? coordinates[0].lat : "unset",
-            lng: coordinates ? coordinates[0].lon : "unset"
-        },
-        images: pageimage ? pageimage : "unset"
-    };
+    if (destinationRes) {
+        destination = {
+            name: title,
+            content: extract,
+            images: pageimage ? pageimage : "unset"
+        };
+    }
+    if (coordinates) {
+        destination = Object.assign(Object.assign({}, destination), { coordinates: {
+                lat: coordinates[0].lat || coords.lat,
+                lng: coordinates[0].lon || coords.lat
+            } });
+    }
+    if (!coordinates) { //  (!coordinates[0].lat && !coordinates[0].lon)
+        const destinationCoords = await destAction.getOneCoords(name).catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
+        coords.lat = destinationCoords;
+        coords.lon = destinationCoords;
+    }
+    console.log("coords from getonecords", coords);
     res.locals.destination = destination;
     next();
 };

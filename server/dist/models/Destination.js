@@ -16,9 +16,22 @@ class Destinations {
             throw new Error("communication with database failed in Destination model");
         return destinations[0];
     }
-    async getOne(name) {
-        const destinationRes = await this.getDBData(`SELECT * FROM destination WHERE (name = '${name}')`);
+    async getOne(arg, table) {
+        if (typeof arg === "string") {
+            const destinationRes = await this.getDBData(`SELECT * FROM destination WHERE (name = '${arg}')`);
+            const destArray = destinationRes[0];
+            return destArray[0];
+        }
+        else {
+            const destinationRes = await this.getDBData(`SELECT * FROM ${table} WHERE (lat = "${arg.lat}") and (lng = "${arg.lng}")`);
+            const destArray = destinationRes[0];
+            return destArray[0];
+        }
+    }
+    async getOneCoords(name) {
+        const destinationRes = await this.getDBData(`SELECT LAT, LNG FROM destinations_list WHERE (CITY = '${name}')`);
         const destArray = destinationRes[0];
+        console.log("raw mres cords", destinationRes);
         return destArray[0];
     }
     async checkIfSavedAlready(name) {
@@ -30,6 +43,7 @@ class Destinations {
     saveOne({ name, content, coordinates, images }) {
         const lat = coordinates.lat === "unset" ? 0 : coordinates.lat;
         const lng = coordinates.lng === "unset" ? 0 : coordinates.lng;
+        console.log("cords bef save ", coordinates.lat, coordinates.lng);
         database_1.db.execute('INSERT INTO destination (name, content, lat, lng, images) VALUES (?, ?, ?, ?, ?)', [name, content, lat, lng, images]);
     }
 }

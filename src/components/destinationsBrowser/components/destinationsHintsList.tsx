@@ -4,7 +4,7 @@ import { HintsButtonStyled } from "../styles/hintsButtonStyled";
 import { HintsListStyles } from "../styles/hintsListStyles";
 
 interface DestinationsHintsListProps {
-   destinations: Destination[] | {name: string}[];
+   destinations: Destination[] | {name: string; country: string;}[];
    handleClick(e: MouseEvent<HTMLButtonElement>): void;
    showHints: boolean;
 }

@@ -43,6 +43,17 @@ export interface IWorldMap {
     const theme = useSelector((store: Store) => {
       return store.getMapTheme.theme;
     })
+    
+    useEffect(() => {
+      if(!map) return;
+      map.addEventListener('tap',  (e) => {
+        const extendedEvent = e as Event & {currentPointer : H.mapevents.Pointer};
+        const coord: H.geo.Point = map.screenToGeo(extendedEvent.currentPointer.viewportX, extendedEvent.currentPointer.viewportY);
+        const lat: number = Math.abs(+coord.lat.toFixed(4)); //  (coord.lat > 0) ? 'N' : 'S)'
+        const lng: number = Math.abs(+coord.lng.toFixed(4)); // (coord.lng > 0) ? 'E' : 'W')
+        dispatch({type: "FETCH_START.DEST_COORDS", coords: { lat, lng }});
+      });
+    }, [map])
 
     useEffect(() => {
       const layer = layerWithTheme(theme); 

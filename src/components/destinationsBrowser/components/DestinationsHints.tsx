@@ -1,4 +1,4 @@
-import {  MouseEvent, FC, Dispatch, SetStateAction } from "react";
+import {  MouseEvent, FC, Dispatch, SetStateAction, useState } from "react";
 import { Destination } from "../../../generalTypes/apiResponse";
 import { DestinationsHintsList } from "./destinationsHintsList";
 
@@ -7,7 +7,8 @@ export interface IDestinationsHints {
    setInputTypedValue: Dispatch<SetStateAction<string>>;
    setFiltered: Dispatch<SetStateAction<Destination[]>>; 
    filtered: Destination[];
-   cachedValues: {name: string}[];
+   cachedValues: {name: string, country: string}[];
+   showCachedList: boolean;
  }
 
 
@@ -21,17 +22,19 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
       props.setFiltered([]);
   }; 
 
-  const showHints = (): JSX.Element | null =>  props.filtered.length ? 
+  const showHintList = (): JSX.Element | null =>  props.filtered.length ? 
       <DestinationsHintsList
           handleClick={handleHintClick} 
           destinations={props.filtered} 
           showHints={false}  
-      /> : null; 
-
+      /> : null;
 
    const hasCached = props.cachedValues.some(val => val.name);
+   console.log("props.cachedValues", props.cachedValues);
+   console.log("hasCached && props.showCachedList", {hasCached , show: props.showCachedList});
+   
 
-   const showCached = (): JSX.Element | null => hasCached ? 
+   const showCachedList = (): JSX.Element | null => hasCached && props.showCachedList ? 
       <DestinationsHintsList
          handleClick={handleHintClick} 
          destinations={props.cachedValues} 
@@ -40,8 +43,8 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
 
    return(
      <>
-         {showCached()}
-         {showHints()}
+         {showCachedList()}
+         {showHintList()}
       </>
    )
 }

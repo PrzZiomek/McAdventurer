@@ -12,25 +12,42 @@ import { getDestinationData } from "./getDestinationData";
   
     const name: string = res.locals.destinationName; 
     const callWiki: boolean = res.locals.callWiki;
+    const destAction = new Destinations();
+    const coords = { lat: "", lon: "" };
+    let destination: DestinationTransitType | 
+      {coordinates: null | {lat: string, lng: string}} = {coordinates: null};
 
     if(!callWiki) return;  
 
     const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${name}&prop=extracts|coordinates|pageimages&exintro&explaintext&format=json&exintro=1&indexpageids`
     const destinationRes: WikiPage | void = await getDestinationData(url).catch(err => next(errorHandle(err, 500)));
-   
+    console.log("wikiSest@@@", destinationRes);
+    const { title, extract, coordinates, pageimage } = destinationRes as WikiPage;
 
-    const { title, extract, coordinates, pageimage } = destinationRes;
-    const destination: DestinationTransitType = {
-      name: title,
-      content: extract,
-      coordinates: {
-        lat: coordinates ?  coordinates[0].lat : "unset",
-        lng: coordinates ? coordinates[0].lon : "unset"
-      },
-      images: pageimage ? pageimage : "unset"
-    }; 
+    if(destinationRes){
+      destination = {
+        name: title,
+        content: extract,
+        images: pageimage ? pageimage : "unset"
+      }; 
+    }
+    if(coordinates){
+        destination = {
+          ...destination,
+          coordinates: {
+            lat: coordinates[0].lat || coords.lat,
+            lng: coordinates[0].lon || coords.lat
+          },
+        }; 
+    }
+    if(!coordinates){  //  (!coordinates[0].lat && !coordinates[0].lon)
+      const destinationCoords = await destAction.getOneCoords(name).catch(err => next(errorHandle(err, 500)));
+      coords.lat = destinationCoords;
+      coords.lon = destinationCoords
+    }
 
-
+    console.log("coords from getonecords", coords);
+    
     res.locals.destination = destination; 
     next();
 };
