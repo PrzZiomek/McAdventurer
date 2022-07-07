@@ -19,44 +19,43 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
     const [filtered, setFiltered] = useState<Destination[]>([]);
     const [inputTypedValue, setInputTypedValue] = useState<string>("");
     const [destination, setDestinastion] = useState<string>("");
-    const [cachedDestinations, setCachedDestinations] = useState<{name: string, region: string }>(() => {
-        const storedName = localStorage.getItem("destinationsName");
+    const [inputFocused, setInputFocused] = useState<boolean>(false);
+    const dispatch = useDispatch();
+    const [cachedDestinations, setCachedDestinations] = useState(() => {
+        const storedName = localStorage.getItem("destinationsName") as string;
         const storedRegion = localStorage.getItem("destinationsRegion") as string;
         let name = "";
         let region = "";
         if(storedName){
             name = JSON.parse(storedName);
-            region = JSON.parse(storedRegion);
-        } 
+            region = JSON.parse(storedRegion); 
+        }
         return { name, region } ;
     });
-    const [inputFocused, setInputFocused] = useState<boolean>(false);
-    const dispatch = useDispatch();
 
     useDidMountEffect(() => dispatch({type: FETCH_START.DEST, name: destination}), [destination]);
 
-    const destinationData = useSelector((state: Store) => { 
-        if(state.getDestination.loading !== false) return;
-        return state.getDestination.data;                                                                                                                                    //setDestination(state.getDestination.destination)  
-    })
+    const addToCached = (cacheDestination: string) => {
+        const storedWithNextName = cachedDestinations.name += `, ${cacheDestination}`;        
+        const destWithCountry = props.destinations?.find(value => value.name === cacheDestination); 
+        const storedWithNextRegion = cachedDestinations.region += `, ${destWithCountry?.country}`;
 
-    useEffect(() =>{
-        if(!destinationData?.content) return;
-        const updatedRegion = cachedDestinations.region += destinationData?.content;
-        setCachedDestinations({ name: cachedDestinations.name, region: updatedRegion})
-    }, [destinationData?.content])
+        localStorage.setItem("destinationsRegion", JSON.stringify(storedWithNextRegion));  
+        localStorage.setItem("destinationsName", JSON.stringify(storedWithNextName));
+
+        setCachedDestinations(() => ({ name: storedWithNextName, region: storedWithNextRegion }))
+    }
 
     const handleSearchClick = (e: MouseEvent<HTMLElement>): void => { 
         if(inputTypedValue.length < 1) return;
         const valueCapitalized: string = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase());    
         const destination: string =  valueCapitalized;  
+
         setDestinastion(destination);
-        if(cachedDestinations.name.includes(destination)) return;
-        const storedWithNextName = cachedDestinations.name += `, ${destination}`;       console.log("destinationData", destinationData);    
-      //  const storedWithNextRegion = cachedDestinations.region += `, ${destinationData?.content}`;
-        setCachedDestinations({ name: storedWithNextName, region: cachedDestinations.region }); 
-        localStorage.setItem("destinationsName", JSON.stringify(storedWithNextName));
-        localStorage.setItem("destinationsRegion", JSON.stringify(cachedDestinations.region));
+
+        const isContent = /[a-zA-Z]/.test(destination);
+        if(!isContent || cachedDestinations.name.includes(destination)) return;
+        addToCached(destination)
     }
   
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -64,6 +63,7 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
         const value = input.value.toLowerCase();
         setInputTypedValue(value);
         if(props.destinations === undefined) return;   
+
         const pickIfMatch = ({name}: {name: string}): boolean | undefined => { 
             for(let i = 30; i > 0; i--){
                 if(value.length > i){    
@@ -76,17 +76,24 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
             .filter(pickIfMatch)
             .slice(0, 30);               
         setFiltered(filtered);      
+    } 
+
+    const handleInputFocus = () =>  setInputFocused(!inputFocused);
+
+    const createCachedDestObj = () => {
+        const cachedDestNameList: string[] = cachedDestinations.name.split(","); 
+        const cachedDestRegionList: string[] = cachedDestinations.region.split(","); 
+        const cachedDestObjList = [];
+
+        for(let i=0; i<=cachedDestNameList.length; i++){
+            if(cachedDestNameList[i]?.length > 1){     
+                cachedDestObjList.push({ name: cachedDestNameList[i], country: cachedDestRegionList[i] })
+            }
+        }
+
+        return cachedDestObjList;
     }
 
-    const handleInputFocus = () => setInputFocused(!inputFocused);
- 
-    const cachedDestNameList: string[] = cachedDestinations.name.split(","); console.log("cachedDestNameList", cachedDestNameList);    
-    const cachedDestRegionList: string[] = cachedDestinations.region.split(",");
-    const cachedDestObjList = cachedDestNameList.reduce((acc:{ name: string, country: string }[], item, i) => {
-        acc.push({ name: item, country: cachedDestRegionList[i] });
-        return acc
-    }, []);
-    console.log("cachedDestObjList", cachedDestObjList);  
     return (
         <DestinationsBrowserStyled changeBorder={false}> 
             <BrowserInputStyled 
@@ -100,7 +107,8 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
                 setInputTypedValue={setInputTypedValue}
                 setFiltered={setFiltered}
                 filtered={filtered}
-                cachedValues={cachedDestObjList}
+                cachedValues={createCachedDestObj()}
+                showCachedList={inputFocused}
             />
         </DestinationsBrowserStyled>
     )

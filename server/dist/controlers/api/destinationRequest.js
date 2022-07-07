@@ -14,7 +14,6 @@ const destinationRequest = async (req, res, next) => {
         const destination = await destinations
             .getOne(name)
             .catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
-        console.log("dest !!!!", destination);
         if (destination) {
             res.status(200).json({
                 destination: {

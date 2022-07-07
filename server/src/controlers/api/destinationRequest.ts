@@ -21,7 +21,7 @@ export const destinationRequest = async (req: Request, res: Response, next: Next
     if(savedAlready >= 1){
         const destination: void | Destination = await destinations
             .getOne(name)
-            .catch(err => next(errorHandle(err, 500))); console.log("dest !!!!", destination);
+            .catch(err => next(errorHandle(err, 500))); 
        if(destination){  
             res.status(200).json({
                 destination: {

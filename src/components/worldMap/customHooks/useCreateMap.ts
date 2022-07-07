@@ -17,7 +17,7 @@ export function useCreateMap(mapElement: MutableRefObject<null>): [H.Map | undef
          }); 
          const defaultLayers =  platformRef.current.createDefaultLayers();
          hMapRef.current = new H.Map(mapElement.current, defaultLayers.vector.normal.map); 
-         hMapRef.current.addEventListener('resize', () =>  hMapRef.current.getViewPort().resize());
+         window.addEventListener('resize', () => hMapRef.current.getViewPort().resize());
          new H.mapevents.Behavior(new H.mapevents.MapEvents( hMapRef.current));  
 
          return () => { 

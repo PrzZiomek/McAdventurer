@@ -16,13 +16,13 @@ export interface AllDestination {
 }
 
 export interface DestinationTransitType {
-    content: string,
+    content?: string,
     images?: string, 
-    coordinates: {
+    coordinates?: {
       lat: number | string,
       lng: number | string
     }
-    name: string 
+    name?: string 
   }
 
 export interface DestinationNameAndPosition {
@@ -50,5 +50,5 @@ export interface Locals {
     callWiki: boolean;
     destination: DestinationTransitType;
     destinationsList: AllDestination[] | Destination[];
-  
+    coordinates: {lat: string, lng: string};
   }

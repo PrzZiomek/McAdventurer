@@ -12,6 +12,7 @@ const callWikiApi_1 = require("../../middleware/wikiApi/callWikiApi");
 const router = (0, express_1.Router)();
 router.post("/api/destinationsList", destinationListRequest_1.destinationListRequest, combinedDestinationsListsRequest_1.combinedDestinationsRequest);
 router.post("/api/destination", destinationRequest_1.destinationRequest, callWikiApi_1.callWikiApi, callPositionstackApi_1.callPositionstackApi, saveDestinationInDb_1.saveDestinationInDb);
-router.post("/api/destination-resend", resendDestinationRequest_1.resendDestinationRequest);
+router.post("/api/destination-", resendDestinationRequest_1.resendDestinationRequest);
+router.post("/api/destination-coordinates", destinationRequest_1.destinationRequest);
 exports.apiRoutes = router;
 //# sourceMappingURL=main.js.map
