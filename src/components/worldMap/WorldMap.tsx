@@ -11,6 +11,7 @@ import { MapStyled } from "./styles/worldMapStyles";
 import { useDestinationLocation } from "./customHooks/useDestinationLocaton";
 import { Store } from "../../state/types";
 import { Destination } from "../../generalTypes/apiResponse";
+import { FETCH_START } from "../../state/actions/actionTypes";
 
 export interface IWorldMap {
   destinations: Destination[] | undefined;
@@ -51,7 +52,7 @@ export interface IWorldMap {
         const coord: H.geo.Point = map.screenToGeo(extendedEvent.currentPointer.viewportX, extendedEvent.currentPointer.viewportY);
         const lat: number = Math.abs(+coord.lat.toFixed(4)); //  (coord.lat > 0) ? 'N' : 'S)'
         const lng: number = Math.abs(+coord.lng.toFixed(4)); // (coord.lng > 0) ? 'E' : 'W')
-        dispatch({type: "FETCH_START.DEST_COORDS", coords: { lat, lng }});
+        dispatch({type: FETCH_START.DEST_CLICKED, coords: { lat, lng }});       
       });
     }, [map])
 

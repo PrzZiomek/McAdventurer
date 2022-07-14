@@ -17,7 +17,7 @@ export const DetailsPanelStyled = styled(Div)`
     background-color: ${panelColor("background")}; 
     transition: 0.5s;
     box-shadow: inset 0 0 8px ${panelColor("text")}; 
-    background-color: #F7F7F3; 
+    background-color: white; 
 
     .toggleBar{
        // display: ${(props) => props.showPanel === true ? "block" : "none"};

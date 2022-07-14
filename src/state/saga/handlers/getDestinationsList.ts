@@ -23,7 +23,7 @@ export function* getDestinationsList(fetchData: () => Promise<void | Destination
    }
    catch(err){      
       yield put(failFetchDestListAction({
-         message: "error when making destinations list request",
+         message: "error during destinations list request",
          content: err as Error
       }))
    }

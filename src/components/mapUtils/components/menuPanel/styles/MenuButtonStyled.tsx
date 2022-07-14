@@ -11,7 +11,7 @@ export const MenuButtonStyled = styled(Button)`
    right: 0;
    text-transform: uppercase;
    padding: 0 20px;
-   background-color: ${panelColor("background")}; 
+   background-color: white; 
    transition: 0.5s;
    box-shadow: 0 0 8px ${panelColor("text")}; 
    border-radius: 20px; 

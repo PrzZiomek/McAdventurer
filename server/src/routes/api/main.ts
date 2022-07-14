@@ -26,7 +26,7 @@ router.post("/api/destination-",
     resendDestinationRequest
 )
 
-router.post("/api/destination-coordinates",
+router.post("/api/destination-clicked",
     reverseGeolocationRequest
 )
 
