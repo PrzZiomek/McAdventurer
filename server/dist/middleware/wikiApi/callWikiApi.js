@@ -29,11 +29,15 @@ const callWikiApi = async (req, res, next) => {
                 lat: coordinates[0].lat || coords.lat,
                 lng: coordinates[0].lon || coords.lat
             } });
+        res.status(200).json({ destination });
     }
-    if (!coordinates) { //  (!coordinates[0].lat && !coordinates[0].lon)
-        const destinationCoords = await destAction.getOneCoords(name).catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
-        coords.lat = destinationCoords;
-        coords.lon = destinationCoords;
+    const destinationCoords = await destAction.getOneCoords(name).catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
+    if (destinationCoords.lat && destinationCoords.lng) {
+        destination = Object.assign(Object.assign({}, destination), { coordinates: {
+                lat: destinationCoords.lat,
+                lng: destinationCoords.lng
+            } });
+        res.status(200).json({ destination });
     }
     console.log("coords from getonecords", coords);
     res.locals.destination = destination;

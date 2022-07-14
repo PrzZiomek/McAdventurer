@@ -38,7 +38,7 @@ export class Destinations {
 
   async getOneCoords(name: string): Promise<Destination>{
     const destinationRes = await this.getDBData(`SELECT LAT, LNG FROM destinations_list WHERE (CITY = '${name}')`)
-    const destArray = destinationRes[0] as Destination[];     console.log("raw mres cords", destinationRes);   
+    const destArray = destinationRes[0] as Destination[];     console.log("raw mres cords 0", destinationRes[0]);   
     return destArray[0];
   }
 
@@ -50,8 +50,8 @@ export class Destinations {
   }
 
   saveOne ({ name, content, coordinates , images }: DestinationTransitType): void{
-    const lat = coordinates.lat === "unset" ? 0 : coordinates.lat;
-    const lng = coordinates.lng === "unset" ? 0 : coordinates.lng; console.log("cords bef save ", coordinates.lat, coordinates.lng);   
+    const lat = coordinates?.lat === "unset" ? 0 : coordinates?.lat;
+    const lng = coordinates?.lng === "unset" ? 0 : coordinates?.lng; console.log("cords bef save ", coordinates?.lat, coordinates?.lng);   
     db.execute(
       'INSERT INTO destination (name, content, lat, lng, images) VALUES (?, ?, ?, ?, ?)',
       [name, content, lat, lng, images ]

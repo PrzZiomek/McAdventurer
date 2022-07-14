@@ -15,3 +15,13 @@ export interface WikiDestination {
    }
    name: string
 };
+
+export interface DestinationDetailed {
+   name: string,
+   region: string,
+   county: string,
+   locality: string,
+   country: string,
+   label: string
+ }
+ 

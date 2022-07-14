@@ -23,8 +23,7 @@ export const MapUtils: FC<MapUtils> = (props) => {
                   toggleState={data.showPanel}
                />  
                <DetailsContent 
-                  headerText={data.detailsContentProps.destinationName} 
-                  localizationError={data.detailsContentProps.localizationError}
+                  content={data.detailsContentProps} 
                />
             </>
          )}/>  

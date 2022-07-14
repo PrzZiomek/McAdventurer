@@ -7,7 +7,7 @@ import { getApiData } from "./highOrderReducers/getApiData";
 import { Destination } from "../../generalTypes/apiResponse";
 import { Coordinates } from "../../generalTypes/others";
 import { getData } from "./highOrderReducers/getData";
-import { COORDINATES, DEST, DEST_LIST, FIND_DESTINATION, SET_ERROR, SET_MAP_THEME } from "../actions/actionTypes";
+import { COORDINATES, DEST, DEST_CLICKED, DEST_LIST, FIND_DESTINATION, SET_ERROR, SET_MAP_THEME } from "../actions/actionTypes";
 
 //console.log("getMapTheme", getData(getMapTheme, SET_MAP_THEME));
 //console.log("getMapThemered", getMapThemeRed);
@@ -17,6 +17,7 @@ export const reducers = combineReducers({
    getDestination: getApiData(DEST),
    getDestinationList: getApiData(DEST_LIST),
    getCoordinates: getApiData(COORDINATES),
+   getClickedDestination: getApiData(DEST_CLICKED),
    getErrors: getData(getErrors, SET_ERROR),
    getOneFromDestList: getData(getOneFromDestList, FIND_DESTINATION),
    getMapTheme: getData(getMapTheme, SET_MAP_THEME),

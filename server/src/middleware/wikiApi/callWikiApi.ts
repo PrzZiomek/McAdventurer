@@ -39,12 +39,22 @@ import { getDestinationData } from "./getDestinationData";
             lng: coordinates[0].lon || coords.lat
           },
         }; 
+        res.status(200).json({ destination })
     }
-    if(!coordinates){  //  (!coordinates[0].lat && !coordinates[0].lon)
-      const destinationCoords = await destAction.getOneCoords(name).catch(err => next(errorHandle(err, 500)));
-      coords.lat = destinationCoords;
-      coords.lon = destinationCoords
+    
+    const destinationCoords = await destAction.getOneCoords(name).catch(err => next(errorHandle(err, 500))) as Destination;
+    if(destinationCoords.lat && destinationCoords.lng){ 
+      destination = {
+        ...destination,
+        coordinates: {
+          lat:destinationCoords.lat,
+          lng:  destinationCoords.lng
+        },
+      }; 
+      res.status(200).json({ destination })
     }
+    
+
 
     console.log("coords from getonecords", coords);
     

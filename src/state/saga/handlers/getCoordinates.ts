@@ -5,20 +5,19 @@ type OutgoingValue =  CallEffect<unknown> | PutEffect<{type: string; payload: ob
 
 
  export function* getCoordinates(fetchData: () => Promise<unknown>): Generator<OutgoingValue, void, GeolocationPosition> {
-
-  try{
-    const geoPosition = yield call(fetchData); 
-    const lat: number = geoPosition.coords.latitude;
-    const lng: number = geoPosition.coords.longitude;
-    
-    yield put(locationAction({lat, lng}))
-  }
-  catch(err){
-    yield put(failLocationAction({
-      message: "geolocation coordinates not obtained",
-      content: err as Error
-   }))    
-  } 
+    try{
+      const geoPosition = yield call(fetchData); 
+      const lat: number = geoPosition.coords.latitude;
+      const lng: number = geoPosition.coords.longitude;
+      
+      yield put(locationAction({lat, lng}))
+    }
+    catch(err){
+      yield put(failLocationAction({
+        message: "geolocation coordinates not obtained",
+        content: err as Error
+    }))    
+    } 
 }
 
 

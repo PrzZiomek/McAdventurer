@@ -19,15 +19,14 @@ type OutgoingValue =
 type Action = { name: string, type: typeof FETCH_START.DEST };
 
 
-export function* getDestination( action: Action): Generator<OutgoingValue, void, { destination: Destination }> {
-   
+export function* getDestination( action: Action): Generator<OutgoingValue, void, { destination: Destination }> {  
    try{
       const res = yield fetchDestination(action.name);
       yield put(successFetchDestAction(res.destination))
    }
    catch(err){      
       yield put(failFetchDestAction({
-         message: "error when making destinations list request",
+         message: "error during destination request",
          content: <Error>err
       }))
    }
