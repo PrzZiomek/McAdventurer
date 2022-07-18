@@ -1,7 +1,7 @@
-import { useState, FC } from "react"
+import { FC } from "react"
+
 import { DestinationBrowser } from "../destinationsBrowser/DestinationsBrowser";
 import { PanelToggleBarStyled } from "./styles/panelToggleBar";
-import { I } from "../worldMap/models/types/componentsInterfaces";
 import { DetailsPanel, DetailsPanelRenderProps } from "./components/detailsPanel/DetailsPanel";
 import { MenuPanel } from "./components/menuPanel/MenuPanel";
 import { DetailsContent } from "./components/detailsPanel/components/detailsContent/DetailsContent";

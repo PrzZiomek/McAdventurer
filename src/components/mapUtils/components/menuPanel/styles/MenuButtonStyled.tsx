@@ -25,5 +25,6 @@ export const MenuButtonStyled = styled(Button)`
 
    &:hover{
         color: #C7C7A9;
+        box-shadow: inset 0 0 8px #3e3e28;
     }
 `

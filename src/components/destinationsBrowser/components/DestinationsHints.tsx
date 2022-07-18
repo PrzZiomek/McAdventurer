@@ -1,8 +1,9 @@
-import {  MouseEvent, FC, Dispatch, SetStateAction, useState } from "react";
+import {  MouseEvent, FC, Dispatch, SetStateAction, useState, useEffect, useRef } from "react";
+import { useDetectOutsideClick } from "../../../customHooks/useDetectOutsideClick";
 import { Destination } from "../../../generalTypes/apiResponse";
 import { DestinationsHintsList } from "./destinationsHintsList";
 
-
+// component to refactor!!!
 export interface IDestinationsHints {
    setInputTypedValue: Dispatch<SetStateAction<string>>;
    setFiltered: Dispatch<SetStateAction<Destination[]>>; 
@@ -14,15 +15,25 @@ export interface IDestinationsHints {
 
 export const DestinationsHints: FC<IDestinationsHints> = (props) => {
 
+   const [openList, setOpenList] = useState(true);
+   const menuRef = useRef<HTMLDivElement>(null);
+   useDetectOutsideClick(menuRef, () => setOpenList(false));
+
+   useEffect(() => {
+      if(!props.showCachedList) return;
+      setOpenList(true)
+    }, [props.showCachedList])
+
    const handleHintClick = (e: MouseEvent<HTMLButtonElement>): void => {
       const button = e.currentTarget;
       const destinationName = button.querySelector("span")!.textContent; 
       if(!destinationName) return;
       props.setInputTypedValue(destinationName);
-      props.setFiltered([]);
+     // props.setFiltered([]);
+     setOpenList(!openList)
   }; 
 
-  const showHintList = (): JSX.Element | null =>  props.filtered.length ? 
+  const showHintList = (): JSX.Element | null => openList && props.filtered.length ? 
       <DestinationsHintsList
           handleClick={handleHintClick} 
           destinations={props.filtered} 
@@ -30,11 +41,9 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
       /> : null;
 
    const hasCached = props.cachedValues.some(val => val.name);
-   console.log("props.cachedValues", props.cachedValues);
-   console.log("hasCached && props.showCachedList", {hasCached , show: props.showCachedList});
-   
+console.log("props.showCachedList",props.showCachedList);
 
-   const showCachedList = (): JSX.Element | null => hasCached && props.showCachedList ? 
+   const showCachedList = (): JSX.Element | null =>  openList && (hasCached && props.showCachedList)? 
       <DestinationsHintsList
          handleClick={handleHintClick} 
          destinations={props.cachedValues} 
@@ -42,9 +51,9 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
       /> : null; 
 
    return(
-     <>
+     <div ref={menuRef}>
          {showCachedList()}
          {showHintList()}
-      </>
+      </div>
    )
 }

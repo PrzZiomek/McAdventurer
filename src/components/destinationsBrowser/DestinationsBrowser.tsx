@@ -1,3 +1,4 @@
+import { type } from "os";
 import {  useState,  ChangeEvent, MouseEvent, FC, Dispatch, SetStateAction, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,6 +9,11 @@ import { Store } from "../../state/types";
 import { DestinationsHints } from "./components/DestinationsHints";
 import { BrowserInputStyled, InputButtonStyled, DestinationsBrowserStyled} from "./styles/destinationBrowserStyle";
 
+
+type CachedDestinations = {
+    name: string;
+    country: string;
+}[]
 
 export interface DestinationBrowser{
     destinations: Destination[] | undefined;
@@ -21,6 +27,7 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
     const [destination, setDestinastion] = useState<string>("");
     const [inputFocused, setInputFocused] = useState<boolean>(false);
     const dispatch = useDispatch();
+    const [filteredCached, setFilteredCached] = useState<CachedDestinations>([]);
     const [cachedDestinations, setCachedDestinations] = useState(() => {
         const storedName = localStorage.getItem("destinationsName") as string;
         const storedRegion = localStorage.getItem("destinationsRegion") as string;
@@ -72,15 +79,21 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
                 } 
             }        
         };       
+
         const filtered: Destination[] = props.destinations
             .filter(pickIfMatch)
             .slice(0, 30);               
         setFiltered(filtered);      
+        const filteredCached  = createCachedDestObj()
+            .map(dest => ({ ...dest,  name: dest.name.trim()}))
+            .filter(pickIfMatch)
+            .slice(0, 30);            
+        setFilteredCached(filteredCached); 
     } 
 
-    const handleInputFocus = () =>  setInputFocused(!inputFocused);
+    const handleInputFocus = () => { setInputFocused(!inputFocused); console.log("!inputFocused", !inputFocused)};
 
-    const createCachedDestObj = () => {
+    const createCachedDestObj = (): CachedDestinations => {
         const cachedDestNameList: string[] = cachedDestinations.name.split(","); 
         const cachedDestRegionList: string[] = cachedDestinations.region.split(","); 
         const cachedDestObjList = [];
@@ -94,22 +107,25 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
         return cachedDestObjList;
     }
 
+    const cachedHints: CachedDestinations = filteredCached.length ? filteredCached : createCachedDestObj();
+
     return (
         <DestinationsBrowserStyled changeBorder={false}> 
             <BrowserInputStyled 
-                  id="browserInput"
+                  id="browser_input"
                   onChange={handleChange}
                   onFocus={handleInputFocus}
                   value={inputTypedValue}
+                  handleClick={() => setInputFocused(true)}
             />       
             <InputButtonStyled handleClick={handleSearchClick}>search</InputButtonStyled>
             <DestinationsHints
                 setInputTypedValue={setInputTypedValue}
                 setFiltered={setFiltered}
                 filtered={filtered}
-                cachedValues={createCachedDestObj()}
+                cachedValues={cachedHints}
                 showCachedList={inputFocused}
-            />
+            />       
         </DestinationsBrowserStyled>
     )
 }

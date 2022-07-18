@@ -24,7 +24,7 @@ export const DestinationsHintsList: FC<DestinationsHintsListProps> = (props) => 
    });
 
    return (
-      <HintsListStyles id="hintsList">
+      <HintsListStyles>
          <ul> {list} </ul>
       </HintsListStyles>
    )

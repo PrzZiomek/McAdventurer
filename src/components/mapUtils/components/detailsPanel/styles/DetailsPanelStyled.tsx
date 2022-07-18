@@ -8,6 +8,8 @@ export const DetailsPanelStyled = styled(Div)`
     position: absolute;
     width: 100vw;   
     min-height: 300px;
+    max-height: 400px;
+    padding-right: 8px;
     left: 18px;
     bottom: ${(props) => props.showPanel === false ? "-300px" : 0 };
     z-index: 1;
@@ -23,7 +25,7 @@ export const DetailsPanelStyled = styled(Div)`
        // display: ${(props) => props.showPanel === true ? "block" : "none"};
     }
 
- //  Tablet: >= 768 x 1024 <=
+
     @media (min-width: 768px){
         width: 400px;
         width: ${(props) => props.showPanel === true ? "50vw" : 0};   

@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import { panelColor } from "../../../../../../../styles/themes/accessors";
-import { Button } from "../../../../../../../ui/Button"; 
 import { Div } from "../../../../../../../ui/Div";
 
 
@@ -9,12 +7,45 @@ export const MenuStyled = styled(Div)`
    position: absolute;
    top: -10px;
    right: ${(props) => props.showPanel === false ? "-385px" : "-10px" } ;
-   width: 375px;
+   width: 275px;
    height: 500px;
    z-index: 3;
-   background-color: ${panelColor("background")}; 
+   background-color: white; 
    border-radius: 0 0 7px 7px;
-   box-shadow:  0 0 8px #3e3e28;
+   box-shadow: inset 0 0 8px #3e3e28;
    transition: 0.5s; 
    border: none;
+
+   .menuList {
+      margin: 10px;
+      color: #6F6F49;
+      padding: 10px;
+      text-align: center;
+   }
+
+   li {
+      list-style: none; 
+   }
+
+   button{
+      background: transparent;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      padding: 10px;
+      border-bottom: 1px solid #6F6F49;
+      letter-spacing: 1px;
+      transition: 0.2s;
+      border-radius: 0;
+   }
+
+  button:hover {
+    color: #3E3E28;
+    background-color: #F7F7F3;
+    background-color: #DFDFCE;
+    border: 1px solid #6F6F49;
+    border-radius: 5px;
+   }
 `; 
