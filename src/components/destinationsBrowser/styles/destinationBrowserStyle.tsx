@@ -18,8 +18,9 @@ export const DestinationsBrowserStyled = styled(Div)`
   box-shadow: inset 0 0 8px #3e3e28;
   border: none;
 
-//  border: ${(props) => props.changeBorder === true ? "none" : "1px solid #3e3e28"};
-//  box-shadow: ${(props) => props.changeBorder === true ? "inset 0 0 8px #3e3e28" : "none"};
+  > div{
+    width: 96%;
+  }
  
   @media (min-width: 768px){
     width: 400px;
@@ -29,7 +30,7 @@ export const DestinationsBrowserStyled = styled(Div)`
 
 export const BrowserInputStyled = styled(Input)`
     width: 70%;
-    margin-left: 11px;
+    margin-left: 10px;
     border-radius: 7px;
     font-size: 1rem;
     color:#3e3e28;
@@ -38,9 +39,7 @@ export const BrowserInputStyled = styled(Input)`
     margin-bottom: 9px;
     border: none;     
 
-    //  Tablet: >= 768 x 1024 <=
     @media (min-width: 768px){
-      margin-left: 15px;
     }
 `;
 

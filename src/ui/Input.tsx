@@ -9,7 +9,8 @@ interface Props{
     type?: string;
     id?: string;
     value?: string;
-    onFocus?: FocusEventHandler
+    onFocus?: FocusEventHandler;
+    handleClick?: MouseEventHandler;
 }
 
 export const Input: FC <Props> = (props) => (
@@ -22,5 +23,6 @@ export const Input: FC <Props> = (props) => (
         className={props.className}
         onKeyDown={props.handleEnterClick}
         onFocus={props.onFocus}
+        onClick={props.handleClick}
      />
 )

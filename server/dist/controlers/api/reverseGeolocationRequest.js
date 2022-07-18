@@ -33,8 +33,8 @@ const reverseGeolocationRequest = async (req, res, next) => {
         const response = await axios_1.default.get("http://api.positionstack.com/v1/reverse", { params })
             .then(res => res.data)
             .catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
-        console.log("response????", response);
-        if (Array.isArray(response.data)) {
+        console.log("responsedata????", response.data);
+        if (response.data) {
             const destinations = response.data.map(dest => ({
                 name: dest.name,
                 region: dest.region,

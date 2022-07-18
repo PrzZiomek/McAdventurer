@@ -3,11 +3,16 @@ import { Div } from "../../../ui/Div";
 
 
 export const MapThemesMenuStyled = styled(Div)`
-   position: absolute;
-   top: 90px;
-   right: 0;
-   width: 75px;
-   z-index: 3;
+    position: absolute; 
+    top: 0;
+    right: ${(props) => props.showUpBar === false ?  '-75px' : 0};
+    height: 98.5%;
+    width: 75px;
+    margin-top: 1.2%;
+    border-left: 1px solid #3e3e28;
+    border-radius: 0 0 12px 0px;
+    transition: 0.3s;
+    z-index: 3;
 `; 
 
 export const ThemesMenu = styled(Div)`
@@ -17,11 +22,15 @@ export const ThemesMenu = styled(Div)`
     width: 100%;
     height: 100%;
     transition: 0.5s;
-    margin-right: ${(props) => props.showUpBar === false ? "-44px" : 0};
 
     img{
         height: 75px;
         width: 100%;
+        cursor: pointer;
+    }
+
+    img:hover{
+        transform: scale(1.2);
     }
 
 `;

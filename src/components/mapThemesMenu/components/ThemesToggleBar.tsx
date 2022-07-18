@@ -21,9 +21,7 @@ const ThemesToggleBarStyled = styled(Div)`
     border-right: 19px solid transparent;
     height: 0;
 
-    &::hover{
-        color: #C7C7A9;
-    }
+
 `
 
 export const ThemesToggleBar: FC<ToggleBarProps> = (props) => ToggleBar(props)(ThemesToggleBarStyled);

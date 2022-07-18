@@ -40,6 +40,7 @@ export interface IWorldMap {
     const createMarkerInit = createMarker(map, dispatch);
     const userLocationCoords = useUserLocalization();
     const destinationCoords = useDestinationLocation(props.destinations);
+    const [clickedCoords, setClickedCoords] = useState<{ lat: number; lng: number; }>();
 
     const theme = useSelector((store: Store) => {
       return store.getMapTheme.theme;
@@ -52,6 +53,9 @@ export interface IWorldMap {
         const coord: H.geo.Point = map.screenToGeo(extendedEvent.currentPointer.viewportX, extendedEvent.currentPointer.viewportY);
         const lat: number = Math.abs(+coord.lat.toFixed(4)); //  (coord.lat > 0) ? 'N' : 'S)'
         const lng: number = Math.abs(+coord.lng.toFixed(4)); // (coord.lng > 0) ? 'E' : 'W')
+        setClickedCoords({ lat, lng });
+        const marker = createMarkerInit({ lat, lng }, createDestinationMarkerIcon());
+        setCurentMarker(marker);
         dispatch({type: FETCH_START.DEST_CLICKED, coords: { lat, lng }});       
       });
     }, [map])
@@ -60,6 +64,11 @@ export interface IWorldMap {
       const layer = layerWithTheme(theme); 
       if(map && layer) map.setBaseLayer(layer); 
     }, [theme])
+
+    useEffect(() => {
+      if(!map) return;
+      if(currentMarker) map.removeObject(currentMarker); 
+    }, [clickedCoords])
 
     useEffect(() => {
       if(!map) return;

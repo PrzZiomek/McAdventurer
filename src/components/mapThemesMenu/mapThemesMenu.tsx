@@ -1,14 +1,20 @@
- import { useState, FC, useEffect, useRef, MutableRefObject, Dispatch, MouseEvent } from "react"
+ import React, { useState, FC, useEffect, useRef, MutableRefObject, Dispatch, MouseEvent } from "react"
 import { useDispatch } from "react-redux";
+import { useDetectOutsideClick } from "../../customHooks/useDetectOutsideClick";
 
-import { ThemesToggleBar } from "./components/ThemesToggleBar";
 import { Theme } from "./models/Theme";
 import { ThemesMenu, MapThemesMenuStyled } from "./styles/mapThemesMenuStyles";
 
 
-export const MapThemesMenu:FC = () => {
+interface MapThemesMenu{
+    toggleState: boolean;
+    setShowThemes: Dispatch<React.SetStateAction<boolean>>;
+} 
 
-    const [toggleState, setToggler] = useState(false);
+export const MapThemesMenu: FC<MapThemesMenu> = (props) => { 
+
+    const menuRef = useRef<HTMLDivElement>(null);
+    useDetectOutsideClick(menuRef, () => props.setShowThemes(false));
     const dispatch = useDispatch();
 
     const themes = [
@@ -37,9 +43,8 @@ export const MapThemesMenu:FC = () => {
         />);
         
     return (
-        <MapThemesMenuStyled className="themesBar">
-            <ThemesToggleBar toggle={setToggler} toggleState={toggleState}>Themes</ThemesToggleBar>
-            <ThemesMenu className="themesMenu" showUpBar={toggleState}> {thumbnails} </ThemesMenu>
+        <MapThemesMenuStyled actualRef={menuRef} showUpBar={props.toggleState} id="themesBar">
+            <ThemesMenu className="themesMenu"> {thumbnails} </ThemesMenu>
         </MapThemesMenuStyled>
     )
 }

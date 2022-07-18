@@ -23,7 +23,7 @@ export interface DetailsPanelRenderProps {
 
 export const DetailsPanel: FC<IDetailsPanel> = (props) => {
 
-   const [showPanel, setShowPanel] = useState(false); 
+   const [showPanel, setShowPanel] = useState<boolean>(false); 
 
    const destination: WikiDestination | undefined = useSelector((state: Store) => { 
       if(state.getDestination.loading !== false) return; 
@@ -34,7 +34,7 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
       if(state.getClickedDestination.loading !== false) return; 
       return state.getClickedDestination.data;                                                                                                                                        //setDestination(state.getDestination.destination)  
    });
-// ???
+// to refactor !!!
    useEffect(() => {
       setShowPanel(!!destination?.name); 
     }, [destination?.name])
@@ -59,13 +59,13 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
       detailsContentProps: {
           localizationError: getLocalizationError(),
           destinationName: destination?.name,
-          clickedDestination 
+          clickedDestination
       },
     }
 
    return (
       <DetailsPanelStyled 
-         id="detailsPanel" 
+         id="details_panel" 
          showPanel={showPanel}
       >
         {props.render(renderProps)}
@@ -73,6 +73,3 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
    )
 }
 
-/*
- const handlePanelTogglerClick = () => setShowPanel(!showPanel); 
-*/
