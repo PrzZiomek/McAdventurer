@@ -4,7 +4,7 @@ The Web map application enables users to discover destinations, by showing typed
 providing information about places, such as pictures, descriptions, references, and hints to further explore. 
 The project is at an early stage - so far the app allows the user to find a given destination on the map and show
 the name of the clicked location. Furthermore, the app will be turned into a PWA (Progressive Web Application) and next 
-functionalities will be added, and the app will also be uploaded to the internet.
+functionalities will be added or improved, and the app will also be uploaded to the internet.
 
 
 Concepts and technology stack:
