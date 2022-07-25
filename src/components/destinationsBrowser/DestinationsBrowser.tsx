@@ -7,6 +7,7 @@ import { Destination } from "../../generalTypes/apiResponse";
 import { FETCH_START} from "../../state/actions/actionTypes";
 import { Store } from "../../state/types";
 import { DestinationsHints } from "./components/DestinationsHints";
+import { pickIfMatch } from "./helpers/pickIfMatch";
 import { BrowserInputStyled, InputButtonStyled, DestinationsBrowserStyled} from "./styles/destinationBrowserStyle";
 
 
@@ -28,7 +29,18 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
     const [inputFocused, setInputFocused] = useState<boolean>(false);
     const dispatch = useDispatch();
     const [filteredCached, setFilteredCached] = useState<CachedDestinations>([]);
-    const [cachedDestinations, setCachedDestinations] = useState(() => {
+    const [currentCachedList, setCurrentCachedList] = useState<CachedDestinations>([]);
+    const [cachedDestinations, setCachedDestinations] = useState(getLocalStorageData);
+
+    useDidMountEffect(() => dispatch({type: FETCH_START.DEST, name: destination}), [destination]);
+
+    
+    useEffect(() => {
+        const cachedList = filteredCached.length ? filteredCached : createCachedDestObj();
+        setCurrentCachedList(cachedList); 
+    }, [filteredCached.length])
+
+    function getLocalStorageData() {
         const storedName = localStorage.getItem("destinationsName") as string;
         const storedRegion = localStorage.getItem("destinationsRegion") as string;
         let name = "";
@@ -38,9 +50,7 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
             region = JSON.parse(storedRegion); 
         }
         return { name, region } ;
-    });
-
-    useDidMountEffect(() => dispatch({type: FETCH_START.DEST, name: destination}), [destination]);
+    }
 
     const addToCached = (cacheDestination: string) => {
         const storedWithNextName = cachedDestinations.name += `, ${cacheDestination}`;        
@@ -71,27 +81,21 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
         setInputTypedValue(value);
         if(props.destinations === undefined) return;   
 
-        const pickIfMatch = ({name}: {name: string}): boolean | undefined => { 
-            for(let i = 30; i > 0; i--){
-                if(value.length > i){    
-                    const piece = i + 1;        
-                    return name.toLowerCase().slice(0, piece) === value.slice(0, piece);
-                } 
-            }        
-        };       
-
         const filtered: Destination[] = props.destinations
-            .filter(pickIfMatch)
+            .filter(pickIfMatch(value))
             .slice(0, 30);               
         setFiltered(filtered);      
+
         const filteredCached  = createCachedDestObj()
             .map(dest => ({ ...dest,  name: dest.name.trim()}))
-            .filter(pickIfMatch)
+            .filter(pickIfMatch(value))
             .slice(0, 30);            
-        setFilteredCached(filteredCached); 
+        setFilteredCached(filteredCached);   
     } 
 
-    const handleInputFocus = () => { setInputFocused(!inputFocused); console.log("!inputFocused", !inputFocused)};
+    const handleInputFocus = () =>  setInputFocused(!inputFocused);
+
+    const handleInputClick = () => setInputFocused(true);
 
     const createCachedDestObj = (): CachedDestinations => {
         const cachedDestNameList: string[] = cachedDestinations.name.split(","); 
@@ -107,8 +111,6 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
         return cachedDestObjList;
     }
 
-    const cachedHints: CachedDestinations = filteredCached.length ? filteredCached : createCachedDestObj();
-
     return (
         <DestinationsBrowserStyled changeBorder={false}> 
             <BrowserInputStyled 
@@ -116,14 +118,14 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
                   onChange={handleChange}
                   onFocus={handleInputFocus}
                   value={inputTypedValue}
-                  handleClick={() => setInputFocused(true)}
+                  handleClick={handleInputClick}
             />       
             <InputButtonStyled handleClick={handleSearchClick}>search</InputButtonStyled>
             <DestinationsHints
                 setInputTypedValue={setInputTypedValue}
                 setFiltered={setFiltered}
                 filtered={filtered}
-                cachedValues={cachedHints}
+                cachedValues={currentCachedList}
                 showCachedList={inputFocused}
             />       
         </DestinationsBrowserStyled>
