@@ -3,7 +3,7 @@ import { useDetectOutsideClick } from "../../../customHooks/useDetectOutsideClic
 import { Destination } from "../../../generalTypes/apiResponse";
 import { DestinationsHintsList } from "./destinationsHintsList";
 
-// component to refactor!!!
+
 export interface IDestinationsHints {
    setInputTypedValue: Dispatch<SetStateAction<string>>;
    setFiltered: Dispatch<SetStateAction<Destination[]>>; 
@@ -29,7 +29,6 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
       const destinationName = button.querySelector("span")!.textContent; 
       if(!destinationName) return;
       props.setInputTypedValue(destinationName);
-     // props.setFiltered([]);
      setOpenList(!openList)
   }; 
 
@@ -40,10 +39,7 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
           showHints={false}  
       /> : null;
 
-   const hasCached = props.cachedValues.some(val => val.name);
-console.log("props.showCachedList",props.showCachedList);
-
-   const showCachedList = (): JSX.Element | null =>  openList && (hasCached && props.showCachedList)? 
+   const showCachedList = (): JSX.Element | null =>  openList && props.showCachedList ? 
       <DestinationsHintsList
          handleClick={handleHintClick} 
          destinations={props.cachedValues} 

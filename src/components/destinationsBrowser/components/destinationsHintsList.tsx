@@ -23,9 +23,23 @@ export const DestinationsHintsList: FC<DestinationsHintsListProps> = (props) => 
          )
    });
 
+   const listElement = () => {
+      let element: null |  JSX.Element = null;
+
+      if(props.destinations.length){
+         element = (
+            <HintsListStyles>
+               <ul> {list} </ul>
+            </HintsListStyles>
+         )
+      }
+
+      return element;
+   }
+
    return (
-      <HintsListStyles>
-         <ul> {list} </ul>
-      </HintsListStyles>
+      <>
+         {listElement()}
+      </>
    )
 }

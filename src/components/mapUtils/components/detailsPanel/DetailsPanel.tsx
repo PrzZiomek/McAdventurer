@@ -25,7 +25,7 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
 
    const [showPanel, setShowPanel] = useState<boolean>(false); 
 
-   const destination: WikiDestination | undefined = useSelector((state: Store) => { 
+   const typedDestination: WikiDestination | undefined = useSelector((state: Store) => { 
       if(state.getDestination.loading !== false) return; 
       return state.getDestination.data;                                                                                                                                        //setDestination(state.getDestination.destination)  
    });
@@ -34,13 +34,13 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
       if(state.getClickedDestination.loading !== false) return; 
       return state.getClickedDestination.data;                                                                                                                                        //setDestination(state.getDestination.destination)  
    });
-// to refactor !!!
+
    useEffect(() => {
-      setShowPanel(!!destination?.name); 
-    }, [destination?.name])
+      setShowPanel(!!typedDestination?.name); 
+    }, [typedDestination?.name])
 
     useEffect(() => {
-      setShowPanel(!!clickedDestination?.name); console.log("setShowPanel", !!destination?.name);      
+      setShowPanel(!!clickedDestination?.name); console.log("setShowPanel", !!typedDestination?.name);      
     }, [clickedDestination?.name])
 
     useEffect(() => {
@@ -48,7 +48,7 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
     }, [clickedDestination?.length])
 
    const getLocalizationError = (): JSX.Element | null => {
-      if(!destination?.coordinates || noCoordinates(destination?.coordinates)){
+      if(!typedDestination?.coordinates || noCoordinates(typedDestination?.coordinates)){
          return <h3>coordinates not found</h3>;
       }  
       return null;
@@ -58,7 +58,7 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
       showPanel,
       detailsContentProps: {
           localizationError: getLocalizationError(),
-          destinationName: destination?.name,
+          destinationName: typedDestination?.name,
           clickedDestination
       },
     }
