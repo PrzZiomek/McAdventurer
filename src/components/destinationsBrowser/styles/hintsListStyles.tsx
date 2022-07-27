@@ -10,6 +10,7 @@ export const HintsListStyles = styled(Div)`
    background: white;
    max-height: 87vh;
    overflow-y: scroll;
+   overflow-x: hidden;
 
    ul{
       list-style: none;

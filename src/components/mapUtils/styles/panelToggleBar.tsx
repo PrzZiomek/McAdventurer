@@ -21,7 +21,7 @@ export const PanelToggleBarStyled = styled(Div)`
     transform: rotate(${(props: propsType) =>{console.log("toggleState", props.toggleState); return props.toggleState === true ? 45 : 225} }deg);
 
     &:hover {
-     border-color : #C7C7A9;
+     border-color : #abab93;
      background: linear-gradient(to bottom right,transparent 0%,transparent 50%,#C7C7A9 50%,#C7C7A9 100%);
     }
 `;

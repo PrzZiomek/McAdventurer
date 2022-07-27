@@ -1,6 +1,8 @@
 import { type } from "os";
 import {  useState,  ChangeEvent, MouseEvent, FC, Dispatch, SetStateAction, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Search } from "@material-ui/icons"
+import { Tooltip, IconButton } from '@mui/material';
 
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
 import { Destination } from "../../generalTypes/apiResponse";
@@ -18,7 +20,8 @@ type CachedDestinations = {
 
 export interface DestinationBrowser{
     destinations: Destination[] | undefined;
-    setShowPanel?: Dispatch<SetStateAction<boolean>>
+    setShowPanel?: Dispatch<SetStateAction<boolean>>;
+    device: "mobile" | "desktop";
   }
 
 export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
@@ -119,8 +122,13 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
                   onFocus={handleInputFocus}
                   value={inputTypedValue}
                   handleClick={handleInputClick}
-            />       
-            <InputButtonStyled handleClick={handleSearchClick}>search</InputButtonStyled>
+                  placeholder="Where you wanna go?"
+            />      
+            <Tooltip title="Search">
+                <IconButton onClick={handleSearchClick} >
+                    <Search />
+                </IconButton>
+            </Tooltip> 
             <DestinationsHints
                 setInputTypedValue={setInputTypedValue}
                 setFiltered={setFiltered}

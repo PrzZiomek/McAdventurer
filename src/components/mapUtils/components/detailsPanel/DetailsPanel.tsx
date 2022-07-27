@@ -12,12 +12,13 @@ export interface IDetailsPanel{
  }
 
 export interface DetailsPanelRenderProps {
-   showPanel: boolean
+   showPanel: boolean;
+   setShowPanel: React.Dispatch<React.SetStateAction<boolean>>;
    detailsContentProps: {
       localizationError: JSX.Element | null,
       destinationName: string | undefined,
       clickedDestination: Destination | undefined | DestinationDetailed[] 
-   }, 
+   };
 }
 
 
@@ -55,6 +56,7 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
    } 
 
    const renderProps: DetailsPanelRenderProps = {
+      setShowPanel,
       showPanel,
       detailsContentProps: {
           localizationError: getLocalizationError(),
