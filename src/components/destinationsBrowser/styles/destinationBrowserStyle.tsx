@@ -7,6 +7,7 @@ export const DestinationsBrowserStyled = styled(Div)`
   position: absolute;
   top: 16px;
   display:flex;
+  justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
   width: 90vw;
@@ -21,10 +22,33 @@ export const DestinationsBrowserStyled = styled(Div)`
   > div{
     width: 96%;
   }
+
+  button{
+    margin-right: 3px;
+    padding-right: 55px;
+  }
+
+  button.MuiButtonBase-root.MuiIconButton-root:hover .MuiSvgIcon-root{
+    color: #C7C7A9;
+    cursor: pointer;
+  }
+
+  button.MuiButtonBase-root.MuiIconButton-root:hover{
+    background-color: transparent;
+  }
+
+  .MuiSvgIcon-root{
+    font-size: 1.69rem;
+    color: #3e3e28;
+  }
  
   @media (min-width: 768px){
     width: 400px;
     margin-left: 18px;
+
+    button{
+      padding-right: 8px;
+    }
   }
 `;
 
@@ -32,14 +56,30 @@ export const BrowserInputStyled = styled(Input)`
     width: 70%;
     margin-left: 10px;
     border-radius: 7px;
-    font-size: 1rem;
+    font-size: 1.15rem;
     color:#3e3e28;
-    height: 30px;
+    height: 34px;
     margin-top: 14px;
     margin-bottom: 9px;
     border: none;     
 
+    ::placeholder {
+      color: #aa9d98;
+      padding-left: 7px;
+    }
+    
+    :-ms-input-placeholder {
+      color: #aa9d98;
+      padding-left: 7px;
+    }
+
+    ::-ms-input-placeholder {
+      color: #aa9d98;
+      padding-left: 7px;
+    }
+
     @media (min-width: 768px){
+      height: 32px;
     }
 `;
 
@@ -63,7 +103,6 @@ export const InputButtonStyled = styled(Button)`
         color: #C7C7A9;
       }
 
-     //  Tablet: >= 768 x 1024 <=
      @media (min-width: 768px){
         right: 14px;
         font-size: 1.2rem;

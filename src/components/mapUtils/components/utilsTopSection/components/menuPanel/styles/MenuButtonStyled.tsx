@@ -1,13 +1,12 @@
 import styled from "styled-components";
-
-import { panelColor } from "../../../../../styles/themes/accessors";
-import { Button } from "../../../../../ui/Button";
+import { panelColor } from "../../../../../../../styles/themes/accessors";
+import { Button } from "../../../../../../../ui/Button";
 
 
 export const MenuButtonStyled = styled(Button)`
    position: absolute;
    top: 6px;
-   z-index: ${(props) => props.showPanel === false ? "-385px" : "-10px" };
+  // z-index: ${(props) => props.showPanel === false ? "-385px" : "-10px" };
    right: 0;
    text-transform: uppercase;
    padding: 0 20px;

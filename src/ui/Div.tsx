@@ -25,6 +25,8 @@ export interface DivProps{
     toggleState?: boolean;
     /** to change border on DestinatonBrowser input */
     changeBorder?: boolean;
+    /** ARIA attribiute, to tell the screen readers what role does the element serve  */
+    role?: string
 }
 
 
@@ -47,6 +49,7 @@ export const Div: FC<DivProps> = (props) => (
         ref={props.actualRef} 
         className={props.className}
         onClick={props.onClick}
+        role={props.role}
     > 
       {props.children}
     </div>

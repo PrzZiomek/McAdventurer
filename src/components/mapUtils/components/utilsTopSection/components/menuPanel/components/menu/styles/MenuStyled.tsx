@@ -1,6 +1,5 @@
 import styled from "styled-components";
-
-import { Div } from "../../../../../../../ui/Div";
+import { Div } from "../../../../../../../../../ui/Div";
 
 
 export const MenuStyled = styled(Div)`
@@ -45,7 +44,13 @@ export const MenuStyled = styled(Div)`
     color: #3E3E28;
     background-color: #F7F7F3;
     background-color: #DFDFCE;
-    border: 1px solid #6F6F49;
+    border: 2px solid #6F6F49;
+    border-top: none;
     border-radius: 5px;
    }
+
+   @media (min-width: 768px){
+      right: ${(props) => props.showPanel === false ? "-385px" : "-10px" } ;
+      width: 275px;
+  }
 `; 

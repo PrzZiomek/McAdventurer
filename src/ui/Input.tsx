@@ -1,6 +1,6 @@
 import { ChangeEventHandler, FC, FocusEventHandler, KeyboardEventHandler, MouseEventHandler } from "react";
 
-interface Props{
+interface InputProps{
     className?: string;
     color?: string;
     onChange: ChangeEventHandler;
@@ -11,9 +11,10 @@ interface Props{
     value?: string;
     onFocus?: FocusEventHandler;
     handleClick?: MouseEventHandler;
+    placeholder?: string
 }
 
-export const Input: FC <Props> = (props) => (
+export const Input: FC <InputProps> = (props) => (
     <input 
         autoComplete="off"
         id={props.id}
@@ -24,5 +25,6 @@ export const Input: FC <Props> = (props) => (
         onKeyDown={props.handleEnterClick}
         onFocus={props.onFocus}
         onClick={props.handleClick}
+        placeholder={props.placeholder}
      />
 )
