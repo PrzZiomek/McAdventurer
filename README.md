@@ -20,3 +20,5 @@ Concepts and technology stack:
 - sourcing data from several external APIs , like the Wikipedia API
 
 - arranging data with the MySQL database
+
+- all together bundled with Webpack.
