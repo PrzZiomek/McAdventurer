@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { Aside } from "../../../../../../../../../ui/aside";
 import { Div } from "../../../../../../../../../ui/Div";
 
 
-export const MenuStyled = styled(Div)`
+export const MenuStyled = styled(Aside)`
    position: absolute;
    top: -10px;
    right: ${(props) => props.showPanel === false ? "-385px" : "-10px" } ;
@@ -42,11 +43,11 @@ export const MenuStyled = styled(Div)`
 
   button:hover {
     color: #3E3E28;
-    background-color: #F7F7F3;
+   // background-color: #F7F7F3;
     background-color: #DFDFCE;
     border: 2px solid #6F6F49;
     border-top: none;
-    border-radius: 5px;
+    border-radius: 0 0 5px 5px;
    }
 
    @media (min-width: 768px){

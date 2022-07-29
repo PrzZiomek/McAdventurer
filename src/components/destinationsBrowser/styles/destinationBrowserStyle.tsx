@@ -6,10 +6,6 @@ import { Input } from "../../../ui/Input";
 export const DestinationsBrowserStyled = styled(Div)`
   position: absolute;
   top: 16px;
-  display:flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: center;
   width: 90vw;
   min-height: 45px;
   z-index: 1;
@@ -19,7 +15,13 @@ export const DestinationsBrowserStyled = styled(Div)`
   box-shadow: inset 0 0 8px #3e3e28;
   border: none;
 
-  > div{
+  form {
+    display: flex;
+    justify-content: space-between;
+    width: 100%
+  }
+
+  form > div{
     width: 96%;
   }
 

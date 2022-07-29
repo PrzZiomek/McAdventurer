@@ -1,16 +1,13 @@
 import { ChangeEventHandler, FC, FocusEventHandler, KeyboardEventHandler, MouseEventHandler } from "react";
+import { HtmlElementProps } from "../generalTypes/HtmlElementProps";
 
-interface InputProps{
-    className?: string;
-    color?: string;
+interface InputProps extends HtmlElementProps {
     onChange: ChangeEventHandler;
     visibleText?: boolean;
     handleEnterClick?: KeyboardEventHandler;
     type?: string;
-    id?: string;
     value?: string;
     onFocus?: FocusEventHandler;
-    handleClick?: MouseEventHandler;
     placeholder?: string
 }
 
@@ -24,7 +21,7 @@ export const Input: FC <InputProps> = (props) => (
         className={props.className}
         onKeyDown={props.handleEnterClick}
         onFocus={props.onFocus}
-        onClick={props.handleClick}
+        onClick={props.onClick}
         placeholder={props.placeholder}
      />
 )

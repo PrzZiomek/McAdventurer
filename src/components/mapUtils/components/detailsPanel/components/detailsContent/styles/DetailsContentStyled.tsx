@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import { Article } from "../../../../../../../ui/Article";
 import { Div } from "../../../../../../../ui/Div";
 
 
 
-export const DetailsContentStyled = styled(Div)`
+export const DetailsContentStyled = styled(Article)`
 
    margin-top: 30px;
    padding: 10px;
