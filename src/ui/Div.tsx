@@ -1,20 +1,13 @@
 import { FC, ForwardedRef, LegacyRef, MouseEventHandler, MutableRefObject, RefObject } from "react";
+import { HtmlElementProps } from "../generalTypes/HtmlElementProps";
 
-export interface DivProps{
-    /** Required by default */
-    className?: string;     
-    /** identifier */
-    id?: string;
-    /** to set color if need be */
-    color?: string;   
+export interface DivProps extends HtmlElementProps{
     /** used with expanding hintsList in Panel */
     showHints?: boolean;
     /** used in DivWrapper to apply proper ref to individual div  */
     actualRef?: MutableRefObject<null> | LegacyRef<HTMLDivElement> | ForwardedRef<unknown> | RefObject<HTMLDivElement | unknown>
     /** to get map element ref  */
     mapRef?: MutableRefObject<null>;
-    /** used in ToggleBar  */                                                                      
-    onClick?: MouseEventHandler<HTMLDivElement>;
     /** used to show and hide Panel and themes  */
     showUpBar?: boolean;
     /** used in Panel toggle bar arrow  */
@@ -25,8 +18,6 @@ export interface DivProps{
     toggleState?: boolean;
     /** to change border on DestinatonBrowser input */
     changeBorder?: boolean;
-    /** ARIA attribiute, to tell the screen readers what role does the element serve  */
-    role?: string
 }
 
 

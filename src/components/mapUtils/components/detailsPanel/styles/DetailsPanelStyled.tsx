@@ -2,9 +2,10 @@ import styled from "styled-components";
 
 import { Div } from "../../../../../ui/Div";
 import { panelColor } from "../../../../../styles/themes/accessors";
+import { Aside } from "../../../../../ui/aside";
 
 
-export const DetailsPanelStyled = styled(Div)`
+export const DetailsPanelStyled = styled(Aside)`
     position: absolute;
     width: 100vw;   
     min-height: 300px;

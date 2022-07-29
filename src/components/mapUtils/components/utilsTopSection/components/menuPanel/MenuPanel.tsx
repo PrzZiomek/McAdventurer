@@ -29,7 +29,7 @@ export const MenuPanel: FC<MenuPanelProps> = (props) => {
   }
 
   const menuButton = () => {
-      let element: JSX.Element = <MenuButtonStyled showPanel={showPanel} handleClick={handleMenuClick}>menu</MenuButtonStyled>;
+      let element: JSX.Element = <MenuButtonStyled showPanel={showPanel} onClick={handleMenuClick}>menu</MenuButtonStyled>;
 
       if(props.device === "mobile"){
          element = (  
@@ -52,7 +52,7 @@ export const MenuPanel: FC<MenuPanelProps> = (props) => {
          <Menu showPanel={showPanel} ref={menuRef}>
             <div className="menuList" id="menu_list">
                <menu>
-                  <li><Button handleClick={handleThemesClick}>Themes</Button></li>
+                  <li><Button onClick={handleThemesClick}>Themes</Button></li>
                </menu>
             </div>
             <MapThemesMenu setShowThemes={setShowThemes} toggleState={showThemes} />

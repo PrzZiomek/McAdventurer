@@ -116,19 +116,21 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
 
     return (
         <DestinationsBrowserStyled changeBorder={false}> 
-            <BrowserInputStyled 
-                  id="browser_input"
-                  onChange={handleChange}
-                  onFocus={handleInputFocus}
-                  value={inputTypedValue}
-                  handleClick={handleInputClick}
-                  placeholder="Where you wanna go?"
-            />      
-            <Tooltip title="Search">
-                <IconButton onClick={handleSearchClick} >
-                    <Search />
-                </IconButton>
-            </Tooltip> 
+            <form action="post">
+                <BrowserInputStyled 
+                    id="browser_input"
+                    onChange={handleChange}
+                    onFocus={handleInputFocus}
+                    value={inputTypedValue}
+                    onClick={handleInputClick}
+                    placeholder="Where you wanna go?"
+                />      
+                <Tooltip title="Search">
+                    <IconButton onClick={handleSearchClick} >
+                        <Search />
+                    </IconButton>
+                </Tooltip> 
+            </form>
             <DestinationsHints
                 setInputTypedValue={setInputTypedValue}
                 setFiltered={setFiltered}

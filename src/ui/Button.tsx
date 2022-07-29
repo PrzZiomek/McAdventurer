@@ -1,12 +1,10 @@
 import { FC, MouseEventHandler } from "react";
+import { HtmlElementProps } from "../generalTypes/HtmlElementProps";
 
-interface ButtonProps{
-    className?: string;
-    color?: string;
+interface ButtonProps extends HtmlElementProps{ 
     showPanel?: boolean;
-    handleClick: MouseEventHandler<HTMLButtonElement>
 }
 
 export const Button: FC <ButtonProps> = (props) => (
-    <button className={props.className} onClick={props.handleClick}> {props.children} </button>
+    <button className={props.className} onClick={props.onClick}> {props.children} </button>
 )

@@ -3,8 +3,8 @@ import { Div } from "../../../ui/Div";
 
 
 export const HintsListStyles = styled(Div)`
-   width: 100%;
    margin: 0 7px;
+   margin-right: 8px;
    margin-bottom: 12px;
    padding-left: 9px;
    background: white;

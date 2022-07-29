@@ -15,7 +15,7 @@ export const DestinationsHintsList: FC<DestinationsHintsListProps> = (props) => 
    const list: JSX.Element[] = props.destinations.map((dest, i) => {
       return (
             <li key={i}> 
-               <HintsButtonStyled handleClick={props.handleClick}>
+               <HintsButtonStyled onClick={props.handleClick}>
                   <span>{dest.name}</span>
                   <span>{dest.country}</span>
                </HintsButtonStyled>            
