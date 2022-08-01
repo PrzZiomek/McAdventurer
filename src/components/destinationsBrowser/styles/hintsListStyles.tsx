@@ -28,11 +28,11 @@ export const HintsListStyles = styled(Div)`
       width: 100%;
       background-color: unset;
       border: none;
-      color: #3e3e28;
+      color: #181717;
    }
 
    button:hover {
-      background: #F7F7F3;
+      background: #f2f2e9;
    }
 
    /** custom scroll styles */

@@ -16,21 +16,5 @@
     
     <div id="root"></div>
 
-    <script>
-
-      if("serviceWorker" in navigator){
-        window.addEventListener("load", async () => {
-          try{
-            const sw = await navigator.serviceWorker.register("./serviceWorker.js");
-            console.log("success, ", sw.scope);
-
-          }catch(e){
-            console.log(e);
-          }
-       
-        })
-      }
-
-    </script>
 </body>
 </html>

@@ -6,7 +6,6 @@ export function myUseTheme<T>() {
    try{
       const [theme, setTheme] = useState(themes?.day);
       const [themeLoaded, setThemeLoaded] = useState(false);
-      console.log("theme:",theme);
       
       const setMode = (mode: JSON) => {
          setToLocalStorage("theme", mode);

@@ -13,5 +13,5 @@ export const Article: FC<ArticleProps> = (props) => (
        role={props.role}
    > 
      {props.children}
-   </article >
+   </article>
 )

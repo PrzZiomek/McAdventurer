@@ -25,7 +25,7 @@ type Action = {type: typeof FETCH_START.DEST_CLICKED, coords: Coordinates};
 
 export function* getClickedDestination(action) {  
    try{
-      const res = yield fetchClickedDestination(action.coords); console.log("res!!!!!", res);    
+      const res = yield fetchClickedDestination(action.coords);  
       const data = res.destination ? res.destination : res.destinations;
       yield put({
          type: FETCH_SUCCESS.DEST_CLICKED,

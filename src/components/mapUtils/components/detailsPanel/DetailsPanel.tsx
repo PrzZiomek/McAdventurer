@@ -41,7 +41,7 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
     }, [typedDestination?.name])
 
     useEffect(() => {
-      setShowPanel(!!clickedDestination?.name); console.log("setShowPanel", !!typedDestination?.name);      
+      setShowPanel(!!clickedDestination?.name); 
     }, [clickedDestination?.name])
 
     useEffect(() => {
@@ -68,6 +68,7 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
    return (
       <DetailsPanelStyled 
          id="details_panel" 
+         ariaLabel="destination details panel"
          showPanel={showPanel}
       >
         {props.render(renderProps)}

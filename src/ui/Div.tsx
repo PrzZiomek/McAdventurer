@@ -41,6 +41,7 @@ export const Div: FC<DivProps> = (props) => (
         className={props.className}
         onClick={props.onClick}
         role={props.role}
+        aria-label={props.ariaLabel}
     > 
       {props.children}
     </div>

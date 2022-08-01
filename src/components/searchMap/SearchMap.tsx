@@ -53,17 +53,19 @@ export const SearchMap: FC = () => {
     const destList: Destination[] = destinationList?.length ? destinationList : [];  
     
     return  ( 
-
-            <SearchMapStyled id="mapWrapper">   
-
-                {errorInformation()}  
-
-                <MapUtils destinations={destList} /> 
-
-                <WorldMap
-                    destinations={destList}
-                /> 
-
-            </SearchMapStyled>  
+        <>
+            <header>
+                <h1 style={{ position: "absolute", top: 0, left: "50%" }}>Online interactive world map</h1>
+            </header>
+            <main>
+                <SearchMapStyled id="main_wrapper">   
+                    {errorInformation()}  
+                    <MapUtils destinations={destList} />         
+                        <WorldMap
+                            destinations={destList}
+                        />            
+                </SearchMapStyled>
+            </main>
+        </>
      )
 }

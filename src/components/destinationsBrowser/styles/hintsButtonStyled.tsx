@@ -12,6 +12,6 @@ export const HintsButtonStyled = styled(Button)`
    } 
 
    span:nth-child(2){
-      color: #aa9d98;
+      color: #70757a;
     }
 `;
