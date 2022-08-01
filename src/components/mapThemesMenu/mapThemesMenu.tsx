@@ -43,7 +43,7 @@ export const MapThemesMenu: FC<MapThemesMenu> = (props) => {
         />);
         
     return (
-        <MapThemesMenuStyled actualRef={menuRef} showUpBar={props.toggleState} id="themesBar">
+        <MapThemesMenuStyled actualRef={menuRef} showUpBar={props.toggleState} id="themes_Bar">
             <ThemesMenu className="themesMenu"> {thumbnails} </ThemesMenu>
         </MapThemesMenuStyled>
     )

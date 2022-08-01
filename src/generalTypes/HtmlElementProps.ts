@@ -11,5 +11,7 @@ export interface HtmlElementProps{
    /** used with clickable elements */                                                                      
    onClick?: MouseEventHandler<HTMLElement>;
    /** ARIA attribiute, to tell the screen readers what role does the element serve  */
-   role?: string
+   role?: string;
+   /** ARIA attribiute, to tell the screen readers what is the text of element */
+   ariaLabel?: string;
 }

@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react"
 import { useSelector } from "react-redux";
 import { Destination, DestinationDetailed } from "../../../../../../generalTypes/apiResponse";
 import { Store } from "../../../../../../state/types";
-import { DetailsContentStyled } from "./styles/DetailsContentStyled"
+import { DetailsContentStyled } from "./styles/DetailsContentStyled";
 
 interface DetailsContent {
    content: {
@@ -31,24 +31,34 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
    const destinationList = (): JSX.Element | null => {
       const destList: DestinationDetailed[] | undefined | Destination = props.content.clickedDestination;
       let element: JSX.Element | null = null;
+      const buildDestinationInfoText = (dest: DestinationDetailed) => (acc: string, key: string) => {
+         const DestinationInfoKey = key as keyof DestinationDetailed;
+         if(dest[DestinationInfoKey]){
+            acc += `${dest[DestinationInfoKey]}, `;
+         };          
+         return acc;
+      };
+      const showInfoHeader = (name: string | undefined): JSX.Element | null => name ? <h4>{name}</h4> : null;
+       
       if(Array.isArray(destList)){ 
          element = (
             <ul>
                { destList.map((dest, i) => {
+                  const destinationInfo = ["country", "region", "county", "locality"].reduce(buildDestinationInfoText(dest), "");
+ 
                   return (
                      <li key={i}>
                         <div>
-                           <h4>{dest.name}</h4>
-                           <p>{`
-                              ${dest.country || ""}, ${dest.region || ""}, ${dest.county || ""}, ${dest.locality || ""}
-                           `}</p>
+                           {showInfoHeader(dest.name)}
+                           <p> {destinationInfo} </p>
                         </div>
                      </li>
                   )
                   })}
             </ul>
          ) 
-      } 
+      };
+
       return element;
    } 
 
@@ -67,22 +77,25 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
       return element;
     } 
 
-    const typedDestinationElement: JSX.Element = (
-      <div id="content_wrapper">
-        <h2> {props.content.destinationName} </h2>
-         <div>
-            {props.content.localizationError}
+    const typedDestinationElement = (): JSX.Element => {
+       const showDestinationName = () => props.content.destinationName ? <h2> {props.content.destinationName} </h2> : null;
+       return (
+         <div id="content_wrapper">
+         <h2> {showDestinationName()} </h2>
             <div>
-            
+               {props.content.localizationError}
+               <div>
+               
+               </div>
             </div>
-         </div>
-    </div>)
+      </div>)
+    }
 
-    const clickedDestinationElement: JSX.Element = (
+    const clickedDestinationElement = (): JSX.Element => (
       <> { destinationList() || destination() }</>
-    )
+    );
       
-   const content: JSX.Element = mapClicked ? clickedDestinationElement : typedDestinationElement;
+   const content: JSX.Element = mapClicked ? clickedDestinationElement() : typedDestinationElement();
 
    return ( 
       <DetailsContentStyled>
@@ -91,10 +104,3 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
    )
 }
 
-  /* const [typedDestinationName, setTypedDestinationName] = useState<string>(); 
-   
-   const destinationName: string| undefined = useSelector((state: Store) => { 
-      if(state.getDestination.loading !== false) return; 
-      return state.getDestination.data.name;                                                                                                                                        //setDestination(state.getDestination.destination)  
-   });
-*/

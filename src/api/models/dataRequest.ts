@@ -10,9 +10,9 @@ export const fetchData = async <T>(url: string, queryData: QueryData): Promise<T
    const res = await fetch(url, {
       method: queryData.method,
           headers:{
-             // "Cookie": "login=true",              !!! to set
+             // "Cookie": "login=true",              !!! to do 
               "Content-Type": "application/json",
-             // "Authorization": "Bearer " + token,  !!! to set
+             // "Authorization": "Bearer " + token,  !!! to do
           },
           body: queryData.body ? queryData.body : null         
     })

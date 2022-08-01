@@ -24,6 +24,7 @@ export const MapUtils: FC<MapUtils> = (props) => {
                   toggleState={data.showPanel}
                   onClick={() => data.setShowPanel(!data.showPanel)}
                   role="button"
+                  ariaLabel="details panel toggler"
                />  
                <DetailsContent 
                   content={data.detailsContentProps} 

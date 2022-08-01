@@ -1,18 +1,16 @@
 import styled from "styled-components";
 
-import { Div } from "../../../../../ui/Div";
 import { panelColor } from "../../../../../styles/themes/accessors";
-import { Aside } from "../../../../../ui/aside";
+import { Section } from "../../../../../ui/Section";
 
 
-export const DetailsPanelStyled = styled(Aside)`
+export const DetailsPanelStyled = styled(Section)`
     position: absolute;
     width: 100vw;   
-    min-height: 300px;
-    max-height: 400px;
+    height: 400px;
     padding-right: 8px;
     left: 18px;
-    bottom: ${(props) => props.showPanel === false ? "-300px" : 0 };
+    bottom: ${(props) => props.showPanel === false ? "-400px" : 0 };
     z-index: 1;
     color:  ${panelColor("text")};
     border-top-right-radius: 20px;
