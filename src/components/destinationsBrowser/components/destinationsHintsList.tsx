@@ -4,15 +4,16 @@ import { HintsButtonStyled } from "../styles/hintsButtonStyled";
 import { HintsListStyles } from "../styles/hintsListStyles";
 
 interface DestinationsHintsListProps {
-   destinations: Destination[] | {name: string; country: string;}[];
+   destinations: Destination[];
    handleClick(e: MouseEvent<HTMLButtonElement>): void;
    showHints: boolean;
+   cachedDestinations: {name: string; country: string;}[];
 }
  
 
 export const DestinationsHintsList: FC<DestinationsHintsListProps> = (props) => {
 
-   const list: JSX.Element[] = props.destinations.map((dest, i) => {
+   const list = (items: {name: string; country: string;}[]): JSX.Element[] => items.map((dest, i) => { 
       return (
             <li key={i}> 
                <HintsButtonStyled onClick={props.handleClick}>
@@ -23,13 +24,14 @@ export const DestinationsHintsList: FC<DestinationsHintsListProps> = (props) => 
          )
    });
 
-   const listElement = () => {
+   const showListElement = () => {
       let element: null |  JSX.Element = null;
+      const items: {name: string; country: string;}[] = [...props.cachedDestinations, ...props.destinations];
 
-      if(props.destinations.length){
+      if(props.destinations.length || props.cachedDestinations.length){
          element = (
             <HintsListStyles>
-               <ul> {list} </ul>
+               <ul> {list(items)} </ul>
             </HintsListStyles>
          )
       }
@@ -39,7 +41,8 @@ export const DestinationsHintsList: FC<DestinationsHintsListProps> = (props) => 
 
    return (
       <>
-         {listElement()}
+         {showListElement()}
       </>
    )
+   
 }

@@ -8,6 +8,7 @@ import { Menu } from "./components/menu/Menu"
 import { MenuButtonStyled } from "./styles/MenuButtonStyled"
 import { MenuPanelStyled } from "./styles/MenuPanelStyled"
 import { MapThemesMenu } from "../../../../../mapThemesMenu/MapThemesMenu";
+import { IconButtonWithTooltip } from "../../../../../../ui/iconButton/IconButtonWithTooltip";
 
 interface MenuPanelProps {
    device: "mobile" | "desktop";
@@ -32,15 +33,13 @@ export const MenuPanel: FC<MenuPanelProps> = (props) => {
       let element: JSX.Element = <MenuButtonStyled showPanel={showPanel} onClick={handleMenuClick}>menu</MenuButtonStyled>;
 
       if(props.device === "mobile"){
-         element = (  
-            <Tooltip title="Menu">
-               <IconButton 
-                  onClick={handleMenuClick}
-               >
-                  <MenuIcon />
-               </IconButton>
-            </Tooltip> 
-         )
+         element = (
+            <IconButtonWithTooltip
+               icon= {<MenuIcon />} 
+               onClick={handleMenuClick}
+               title="Menu"
+               ariaLabel="Map settings menu"
+            /> )
       }
 
       return element;

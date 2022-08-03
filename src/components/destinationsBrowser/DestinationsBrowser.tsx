@@ -2,15 +2,15 @@ import { type } from "os";
 import {  useState,  ChangeEvent, MouseEvent, FC, Dispatch, SetStateAction, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Search } from "@material-ui/icons"
-import { Tooltip, IconButton } from '@mui/material';
+
 
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
 import { Destination } from "../../generalTypes/apiResponse";
 import { FETCH_START} from "../../state/actions/actionTypes";
-import { Store } from "../../state/types";
 import { DestinationsHints } from "./components/DestinationsHints";
 import { pickIfMatch } from "./helpers/pickIfMatch";
 import { BrowserInputStyled, InputButtonStyled, DestinationsBrowserStyled} from "./styles/destinationBrowserStyle";
+import { IconButtonWithTooltip } from "../../ui/iconButton/IconButtonWithTooltip";
 
 
 type CachedDestinations = {
@@ -68,6 +68,7 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
 
     const handleSearchClick = (e: MouseEvent<HTMLElement>): void => { 
         if(inputTypedValue.length < 1) return;
+
         const valueCapitalized: string = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase());    
         const destination: string =  valueCapitalized;  
 
@@ -125,11 +126,12 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
                     onClick={handleInputClick}
                     placeholder="Where you wanna go?"
                 />      
-                <Tooltip title="Search">
-                    <IconButton onClick={handleSearchClick} >
-                        <Search />
-                    </IconButton>
-                </Tooltip> 
+                <IconButtonWithTooltip
+                    icon= {<Search/>} 
+                    onClick={handleSearchClick}
+                    title="Search"
+                    ariaLabel="Search button"
+                 />
             </form>
             <DestinationsHints
                 setInputTypedValue={setInputTypedValue}
@@ -137,6 +139,7 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
                 filtered={filtered}
                 cachedValues={currentCachedList}
                 showCachedList={inputFocused}
+                setShowCachedList={setInputFocused}
             />       
         </DestinationsBrowserStyled>
     )

@@ -22,7 +22,7 @@ export const MapUtils: FC<MapUtils> = (props) => {
                <PanelToggleBarStyled
                   className="toggleBar"
                   toggleState={data.showPanel}
-                  onClick={() => data.setShowPanel(!data.showPanel)}
+                  onClick={data.handleTogglerClick}
                   role="button"
                   ariaLabel="details panel toggler"
                />  
@@ -30,9 +30,7 @@ export const MapUtils: FC<MapUtils> = (props) => {
                   content={data.detailsContentProps} 
                />
             </>
-         )}/>  
-
-        
+         )}/>          
       </>
    )
 }

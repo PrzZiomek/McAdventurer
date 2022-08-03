@@ -10,18 +10,18 @@ export interface IDestinationsHints {
    filtered: Destination[];
    cachedValues: {name: string, country: string}[];
    showCachedList: boolean;
+   setShowCachedList: Dispatch<SetStateAction<boolean>>;
  }
 
 
 export const DestinationsHints: FC<IDestinationsHints> = (props) => {
 
-   const [openList, setOpenList] = useState(true);
    const menuRef = useRef<HTMLDivElement>(null);
-   useDetectOutsideClick(menuRef, () => setOpenList(false));
+   useDetectOutsideClick(menuRef, () => props.setShowCachedList(false));
 
    useEffect(() => {
       if(!props.showCachedList) return;
-      setOpenList(true)
+      props.setShowCachedList(true)
     }, [props.showCachedList])
 
    const handleHintClick = (e: MouseEvent<HTMLButtonElement>): void => {
@@ -29,27 +29,22 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
       const destinationName = button.querySelector("span")!.textContent; 
       if(!destinationName) return;
       props.setInputTypedValue(destinationName);
-     setOpenList(!openList)
+     props.setShowCachedList(false)
   }; 
 
-  const showHintList = (): JSX.Element | null => openList && props.filtered.length ? 
+  const showHintList = (): JSX.Element | null => props.showCachedList && props.showCachedList ? 
       <DestinationsHintsList
           handleClick={handleHintClick} 
           destinations={props.filtered} 
+          cachedDestinations={props.cachedValues}
           showHints={false}  
       /> : null;
 
-   const showCachedList = (): JSX.Element | null =>  openList && props.showCachedList ? 
-      <DestinationsHintsList
-         handleClick={handleHintClick} 
-         destinations={props.cachedValues} 
-         showHints={false}  
-      /> : null; 
 
    return(
      <div ref={menuRef}>
-         {showCachedList()}
          {showHintList()}
       </div>
    )
 }
+
