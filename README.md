@@ -15,7 +15,7 @@ Concepts and technology stack:
 
 - the backend part is written in Node.js with Express.js framework
 
-- state managed by Redux and Redux-Saga 
+- app state managed by Redux and Redux-Saga 
 
 - integration tests of the app state, with the use of redux-saga and redux-saga-test-plan libraries
 
