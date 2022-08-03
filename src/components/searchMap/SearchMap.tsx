@@ -11,7 +11,7 @@ import { errorCollector } from "../../helpers/errorCollector";
 import { MapUtils } from "../mapUtils/MapUtils";
 import { Destination } from "../../generalTypes/apiResponse";
 import { WorldMap } from "../worldMap/WorldMap";
-
+import { MainHeader } from "../../styles/MainHeader";
 
 
 export const SearchMap: FC = () => {
@@ -55,7 +55,7 @@ export const SearchMap: FC = () => {
     return  ( 
         <>
             <header>
-                <h1 style={{ position: "absolute", top: 0, left: "50%" }}>Online interactive world map</h1>
+                <MainHeader>Online interactive world map</MainHeader>
             </header>
             <main>
                 <SearchMapStyled id="main_wrapper">   

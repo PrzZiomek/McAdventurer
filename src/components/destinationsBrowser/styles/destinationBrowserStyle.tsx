@@ -27,7 +27,7 @@ export const DestinationsBrowserStyled = styled(Div)`
 
   button{
     margin-right: 3px;
-    padding-right: 55px;
+    margin-right: 55px;
   }
 
   button.MuiButtonBase-root.MuiIconButton-root:hover .MuiSvgIcon-root{
@@ -50,13 +50,14 @@ export const DestinationsBrowserStyled = styled(Div)`
 
     button{
       padding-right: 8px;
+      margin-right: 3px;
     }
   }
 `;
 
 export const BrowserInputStyled = styled(Input)`
     width: 70%;
-    margin-left: 10px;
+    margin-left: 16px;
     border-radius: 7px;
     font-size: 1.15rem;
     color:#3e3e28;
@@ -67,17 +68,14 @@ export const BrowserInputStyled = styled(Input)`
 
     ::placeholder {
       color: #aa9d98;
-      padding-left: 7px;
     }
     
     :-ms-input-placeholder {
       color: #aa9d98;
-      padding-left: 7px;
     }
 
     ::-ms-input-placeholder {
       color: #aa9d98;
-      padding-left: 7px;
     }
 
     @media (min-width: 768px){

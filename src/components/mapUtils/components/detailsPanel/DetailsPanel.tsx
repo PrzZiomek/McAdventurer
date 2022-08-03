@@ -14,6 +14,7 @@ export interface IDetailsPanel{
 export interface DetailsPanelRenderProps {
    showPanel: boolean;
    setShowPanel: React.Dispatch<React.SetStateAction<boolean>>;
+   handleTogglerClick: () => void,
    detailsContentProps: {
       localizationError: JSX.Element | null,
       destinationName: string | undefined,
@@ -55,9 +56,16 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
       return null;
    } 
 
+   const handleTogglerClick = (): void => { console.log("showPanel??? ", showPanel);
+      if(!typedDestination?.name && !clickedDestination?.name) return; 
+      
+      setShowPanel(!showPanel)
+   }
+
    const renderProps: DetailsPanelRenderProps = {
       setShowPanel,
       showPanel,
+      handleTogglerClick,
       detailsContentProps: {
           localizationError: getLocalizationError(),
           destinationName: typedDestination?.name,
