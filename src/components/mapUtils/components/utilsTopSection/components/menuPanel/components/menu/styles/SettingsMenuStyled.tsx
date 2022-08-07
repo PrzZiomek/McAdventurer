@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Section } from "../../../../../../../../../ui/Section";
 
-export const MenuStyled = styled(Section)`
+export const SettingsMenuStyled = styled(Section)`
    position: absolute;
    top: -10px;
    right: ${(props) => props.showPanel === false ? "-385px" : "-10px" } ;

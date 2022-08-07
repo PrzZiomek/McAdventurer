@@ -18,7 +18,6 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
 
    const menuRef = useRef<HTMLDivElement>(null);
    useDetectOutsideClick(menuRef, () => props.setShowCachedList(false));
-
    useEffect(() => {
       if(!props.showCachedList) return;
       props.setShowCachedList(true)

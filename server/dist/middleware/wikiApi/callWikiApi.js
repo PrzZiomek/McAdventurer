@@ -32,7 +32,7 @@ const callWikiApi = async (req, res, next) => {
         res.status(200).json({ destination });
     }
     const destinationCoords = await destAction.getOneCoords(name).catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
-    if (destinationCoords.lat && destinationCoords.lng) {
+    if ((destinationCoords === null || destinationCoords === void 0 ? void 0 : destinationCoords.lat) && (destinationCoords === null || destinationCoords === void 0 ? void 0 : destinationCoords.lng)) {
         destination = Object.assign(Object.assign({}, destination), { coordinates: {
                 lat: destinationCoords.lat,
                 lng: destinationCoords.lng

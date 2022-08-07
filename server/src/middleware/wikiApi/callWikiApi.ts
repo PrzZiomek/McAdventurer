@@ -39,11 +39,11 @@ import { getDestinationData } from "./getDestinationData";
             lng: coordinates[0].lon || coords.lat
           },
         }; 
-        res.status(200).json({ destination })
+        res.status(200).json({ destination });
     }
     
     const destinationCoords = await destAction.getOneCoords(name).catch(err => next(errorHandle(err, 500))) as Destination;
-    if(destinationCoords.lat && destinationCoords.lng){ 
+    if(destinationCoords?.lat && destinationCoords?.lng){ 
       destination = {
         ...destination,
         coordinates: {

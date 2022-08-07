@@ -1,9 +1,8 @@
-import { Tooltip } from '@mui/material';
+import  Tooltip  from '@mui/material/Tooltip';
 
 interface CustomTooltipProps{
   title: string;
   children: JSX.Element;
-  ariaLabel: string;
   arrow: boolean;
 }
 
@@ -22,7 +21,6 @@ export const CustomTooltip = (props: CustomTooltipProps) => (
             padding: "10px",
             borderRadius: "5px"
           },
-          "aria-label": props.ariaLabel
         },
       }}
    >

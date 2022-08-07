@@ -1,14 +1,15 @@
-import { useState, FC, useRef } from "react"
-import { Menu as MenuIcon} from "@material-ui/icons"
-import { Tooltip, IconButton } from '@mui/material';
+import React, { useState, FC, useRef, Suspense } from "react"
+import  Menu from "@material-ui/icons/Menu"
 
 import { useDetectOutsideClick } from "../../../../../../customHooks/useDetectOutsideClick"
 import { Button } from "../../../../../../ui/Button"
-import { Menu } from "./components/menu/Menu"
 import { MenuButtonStyled } from "./styles/MenuButtonStyled"
 import { MenuPanelStyled } from "./styles/MenuPanelStyled"
 import { MapThemesMenu } from "../../../../../mapThemesMenu/MapThemesMenu";
 import { IconButtonWithTooltip } from "../../../../../../ui/iconButton/IconButtonWithTooltip";
+
+
+const SettingsMenu = React.lazy(() => import("./components/menu/SettingsMenu"));
 
 interface MenuPanelProps {
    device: "mobile" | "desktop";
@@ -35,10 +36,9 @@ export const MenuPanel: FC<MenuPanelProps> = (props) => {
       if(props.device === "mobile"){
          element = (
             <IconButtonWithTooltip
-               icon= {<MenuIcon />} 
+               icon= {<Menu />} 
                onClick={handleMenuClick}
                title="Menu"
-               ariaLabel="Map settings menu"
             /> )
       }
 
@@ -48,14 +48,17 @@ export const MenuPanel: FC<MenuPanelProps> = (props) => {
   return (
       <MenuPanelStyled id="right_panel_wrapper">
          {menuButton()}
-         <Menu showPanel={showPanel} ref={menuRef}>
-            <div className="menuList" id="menu_list">
-               <menu>
-                  <li><Button onClick={handleThemesClick}>Themes</Button></li>
-               </menu>
-            </div>
-            <MapThemesMenu setShowThemes={setShowThemes} toggleState={showThemes} />
-         </Menu>
+         <Suspense fallback={<div>menu panel loading...</div>}>
+            <SettingsMenu showPanel={showPanel} ref={menuRef}>
+               <div className="menuList" id="menu_list">
+                  <menu>
+                     <li><Button onClick={handleThemesClick}>Themes</Button></li>
+                  </menu>
+               </div>
+               <MapThemesMenu setShowThemes={setShowThemes} toggleState={showThemes} />
+            </SettingsMenu>
+         </Suspense>
+         
       </MenuPanelStyled>
    )
 }
