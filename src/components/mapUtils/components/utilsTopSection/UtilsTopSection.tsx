@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import React, { FC, NamedExoticComponent, useEffect, useMemo, useState } from "react";
 
 import { Destination } from "../../../../generalTypes/apiResponse";
 import { DestinationBrowser } from "../../../destinationsBrowser/DestinationsBrowser";
@@ -9,7 +9,10 @@ export interface UtilsTopSectionProps {
    destinations: Destination[] | undefined;
 }
 
-export const UtilsTopSection: FC<UtilsTopSectionProps> = (props) => {
+type Device = "mobile" | "desktop";
+
+
+ const UtilsTopSection: FC<UtilsTopSectionProps> = (props) => {
 
    const [mQuery, setMQuery] = useState({
       matches: window.innerWidth > 768 ? true : false,
@@ -22,14 +25,22 @@ export const UtilsTopSection: FC<UtilsTopSectionProps> = (props) => {
       return () => mediaQuery.removeEventListener("change", setMQuery)
    }, []);
 
-   return(
-            <>
-               <DestinationBrowser
-                  destinations={props.destinations}
-                  device={mQuery && !mQuery.matches ? "mobile" : "desktop"}
-               />
-               <MenuPanel device={mQuery && !mQuery.matches ? "mobile" : "desktop"} />
-            </>
-         )
+   const deviceType: Device = mQuery && !mQuery.matches ? "mobile" : "desktop";
+
+   const memoizedMenuPanel: JSX.Element = useMemo(() => ( 
+     <MenuPanel device={deviceType} /> 
+   ), [deviceType])
+   
+   return (
+      <>
+         <DestinationBrowser
+            destinations={props.destinations}
+            device={deviceType}
+         />
+         {memoizedMenuPanel}
+      </>
+   )
           
 }
+
+export const UtilsTopSectionMemo: NamedExoticComponent<UtilsTopSectionProps> = React.memo(UtilsTopSection);

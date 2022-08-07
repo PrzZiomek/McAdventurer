@@ -1,3 +1,5 @@
+/** just for fun, do not use in production! */
+
 let hooks: unknown[][] = [];
 let id = 0;
 

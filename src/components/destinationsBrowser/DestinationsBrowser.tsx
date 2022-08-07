@@ -1,8 +1,6 @@
-import { type } from "os";
 import {  useState,  ChangeEvent, MouseEvent, FC, Dispatch, SetStateAction, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Search } from "@material-ui/icons"
-
+import  Search  from "@material-ui/icons/Search"
 
 import { useDidMountEffect } from "../../customHooks/useDidMountEffect";
 import { Destination } from "../../generalTypes/apiResponse";
@@ -36,7 +34,6 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
     const [cachedDestinations, setCachedDestinations] = useState(getLocalStorageData);
 
     useDidMountEffect(() => dispatch({type: FETCH_START.DEST, name: destination}), [destination]);
-
     
     useEffect(() => {
         const cachedList = filteredCached.length ? filteredCached : createCachedDestObj();
@@ -54,7 +51,7 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
         }
         return { name, region } ;
     }
-
+    // to do: make the custom hook out of caching functionality 
     const addToCached = (cacheDestination: string) => {
         const storedWithNextName = cachedDestinations.name += `, ${cacheDestination}`;        
         const destWithCountry = props.destinations?.find(value => value.name === cacheDestination); 
@@ -67,7 +64,7 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
     }
 
     const handleSearchClick = (e: MouseEvent<HTMLElement>): void => { 
-        if(inputTypedValue.length < 1) return;
+        if(inputTypedValue.length < 1) return; 
 
         const valueCapitalized: string = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase());    
         const destination: string =  valueCapitalized;  
@@ -117,9 +114,11 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
 
     return (
         <DestinationsBrowserStyled changeBorder={false}> 
-            <form action="post">
+            <form action="post" role="search">
                 <BrowserInputStyled 
-                    id="browser_input"
+                    id="search_input"
+                    type="search"
+                    name="search"
                     onChange={handleChange}
                     onFocus={handleInputFocus}
                     value={inputTypedValue}
@@ -130,7 +129,6 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
                     icon= {<Search/>} 
                     onClick={handleSearchClick}
                     title="Search"
-                    ariaLabel="Search button"
                  />
             </form>
             <DestinationsHints
@@ -140,7 +138,7 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
                 cachedValues={currentCachedList}
                 showCachedList={inputFocused}
                 setShowCachedList={setInputFocused}
-            />       
+            />
         </DestinationsBrowserStyled>
     )
 }

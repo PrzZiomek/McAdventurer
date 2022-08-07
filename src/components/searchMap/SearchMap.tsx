@@ -1,5 +1,6 @@
-import React, { Dispatch, FC, useEffect } from "react"
+import React, { Dispatch, FC, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
+import { ErrorBoundary } from "react-error-boundary";
 
 import { SearchMapStyled } from "./styles/SearchMapStyles";
 import { ActionErrObj, ErrorsCollection, Store } from "../../state/types";
@@ -10,13 +11,17 @@ import { errorMonitAction } from "../../state/actions/actions/handleError";
 import { errorCollector } from "../../helpers/errorCollector";
 import { MapUtils } from "../mapUtils/MapUtils";
 import { Destination } from "../../generalTypes/apiResponse";
-import { WorldMap } from "../worldMap/WorldMap";
 import { MainHeader } from "../../styles/MainHeader";
+import { UtilsTopSectionMemo } from "../mapUtils/components/utilsTopSection/UtilsTopSection";
+import { DetailsPanelMemo } from "../mapUtils/components/detailsPanel/DetailsPanel";
+import { ErrorFallback } from "../../ui/errorNotyfications/ErrorFallback";
+import { WorldMapMemo } from "../worldMap/WorldMap";
 
 
 export const SearchMap: FC = () => {
 
     const storeItemsNames = [StoreProps.GetErrors, StoreProps.GetDestinationList, StoreProps.GetDestination];
+    const [destList, setDestList] = useState<Destination[]>([]);
 
     const dispatch: Dispatch<ActionErrObj> = useDispatch();
 
@@ -37,6 +42,12 @@ export const SearchMap: FC = () => {
         return state.getDestinationList.data;                                   
     });
 
+    useEffect(() => {
+        if(!destinationList?.length) return;
+        setDestList(destinationList)
+    },[destinationList?.length])
+
+
     const errorInformation = (): JSX.Element | null => { 
         let Information: JSX.Element | null = null; 
         if(!errors) return null;
@@ -50,8 +61,6 @@ export const SearchMap: FC = () => {
         return Information;
     }
 
-    const destList: Destination[] = destinationList?.length ? destinationList : [];  
-    
     return  ( 
         <>
             <header>
@@ -60,10 +69,15 @@ export const SearchMap: FC = () => {
             <main>
                 <SearchMapStyled id="main_wrapper">   
                     {errorInformation()}  
-                    <MapUtils destinations={destList} />         
-                        <WorldMap
-                            destinations={destList}
-                        />            
+                    <MapUtils>
+                        <UtilsTopSectionMemo destinations={destList}/> 
+                        <DetailsPanelMemo />    
+                    </MapUtils>
+                    <ErrorBoundary
+                        FallbackComponent={ErrorFallback}
+                    >
+                        <WorldMapMemo destinations={destList}/>
+                    </ErrorBoundary>
                 </SearchMapStyled>
             </main>
         </>

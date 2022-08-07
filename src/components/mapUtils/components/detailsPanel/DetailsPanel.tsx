@@ -1,13 +1,14 @@
-import { useState, FC, useEffect } from "react"
+import React, { useState, FC, useEffect } from "react"
 import { useSelector } from "react-redux";
 import { Destination, DestinationDetailed, WikiDestination } from "../../../../generalTypes/apiResponse";
 import { noCoordinates } from "../../../../helpers/noCoordinates";
 import { Store } from "../../../../state/types";
+import { PanelToggleBarStyled } from "../../styles/panelToggleBar";
+import { DetailsContent } from "./components/detailsContent/DetailsContent";
 import { DetailsPanelStyled } from "./styles/DetailsPanelStyled";
 
 
-export interface IDetailsPanel{
-   render: (data: any) => JSX.Element,
+export interface DetailsPanelProps{
    showPanel?: boolean;
  }
 
@@ -23,8 +24,8 @@ export interface DetailsPanelRenderProps {
 }
 
 
-export const DetailsPanel: FC<IDetailsPanel> = (props) => {
-
+export const DetailsPanel: FC<DetailsPanelProps> = (props) => {
+   console.log("details");
    const [showPanel, setShowPanel] = useState<boolean>(false); 
 
    const typedDestination: WikiDestination | undefined = useSelector((state: Store) => { 
@@ -38,11 +39,11 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
    });
 
    useEffect(() => {
-      setShowPanel(!!typedDestination?.name); 
+      setShowPanel(true); 
     }, [typedDestination?.name])
 
     useEffect(() => {
-      setShowPanel(!!clickedDestination?.name); 
+      setShowPanel(true); 
     }, [clickedDestination?.name])
 
     useEffect(() => {
@@ -56,22 +57,19 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
       return null;
    } 
 
-   const handleTogglerClick = (): void => { console.log("showPanel??? ", showPanel);
-      if(!typedDestination?.name && !clickedDestination?.name) return; 
-      
+   const handleTogglerClick = (): void => { 
+      if(!typedDestination?.name && !clickedDestination?.name) {
+         setShowPanel(false);
+         return;
+      }      
       setShowPanel(!showPanel)
    }
 
-   const renderProps: DetailsPanelRenderProps = {
-      setShowPanel,
-      showPanel,
-      handleTogglerClick,
-      detailsContentProps: {
-          localizationError: getLocalizationError(),
-          destinationName: typedDestination?.name,
-          clickedDestination
-      },
-    }
+   const detailsContentProps = {
+      localizationError: getLocalizationError(),
+      destinationName: typedDestination?.name,
+      clickedDestination
+   }
 
    return (
       <DetailsPanelStyled 
@@ -79,8 +77,18 @@ export const DetailsPanel: FC<IDetailsPanel> = (props) => {
          ariaLabel="destination details panel"
          showPanel={showPanel}
       >
-        {props.render(renderProps)}
+        <PanelToggleBarStyled
+            className="toggleBar"
+            toggleState={showPanel}
+            onClick={handleTogglerClick}
+            role="button"
+            ariaLabel="details panel toggler"
+         />  
+         <DetailsContent
+            content={detailsContentProps} 
+         />
       </DetailsPanelStyled>
    )
 }
 
+export const DetailsPanelMemo: React.NamedExoticComponent<DetailsPanelProps> = React.memo(DetailsPanel);

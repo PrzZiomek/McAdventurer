@@ -1,4 +1,4 @@
-import { useState, FC, useEffect, useRef, MutableRefObject, Dispatch, MouseEvent, SetStateAction } from "react"
+import React, { useState, FC, useEffect, useRef, MutableRefObject, Dispatch, MouseEvent, SetStateAction } from "react"
 import { useDispatch, useSelector } from "react-redux";
 
 import  errorActionCreator  from "../../generalHandlers/errorActionCreator";
@@ -31,7 +31,7 @@ export interface IWorldMap {
   }
 }
 
- export const WorldMap: FC<IWorldMap> = (props) => {
+const WorldMap: FC<IWorldMap> = (props) => {
 
     const mapRef: MutableRefObject<null> = useRef(null);
     const [map, platform]: [H.Map | undefined, H.service.Platform | undefined]  = useCreateMap(mapRef);
@@ -107,6 +107,6 @@ export interface IWorldMap {
         <MapStyled mapRef={mapRef} />
       </>
     )
-  }
+  };
 
-
+  export const WorldMapMemo: React.NamedExoticComponent<IWorldMap> = React.memo(WorldMap);

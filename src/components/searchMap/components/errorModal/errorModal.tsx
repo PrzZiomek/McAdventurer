@@ -12,7 +12,7 @@ export const ErrorModal: FC = () => {
 
    if(toggleState.show){
        return (
-            <ErrorModalStyled>
+            <ErrorModalStyled role="alert">
                   <h1>Problem with server communication, some app functionalities are not working</h1>
                   <ToggleButton
                         toggle={setTogglerHandler} 

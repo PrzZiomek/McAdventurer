@@ -15,7 +15,8 @@ export const Input: FC <InputProps> = (props) => (
     <input 
         autoComplete="off"
         id={props.id}
-        type="text"
+        type={props.type}
+        name={props.name}
         value={props.value}
         onChange={props.onChange}
         className={props.className}

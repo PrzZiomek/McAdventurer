@@ -14,4 +14,6 @@ export interface HtmlElementProps{
    role?: string;
    /** ARIA attribiute, to tell the screen readers what is the text of element */
    ariaLabel?: string;
+   /** reference for js or form  */
+   name?: string;
 }

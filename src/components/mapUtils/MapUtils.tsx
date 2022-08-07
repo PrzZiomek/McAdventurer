@@ -1,38 +1,12 @@
-import { FC } from "react"
-
-import { PanelToggleBarStyled } from "./styles/panelToggleBar";
-import { DetailsPanel, DetailsPanelRenderProps } from "./components/detailsPanel/DetailsPanel";
-import { DetailsContent } from "./components/detailsPanel/components/detailsContent/DetailsContent";
-import { Destination } from "../../generalTypes/apiResponse";
-import { UtilsTopSection } from "./components/utilsTopSection/UtilsTopSection";
+import React, { FC } from "react"
 
 
-export interface MapUtils {
-   destinations: Destination[] | undefined;
-}
-
-export const MapUtils: FC<MapUtils> = (props) => {
+export const MapUtils: FC = (props) => { 
 
    return ( 
       <>
-         <UtilsTopSection destinations={props.destinations}/>
-
-         <DetailsPanel render={(data: DetailsPanelRenderProps) => (
-            <> 
-               <PanelToggleBarStyled
-                  className="toggleBar"
-                  toggleState={data.showPanel}
-                  onClick={data.handleTogglerClick}
-                  role="button"
-                  ariaLabel="details panel toggler"
-               />  
-               <DetailsContent 
-                  content={data.detailsContentProps} 
-               />
-            </>
-         )}/>          
+         {props.children}      
       </>
    )
-}
+};
 
- 

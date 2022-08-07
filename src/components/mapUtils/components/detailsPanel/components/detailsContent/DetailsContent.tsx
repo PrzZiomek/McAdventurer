@@ -81,7 +81,7 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
        const showDestinationName = () => props.content.destinationName ? <h2> {props.content.destinationName} </h2> : null;
        return (
          <div id="content_wrapper">
-         <h2> {showDestinationName()} </h2>
+            {showDestinationName()} 
             <div>
                {props.content.localizationError}
                <div>
