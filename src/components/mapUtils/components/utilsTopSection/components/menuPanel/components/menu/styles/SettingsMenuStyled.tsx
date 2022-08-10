@@ -37,6 +37,7 @@ export const SettingsMenuStyled = styled(Section)`
       letter-spacing: 1px;
       transition: 0.2s;
       border-radius: 0;
+      text-transform: capitalize;
    }
 
   button:hover {

@@ -1,18 +1,24 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, ForwardRefExoticComponent, forwardRef, useRef } from "react";
+import { useDetectOutsideClick } from "../../../../../../../../customHooks/useDetectOutsideClick";
 import { SettingsMenuStyled } from "./styles/SettingsMenuStyled";
 
 interface SettingsMenuProps {
    showPanel: boolean;
+   id: string;
+   children: JSX.Element | JSX.Element[];
+   ariaLabelledBy: string;
 }
 
- const SettingsMenu: React.ForwardRefExoticComponent<SettingsMenuProps> = React.forwardRef((props, ref) => {
+
+ const SettingsMenu: ForwardRefExoticComponent<SettingsMenuProps> = forwardRef((props, ref) => {
 
    return (
       <SettingsMenuStyled
          showPanel={props.showPanel} 
          actualRef={ref} 
-         id="settings_SettingsMenu" 
-         ariaLabel="map settings SettingsMenu"
+         id={props.id} 
+         ariaLabel="map settings menu"
+         ariaLabelledBy={props.ariaLabelledBy}
       >
             {props.children}
       </SettingsMenuStyled>

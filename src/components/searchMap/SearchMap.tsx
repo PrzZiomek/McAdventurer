@@ -75,6 +75,7 @@ export const SearchMap: FC = () => {
                     </MapUtils>
                     <ErrorBoundary
                         FallbackComponent={ErrorFallback}
+                        onReset={()=> {}}
                     >
                         <WorldMapMemo destinations={destList}/>
                     </ErrorBoundary>

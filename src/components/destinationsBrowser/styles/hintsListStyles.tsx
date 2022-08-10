@@ -9,7 +9,7 @@ export const HintsListStyles = styled(Div)`
    padding-left: 9px;
    background: white;
    max-height: 87vh;
-   overflow-y: scroll;
+   overflow-y: auto;
    overflow-x: hidden;
 
    ul{

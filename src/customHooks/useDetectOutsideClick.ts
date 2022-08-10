@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 
-export function useDetectOutsideClick(ref: React.RefObject<HTMLDivElement>, cb: Function){
+export function useDetectOutsideClick(ref: React.RefObject<HTMLElement>, cb: Function){
 
    useEffect(() => {
-      const handleClick = (e: MouseEvent): void => {
+      const handleClick = (e: MouseEvent): void => { 
+      
          if (ref.current && !ref.current.contains(e.target as Node)) {
            cb();
          }

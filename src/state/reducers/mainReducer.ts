@@ -9,9 +9,6 @@ import { Coordinates } from "../../generalTypes/others";
 import { getData } from "./highOrderReducers/getData";
 import { COORDINATES, DEST, DEST_CLICKED, DEST_LIST, FIND_DESTINATION, SET_ERROR, SET_MAP_THEME } from "../actions/actionTypes";
 
-//console.log("getMapTheme", getData(getMapTheme, SET_MAP_THEME));
-//console.log("getMapThemered", getMapThemeRed);
-
 
 export const reducers = combineReducers({
    getDestination: getApiData(DEST),

@@ -1,4 +1,4 @@
-import React, { useState, FC, useRef, Suspense } from "react"
+import React, { useState, FC, useRef, Suspense, NamedExoticComponent } from "react"
 import  Menu from "@material-ui/icons/Menu"
 
 import { useDetectOutsideClick } from "../../../../../../customHooks/useDetectOutsideClick"
@@ -15,15 +15,21 @@ interface MenuPanelProps {
    device: "mobile" | "desktop";
 }
 
+
 export const MenuPanel: FC<MenuPanelProps> = (props) => {
 
    const [showPanel, setShowPanel] = useState(false); 
-   const menuRef = useRef<HTMLDivElement>(null);
    const [showThemes, setShowThemes] = useState(false);
+   const menuRef = useRef<HTMLDivElement>(null);
    useDetectOutsideClick(menuRef, () => setShowPanel(false));
 
+   const settingsMenuId: string = "settings_menu";
+   const menuButtonId: string = "menu_button";
+   const menuListButtonId: string = "menu_list_button";
+   const themesBarId: string = "themes_Bar";
+
    const handleMenuClick = () => {
-       setShowPanel(!showPanel);
+       setShowPanel(true);
    }
 
    const handleThemesClick = () => {
@@ -31,7 +37,16 @@ export const MenuPanel: FC<MenuPanelProps> = (props) => {
   }
 
   const menuButton = () => {
-      let element: JSX.Element = <MenuButtonStyled showPanel={showPanel} onClick={handleMenuClick}>menu</MenuButtonStyled>;
+      let element: JSX.Element = 
+         <MenuButtonStyled
+            showPanel={showPanel} 
+            onClick={handleMenuClick}
+            ariaControls={settingsMenuId}
+            id={menuButtonId}
+            ariaExpanded={showPanel}
+         >
+            menu
+         </MenuButtonStyled>;
 
       if(props.device === "mobile"){
          element = (
@@ -39,6 +54,9 @@ export const MenuPanel: FC<MenuPanelProps> = (props) => {
                icon= {<Menu />} 
                onClick={handleMenuClick}
                title="Menu"
+               ariaControls={settingsMenuId}
+               id={menuButtonId}
+               ariaExpanded={showPanel}
             /> )
       }
 
@@ -49,16 +67,37 @@ export const MenuPanel: FC<MenuPanelProps> = (props) => {
       <MenuPanelStyled id="right_panel_wrapper">
          {menuButton()}
          <Suspense fallback={<div>menu panel loading...</div>}>
-            <SettingsMenu showPanel={showPanel} ref={menuRef}>
+            <SettingsMenu
+                showPanel={showPanel} 
+                id={settingsMenuId}
+                ariaLabelledBy={menuButtonId}
+                ref={menuRef}
+            >
                <div className="menuList" id="menu_list">
                   <menu>
-                     <li><Button onClick={handleThemesClick}>Themes</Button></li>
+                     <li>
+                        <Button
+                           onClick={handleThemesClick}
+                           ariaControls={themesBarId}
+                           id={menuListButtonId}
+                           ariaExpanded={showThemes}
+                         >
+                           themes
+                         </Button>
+                     </li>
                   </menu>
                </div>
-               <MapThemesMenu setShowThemes={setShowThemes} toggleState={showThemes} />
+               <MapThemesMenu
+                   setShowThemes={setShowThemes} 
+                   toggleState={showThemes}
+                   ariaLabelledBy={menuListButtonId}
+                   id={themesBarId}
+               />
             </SettingsMenu>
          </Suspense>
          
       </MenuPanelStyled>
    )
-}
+};
+
+export const MenuPanelMemo: NamedExoticComponent<MenuPanelProps> = React.memo(MenuPanel);

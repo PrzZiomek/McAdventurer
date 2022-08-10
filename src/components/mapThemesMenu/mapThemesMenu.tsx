@@ -9,6 +9,8 @@ import { ThemesMenu, MapThemesMenuStyled } from "./styles/mapThemesMenuStyles";
 interface MapThemesMenu{
     toggleState: boolean;
     setShowThemes: Dispatch<React.SetStateAction<boolean>>;
+    ariaLabelledBy: string;
+    id: string;
 } 
 
 export const MapThemesMenu: FC<MapThemesMenu> = (props) => { 
@@ -43,7 +45,12 @@ export const MapThemesMenu: FC<MapThemesMenu> = (props) => {
         />);
         
     return (
-        <MapThemesMenuStyled actualRef={menuRef} showUpBar={props.toggleState} id="themes_Bar">
+        <MapThemesMenuStyled
+           ariaLabelledBy={props.ariaLabelledBy} 
+           actualRef={menuRef} 
+           showUpBar={props.toggleState} 
+           id={props.id}
+        >
             <ThemesMenu className="themesMenu"> {thumbnails} </ThemesMenu>
         </MapThemesMenuStyled>
     )

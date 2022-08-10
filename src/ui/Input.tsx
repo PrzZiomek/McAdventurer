@@ -9,6 +9,7 @@ interface InputProps extends HtmlElementProps {
     value?: string;
     onFocus?: FocusEventHandler;
     placeholder?: string
+    list?: string;
 }
 
 export const Input: FC <InputProps> = (props) => (
