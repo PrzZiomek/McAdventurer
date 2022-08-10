@@ -2,7 +2,7 @@ import React, { FC, NamedExoticComponent, useEffect, useMemo, useState } from "r
 
 import { Destination } from "../../../../generalTypes/apiResponse";
 import { DestinationBrowser } from "../../../destinationsBrowser/DestinationsBrowser";
-import { MenuPanel } from "./components/menuPanel/MenuPanel";
+import { MenuPanel, MenuPanelMemo } from "./components/menuPanel/MenuPanel";
 
 
 export interface UtilsTopSectionProps {
@@ -27,17 +27,13 @@ type Device = "mobile" | "desktop";
 
    const deviceType: Device = mQuery && !mQuery.matches ? "mobile" : "desktop";
 
-   const memoizedMenuPanel: JSX.Element = useMemo(() => ( 
-     <MenuPanel device={deviceType} /> 
-   ), [deviceType])
-   
    return (
       <>
          <DestinationBrowser
             destinations={props.destinations}
             device={deviceType}
          />
-         {memoizedMenuPanel}
+         <MenuPanelMemo device={deviceType} /> 
       </>
    )
           

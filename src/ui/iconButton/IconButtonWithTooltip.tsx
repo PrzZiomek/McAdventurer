@@ -7,6 +7,9 @@ interface IconButtonWithTooltipProps{
    title: string;
    onClick: MouseEventHandler<HTMLButtonElement> | undefined;
    icon: ReactElement<SvgIconTypeMap<{}, "svg">>;
+   ariaControls: string;
+   id?: string;
+   ariaExpanded?: boolean;
  }
  
 
@@ -15,7 +18,12 @@ export const IconButtonWithTooltip = (props: IconButtonWithTooltipProps) => (
       arrow 
       title={props.title}
    >
-      <IconButton onClick={props.onClick} >
+      <IconButton
+          onClick={props.onClick} 
+          id={props.id}
+          aria-controls={props.ariaControls} 
+          aria-expanded={props.ariaExpanded}
+      >
          {props.icon}
       </IconButton>
    </CustomTooltip> 

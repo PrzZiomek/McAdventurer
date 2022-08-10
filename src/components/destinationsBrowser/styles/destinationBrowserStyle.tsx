@@ -56,8 +56,8 @@ export const DestinationsBrowserStyled = styled(Div)`
 `;
 
 export const BrowserInputStyled = styled(Input)`
-    width: 70%;
-    margin-left: 16px;
+    width: 100%;
+    margin-left: 10px;
     border-radius: 7px;
     font-size: 1.15rem;
     color:#3e3e28;

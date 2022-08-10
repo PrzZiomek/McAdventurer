@@ -117,13 +117,14 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
             <form action="post" role="search">
                 <BrowserInputStyled 
                     id="search_input"
-                    type="search"
+                    ariaLabel="search for destinations"
                     name="search"
                     onChange={handleChange}
                     onFocus={handleInputFocus}
                     value={inputTypedValue}
                     onClick={handleInputClick}
                     placeholder="Where you wanna go?"
+                    list="destination_hints_list"
                 />      
                 <IconButtonWithTooltip
                     icon= {<Search/>} 

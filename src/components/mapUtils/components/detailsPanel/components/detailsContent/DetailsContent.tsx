@@ -1,7 +1,5 @@
 import { FC, useEffect, useState } from "react"
-import { useSelector } from "react-redux";
 import { Destination, DestinationDetailed } from "../../../../../../generalTypes/apiResponse";
-import { Store } from "../../../../../../state/types";
 import { DetailsContentStyled } from "./styles/DetailsContentStyled";
 
 interface DetailsContent {
@@ -9,7 +7,9 @@ interface DetailsContent {
       destinationName: string | undefined;
       localizationError: JSX.Element | null,
       clickedDestination: Destination | undefined | DestinationDetailed[];
-   }
+   };
+   ariaLabelledBy: string;
+   id: string;
 }
 
 export const DetailsContent: FC<DetailsContent> = (props) => { 
@@ -98,7 +98,7 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
    const content: JSX.Element = mapClicked ? clickedDestinationElement() : typedDestinationElement();
 
    return ( 
-      <DetailsContentStyled>
+      <DetailsContentStyled id={props.id}>
          {content}
       </DetailsContentStyled>
    )

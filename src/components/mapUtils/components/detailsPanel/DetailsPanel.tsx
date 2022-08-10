@@ -25,9 +25,12 @@ export interface DetailsPanelRenderProps {
 
 
 export const DetailsPanel: FC<DetailsPanelProps> = (props) => {
-   console.log("details");
+
    const [showPanel, setShowPanel] = useState<boolean>(false); 
 
+   const detailsToggleBarId: string = "details_panel_toggle_bar";
+   const detailsContentId: string = "details_content";
+ 
    const typedDestination: WikiDestination | undefined = useSelector((state: Store) => { 
       if(state.getDestination.loading !== false) return; 
       return state.getDestination.data;                                                                                                                                        //setDestination(state.getDestination.destination)  
@@ -83,9 +86,14 @@ export const DetailsPanel: FC<DetailsPanelProps> = (props) => {
             onClick={handleTogglerClick}
             role="button"
             ariaLabel="details panel toggler"
+            ariaControls={detailsContentId}
+            id={detailsToggleBarId}
+            ariaExpanded={showPanel}
          />  
          <DetailsContent
             content={detailsContentProps} 
+            ariaLabelledBy={detailsToggleBarId}
+            id={detailsContentId}
          />
       </DetailsPanelStyled>
    )

@@ -18,6 +18,8 @@ export interface DivProps extends HtmlElementProps{
     toggleState?: boolean;
     /** to change border on DestinatonBrowser input */
     changeBorder?: boolean;
+    /** to tell Aria tools whose content an element controls */
+    ariaControls?: string;
 }
 
 
@@ -42,6 +44,8 @@ export const Div: FC<DivProps> = (props) => (
         onClick={props.onClick}
         role={props.role}
         aria-label={props.ariaLabel}
+        aria-labelledby={props.ariaLabelledBy}
+        aria-expanded={props.ariaExpanded}
     > 
       {props.children}
     </div>
