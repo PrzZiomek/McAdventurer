@@ -1,6 +1,3 @@
-import { strictEqual } from "assert";
-import { type } from "os";
-import { destinationRequest } from "../controlers/api/destinationRequest";
 import { db } from "../util/database";
 import { AllDestination, Destination, DestinationTransitType } from "./types";
 

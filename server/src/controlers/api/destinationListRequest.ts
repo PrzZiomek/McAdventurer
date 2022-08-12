@@ -11,7 +11,7 @@ export const destinationListRequest = async (req: Request, res: Response, next: 
    const allDestination = await destination
       .getAll(Table.Destinations_list)
       .catch(err => next(errorHandle(err, 500)));
-     // console.log("destinationListRequest", allDestination );
+      
    if (!allDestination) {    
       return res.status(422).send({
         message: "database connection error" 

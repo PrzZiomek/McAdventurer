@@ -5,7 +5,7 @@ import { throwError } from 'redux-saga-test-plan/providers';
 import { put, call } from 'redux-saga/effects';
 import { destinations, fetchDestinations } from '../../data';
 import { successFetchDestListAction, startFetchDestListAction, failFetchDestListAction } from '../../../state/actions/actions/fetchDestinationListActions';
-import { getDestinationsList } from '../../../state/saga/handlers/getDestinationsList';
+import { getDestinationsListAndLanguages } from '../../../state/saga/handlers/getDestinationsListAndLanguages';
 import { DEST_LIST } from '../../../state/actions/actionTypes';
 import { getApiData } from '../../../state/reducers/highOrderReducers/getApiData';
  
@@ -14,7 +14,7 @@ describe("testing destinationsList state", () => {
 
    it("test Saga generator", () => {
 
-      return expectSaga(() => getDestinationsList(fetchDestinations))
+      return expectSaga(() => getDestinationsListAndLanguages(fetchDestinations))
          .provide([
             [matchers.call.fn(fetchDestinations), destinations]
          ])
@@ -32,7 +32,7 @@ describe("testing destinationsList state", () => {
          destination: null,
       }
 
-      const { storeState } = await expectSaga(() => getDestinationsList(fetchDestinations))
+      const { storeState } = await expectSaga(() => getDestinationsListAndLanguages(fetchDestinations))
          .withReducer(getApiData(DEST_LIST), initialState)
          .run()
 
@@ -50,7 +50,7 @@ describe("testing destinationsList state", () => {
    
       const error = new Error('error when making destinations list request');
    
-      return expectSaga(() => getDestinationsList(fetchDestinations))
+      return expectSaga(() => getDestinationsListAndLanguages(fetchDestinations))
          .provide([
             [call(fetchDestinations), throwError(error)]
          ])

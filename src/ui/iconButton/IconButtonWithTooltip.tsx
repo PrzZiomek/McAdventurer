@@ -7,7 +7,7 @@ interface IconButtonWithTooltipProps{
    title: string;
    onClick: MouseEventHandler<HTMLButtonElement> | undefined;
    icon: ReactElement<SvgIconTypeMap<{}, "svg">>;
-   ariaControls: string;
+   ariaControls?: string;
    id?: string;
    ariaExpanded?: boolean;
  }

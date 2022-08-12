@@ -15,17 +15,13 @@ export const combinedDestinationsRequest = async (req: Request, res: Response, n
           .getAll(Table.Destination)
           .catch(err => next(errorHandle(err, 500))); 
     
-      if (!checkedDestinations) {    
-        return res.status(422).send({
-          message: "database connection error" 
-        });
-  }
- 
   const mergedDestsList = [...destinationsList, ...checkedDestinations] as (Destination & AllDestination)[];
-  const combinedDestsLists: DestinationNameAndPosition[] = combineDests(mergedDestsList)
-  //console.log("combinedDestsLists", combinedDestsLists);  
-  res.status(200).send(combinedDestsLists);   
+  const combinedDestsLists: DestinationNameAndPosition[] = combineDests(mergedDestsList); 
+  res.locals.combinedDestsLists = combinedDestsLists; 
+  next();
 }
+
+
 
 
 function combineDests(dests: (Destination & AllDestination)[]){
@@ -40,3 +36,5 @@ function combineDests(dests: (Destination & AllDestination)[]){
         return acc;
     }, [])
 }
+
+// to languagesRequest

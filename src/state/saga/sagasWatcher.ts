@@ -4,7 +4,7 @@ import { FETCH_START, SET_MAP_THEME } from "../actions/actionTypes";
 import { getCoordinatesFn } from "./handlers/getCoordinates";
 import { getDestination } from "./handlers/getDestination";
 import { getClickedDestination } from "./handlers/getClickedDestination";
-import { getDestinationsListFn } from "./handlers/getDestinationsList";
+import { getDestinationsListFn } from "./handlers/getDestinationsListAndLanguages";
 import { getMapTheme } from "./handlers/getMapTheme";
 
 
