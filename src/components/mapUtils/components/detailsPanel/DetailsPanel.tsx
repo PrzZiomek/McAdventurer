@@ -61,11 +61,11 @@ export const DetailsPanel: FC<DetailsPanelProps> = (props) => {
    } 
 
    const handleTogglerClick = (): void => { 
-      if(!typedDestination?.name && !clickedDestination?.name) {
-         setShowPanel(false);
+      if(!typedDestination?.name || !clickedDestination?.name) {
+         setShowPanel(!showPanel);
          return;
       }      
-      setShowPanel(!showPanel)
+      setShowPanel(false)
    }
 
    const detailsContentProps = {

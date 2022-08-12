@@ -11,15 +11,10 @@ const combinedDestinationsRequest = async (req, res, next) => {
     const checkedDestinations = await destination
         .getAll(enums_1.Table.Destination)
         .catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
-    if (!checkedDestinations) {
-        return res.status(422).send({
-            message: "database connection error"
-        });
-    }
     const mergedDestsList = [...destinationsList, ...checkedDestinations];
     const combinedDestsLists = combineDests(mergedDestsList);
-    //console.log("combinedDestsLists", combinedDestsLists);  
-    res.status(200).send(combinedDestsLists);
+    res.locals.combinedDestsLists = combinedDestsLists;
+    next();
 };
 exports.combinedDestinationsRequest = combinedDestinationsRequest;
 function combineDests(dests) {
@@ -34,4 +29,5 @@ function combineDests(dests) {
         return acc;
     }, []);
 }
+// to languagesRequest
 //# sourceMappingURL=combinedDestinationsListsRequest.js.map

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useCallback, useEffect, useState } from "react"
 import { Destination, DestinationDetailed } from "../../../../../../generalTypes/apiResponse";
 import { DetailsContentStyled } from "./styles/DetailsContentStyled";
 
@@ -11,6 +11,7 @@ interface DetailsContent {
    ariaLabelledBy: string;
    id: string;
 }
+
 
 export const DetailsContent: FC<DetailsContent> = (props) => { 
 
@@ -28,7 +29,8 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
       setMapClicked(false)
     }, [props.content.destinationName])
 
-   const destinationList = (): JSX.Element | null => {
+   const destinationList = (): JSX.Element | null => { console.log("hej?");
+   
       const destList: DestinationDetailed[] | undefined | Destination = props.content.clickedDestination;
       let element: JSX.Element | null = null;
       const buildDestinationInfoText = (dest: DestinationDetailed) => (acc: string, key: string) => {
@@ -38,6 +40,7 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
          };          
          return acc;
       };
+
       const showInfoHeader = (name: string | undefined): JSX.Element | null => name ? <h4>{name}</h4> : null;
        
       if(Array.isArray(destList)){ 
@@ -84,9 +87,6 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
             {showDestinationName()} 
             <div>
                {props.content.localizationError}
-               <div>
-               
-               </div>
             </div>
       </div>)
     }

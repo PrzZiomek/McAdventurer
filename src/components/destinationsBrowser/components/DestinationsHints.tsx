@@ -1,6 +1,8 @@
-import {  MouseEvent, FC, Dispatch, SetStateAction, useState, useEffect, useRef } from "react";
+import {  MouseEvent, FC, Dispatch, SetStateAction, useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useDetectOutsideClick } from "../../../customHooks/useDetectOutsideClick";
 import { Destination } from "../../../generalTypes/apiResponse";
+import { useSelector } from "react-redux";
+import { Store } from "../../../state/types";
 import { DestinationsHintsList } from "./destinationsHintsList";
 
 
@@ -18,6 +20,8 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
 
    const menuRef = useRef<HTMLDivElement>(null);
    useDetectOutsideClick(menuRef, () => props.setShowCachedList(false));
+   const items = [...props.cachedValues, ...props.filtered];
+
    useEffect(() => {
       if(!props.showCachedList) return;
       props.setShowCachedList(true)
@@ -28,17 +32,30 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
       const destinationName = button.querySelector("span")!.textContent; 
       if(!destinationName) return;
       props.setInputTypedValue(destinationName);
-     props.setShowCachedList(false)
+      props.setShowCachedList(false)
   }; 
 
-  const showHintList = (): JSX.Element | null => props.showCachedList && props.showCachedList ? 
+  const languages: Destination[] | undefined = useSelector((state: Store) => {  
+      if(state.getDestinationList.loading !== false) return;     
+      return state.getLanguages.data;                                   
+   }); 
+
+  const languagesList = useMemo(
+      () => items.map(item => languages?.find((lang) => { 
+               const name = lang.name.trim().toLowerCase();
+               const country = item.country.trim().toLowerCase(); 
+               if(name.slice(0, 3) === country.slice(0, 3)){        
+                  return lang.code;
+               }
+  })), [items.length, languages?.length]); 
+
+  const showHintList = (): JSX.Element | null => props.showCachedList ? 
       <DestinationsHintsList
           handleClick={handleHintClick} 
-          destinations={props.filtered} 
-          cachedDestinations={props.cachedValues}
           showHints={false}  
+          languages={languagesList}
+          items={items}
       /> : null;
-
 
    return(
      <div ref={menuRef}>
