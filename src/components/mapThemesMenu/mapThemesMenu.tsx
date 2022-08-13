@@ -1,19 +1,20 @@
- import React, { useState, FC, useEffect, useRef, MutableRefObject, Dispatch, MouseEvent } from "react"
+ import React, { FC, useRef, Dispatch, MouseEvent } from "react"
 import { useDispatch } from "react-redux";
 import { useDetectOutsideClick } from "../../customHooks/useDetectOutsideClick";
+import { List } from "../../ui/List";
 
 import { Theme } from "./models/Theme";
-import { ThemesMenu, MapThemesMenuStyled } from "./styles/mapThemesMenuStyles";
+import { MapThemesMenuStyled } from "./styles/mapThemesMenuStyles";
 
 
-interface MapThemesMenu{
+interface MapThemesMenuProps{
     toggleState: boolean;
     setShowThemes: Dispatch<React.SetStateAction<boolean>>;
     ariaLabelledBy: string;
     id: string;
 } 
 
-export const MapThemesMenu: FC<MapThemesMenu> = (props) => { 
+export const MapThemesMenu: FC<MapThemesMenuProps> = (props) => { 
 
     const menuRef = useRef<HTMLDivElement>(null);
     useDetectOutsideClick(menuRef, () => props.setShowThemes(false));
@@ -37,13 +38,13 @@ export const MapThemesMenu: FC<MapThemesMenu> = (props) => {
         dispatch({type: "SET_MAP_THEME", payload:  themeElement.id})
       }
 
-    const thumbnails: JSX.Element[] = themes.map((theme, key) => // TO MEMO (?)
+    const returnTheme = (theme: string): JSX.Element =>( 
         <Theme 
             theme={theme}
-            key={key} 
             onChangeTheme={onChangeTheme}
-        />);
-        
+        />
+    );
+
     return (
         <MapThemesMenuStyled
            ariaLabelledBy={props.ariaLabelledBy} 
@@ -51,7 +52,11 @@ export const MapThemesMenu: FC<MapThemesMenu> = (props) => {
            showUpBar={props.toggleState} 
            id={props.id}
         >
-            <ThemesMenu className="themesMenu"> {thumbnails} </ThemesMenu>
+            <List
+                items={themes}
+                renderChildren={returnTheme}
+            />
         </MapThemesMenuStyled>
     )
 }
+

@@ -1,5 +1,6 @@
 import { FC, useCallback, useEffect, useState } from "react"
 import { Destination, DestinationDetailed } from "../../../../../../generalTypes/apiResponse";
+import { List } from "../../../../../../ui/List";
 import { DetailsContentStyled } from "./styles/DetailsContentStyled";
 
 interface DetailsContent {
@@ -29,7 +30,7 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
       setMapClicked(false)
     }, [props.content.destinationName])
 
-   const destinationList = (): JSX.Element | null => { console.log("hej?");
+   const destinationList = (): JSX.Element | null => { 
    
       const destList: DestinationDetailed[] | undefined | Destination = props.content.clickedDestination;
       let element: JSX.Element | null = null;
@@ -44,22 +45,20 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
       const showInfoHeader = (name: string | undefined): JSX.Element | null => name ? <h4>{name}</h4> : null;
        
       if(Array.isArray(destList)){ 
-         element = (
-            <ul>
-               { destList.map((dest, i) => {
-                  const destinationInfo = ["country", "region", "county", "locality"].reduce(buildDestinationInfoText(dest), "");
- 
-                  return (
-                     <li key={i}>
-                        <div>
-                           {showInfoHeader(dest.name)}
-                           <p> {destinationInfo} </p>
-                        </div>
-                     </li>
-                  )
-                  })}
-            </ul>
-         ) 
+         const collectDestinationInfo = (dest: DestinationDetailed) => ["country", "region", "county", "locality"].reduce(buildDestinationInfoText(dest), "");
+         const returnListItem = (item: DestinationDetailed) => (
+            <div>
+                  {showInfoHeader(item.name)}
+                  <p> {collectDestinationInfo(item)} </p>
+            </div>
+         )
+
+         element = (  
+            <List 
+               items={destList}
+               renderChildren={returnListItem}
+            />
+          ) 
       };
 
       return element;
@@ -103,4 +102,3 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
       </DetailsContentStyled>
    )
 }
-

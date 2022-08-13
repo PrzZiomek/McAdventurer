@@ -6,7 +6,7 @@ export interface Theme{
     onChangeTheme: MouseEventHandler<HTMLImageElement>;
 }
 
-export const Theme:FC<Theme> = ({theme, onChangeTheme}) => {
+export const Theme = ({theme, onChangeTheme}: Theme) => {
 
    const img = require('../themesPics/' + theme + '.thumb.png');
    
