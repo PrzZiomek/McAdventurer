@@ -1,4 +1,5 @@
 import { MouseEvent, FC } from "react";
+import { List } from "../../../ui/List";
 
 import { HintsButtonStyled } from "../styles/hintsButtonStyled";
 import { HintsListStyles } from "../styles/hintsListStyles";
@@ -15,10 +16,57 @@ interface DestinationsHintsListProps {
    handleClick(e: MouseEvent<HTMLButtonElement>): void;
    showHints: boolean;
    items: DestinationNames[];
-   languages: Language[];
+   findLanguage: (item: DestinationNames) => Language | undefined;
 }
   
 
+
+export const DestinationsHintsList: FC<DestinationsHintsListProps> = (props) => {
+   
+   const showListElement = () => {
+      let element: null |  JSX.Element = null;
+      const returnListItem = (item: DestinationNames) => { 
+         const lang = props.findLanguage(item);          
+         return (
+            <HintsButtonStyled onClick={props.handleClick}>
+               <span lang={lang?.code}>{item.name}</span>
+               <span>{item.country}</span>
+            </HintsButtonStyled>            
+      )}
+
+      if(props.items.length){
+         element = (
+            <HintsListStyles>
+               <List 
+                  listWrapperProps={{ id: "destination_hints_list" }}
+                  items={props.items}
+                  renderChildren={returnListItem}
+               />
+            </HintsListStyles>
+         )
+      }
+
+      return element;
+   };
+
+   return (
+      <>
+         {showListElement()}
+      </>
+   )
+   
+};
+
+
+
+
+
+
+
+
+
+
+/*
 export const DestinationsHintsList: FC<DestinationsHintsListProps> = (props) => {
    
    const list = (items: DestinationNames[]): JSX.Element[] => items.map((dest, i) => { 
@@ -57,73 +105,4 @@ export const DestinationsHintsList: FC<DestinationsHintsListProps> = (props) => 
    
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-export const DestinationsHintsList: FC<DestinationsHintsListProps> = (props) => {
-   let i = 0;
-   const findLanguage = (countryName: string) => props.languages.find((item) => { 
-      const name = item.name.trim().toLowerCase();
-      const country = countryName.trim().toLowerCase(); console.log("i!!!", i); 
-      if(name.slice(0, 3) === country.slice(0, 3)){      
-         return item.code;
-      }
-   }); 
-   
-   const list = (items: DestinationNames[]): JSX.Element[] =>{console.log("fire!");
-    return items.map((dest, i) => { 
-      const lang = findLanguage(dest.country);      
-      return (
-            <li tabIndex={-1} key={i}> 
-               <HintsButtonStyled onClick={props.handleClick}>
-                  <span lang={lang?.code}>{dest.name}</span>
-                  <span>{dest.country}</span>
-               </HintsButtonStyled>            
-            </li>
-         )
-   });}
-
-   const showListElement = () => {
-      let element: null |  JSX.Element = null;
-      
-      if(props.items.length){
-         element = (
-            <HintsListStyles>
-               <ul id="destination_hints_list" tabIndex={0}>
-                   {list(props.items)} 
-               </ul>
-            </HintsListStyles>
-         )
-      }
-
-      return element;
-   };
-
-   return (
-      <>
-         {showListElement()}
-      </>
-   )
-   
-};
-
-
- */
+*/

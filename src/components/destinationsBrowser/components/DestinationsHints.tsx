@@ -1,6 +1,6 @@
 import {  MouseEvent, FC, Dispatch, SetStateAction, useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useDetectOutsideClick } from "../../../customHooks/useDetectOutsideClick";
-import { Destination } from "../../../generalTypes/apiResponse";
+import { Destination, Language } from "../../../generalTypes/apiResponse";
 import { useSelector } from "react-redux";
 import { Store } from "../../../state/types";
 import { DestinationsHintsList } from "./destinationsHintsList";
@@ -35,25 +35,24 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
       props.setShowCachedList(false)
   }; 
 
-  const languages: Destination[] | undefined = useSelector((state: Store) => {  
+  const languages: Language[] | undefined = useSelector((state: Store) => {  
       if(state.getDestinationList.loading !== false) return;     
       return state.getLanguages.data;                                   
    }); 
 
-  const languagesList = useMemo(
-      () => items.map(item => languages?.find((lang) => { 
-               const name = lang.name.trim().toLowerCase();
-               const country = item.country.trim().toLowerCase(); 
-               if(name.slice(0, 3) === country.slice(0, 3)){        
-                  return lang.code;
-               }
-  })), [items.length, languages?.length]); 
+   const findLanguage =  (item: {name: string; country: string;}) => languages?.find((lang) => { 
+      const name = lang.name.trim().toLowerCase();      
+      const country = item.country.trim().toLowerCase(); 
+      if(name.slice(0, 3) === country.slice(0, 3)){        
+         return lang.code;
+      }
+   })
 
   const showHintList = (): JSX.Element | null => props.showCachedList ? 
       <DestinationsHintsList
           handleClick={handleHintClick} 
           showHints={false}  
-          languages={languagesList}
+          findLanguage={findLanguage}
           items={items}
       /> : null;
 

@@ -1,4 +1,4 @@
-import React, { useState, FC, useRef, Suspense, NamedExoticComponent } from "react"
+import React, { useState, FC, useRef, Suspense } from "react"
 import  Menu from "@material-ui/icons/Menu"
 
 import { useDetectOutsideClick } from "../../../../../../customHooks/useDetectOutsideClick"
@@ -7,6 +7,7 @@ import { MenuButtonStyled } from "./styles/MenuButtonStyled"
 import { MenuPanelStyled } from "./styles/MenuPanelStyled"
 import { MapThemesMenu } from "../../../../../mapThemesMenu/MapThemesMenu";
 import { IconButtonWithTooltip } from "../../../../../../ui/iconButton/IconButtonWithTooltip";
+import { List } from "../../../../../../ui/List"
 
 
 const SettingsMenu = React.lazy(() => import("./components/menu/SettingsMenu"));
@@ -22,6 +23,7 @@ export const MenuPanel: FC<MenuPanelProps> = (props) => {
    const [showThemes, setShowThemes] = useState(false);
    const menuRef = useRef<HTMLDivElement>(null);
    useDetectOutsideClick(menuRef, () => setShowPanel(false));
+console.log("menu!");
 
    const settingsMenuId: string = "settings_menu";
    const menuButtonId: string = "menu_button";
@@ -62,6 +64,16 @@ export const MenuPanel: FC<MenuPanelProps> = (props) => {
 
       return element;
   }
+
+  const returnMenuListItem = () => (
+      <Button
+         onClick={handleThemesClick}
+         ariaControls={themesBarId}
+         id={menuListButtonId}
+         ariaExpanded={showThemes}
+      >
+      themes
+      </Button>)
    
   return (
       <MenuPanelStyled id="right_panel_wrapper">
@@ -74,18 +86,11 @@ export const MenuPanel: FC<MenuPanelProps> = (props) => {
                 ref={menuRef}
             >
                <div className="menuList" id="menu_list">
-                  <menu>
-                     <li>
-                        <Button
-                           onClick={handleThemesClick}
-                           ariaControls={themesBarId}
-                           id={menuListButtonId}
-                           ariaExpanded={showThemes}
-                         >
-                           themes
-                         </Button>
-                     </li>
-                  </menu>
+                  <List
+                     listType="menu"
+                     items={[0]}
+                     renderChildren={returnMenuListItem}
+                   />
                </div>
                <MapThemesMenu
                    setShowThemes={setShowThemes} 
@@ -100,4 +105,3 @@ export const MenuPanel: FC<MenuPanelProps> = (props) => {
    )
 };
 
-export const MenuPanelMemo: NamedExoticComponent<MenuPanelProps> = React.memo(MenuPanel);

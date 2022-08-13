@@ -2,7 +2,7 @@ import React, { FC, NamedExoticComponent, useEffect, useMemo, useState } from "r
 
 import { Destination } from "../../../../generalTypes/apiResponse";
 import { DestinationBrowser } from "../../../destinationsBrowser/DestinationsBrowser";
-import { MenuPanel, MenuPanelMemo } from "./components/menuPanel/MenuPanel";
+import { MenuPanel } from "./components/menuPanel/MenuPanel";
 
 
 export interface UtilsTopSectionProps {
@@ -33,7 +33,7 @@ type Device = "mobile" | "desktop";
             destinations={props.destinations}
             device={deviceType}
          />
-         <MenuPanelMemo device={deviceType} /> 
+         <MenuPanel device={deviceType} /> 
       </>
    )
           
