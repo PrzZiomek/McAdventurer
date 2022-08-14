@@ -9,8 +9,7 @@ import { DestinationsHintsList } from "./destinationsHintsList";
 export interface IDestinationsHints {
    setInputTypedValue: Dispatch<SetStateAction<string>>;
    setFiltered: Dispatch<SetStateAction<Destination[]>>; 
-   filtered: Destination[];
-   cachedValues: {name: string, country: string}[];
+   hints: Destination[];
    showCachedList: boolean;
    setShowCachedList: Dispatch<SetStateAction<boolean>>;
  }
@@ -20,7 +19,6 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
 
    const menuRef = useRef<HTMLDivElement>(null);
    useDetectOutsideClick(menuRef, () => props.setShowCachedList(false));
-   const items = [...props.cachedValues, ...props.filtered];
 
    useEffect(() => {
       if(!props.showCachedList) return;
@@ -53,7 +51,8 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
           handleClick={handleHintClick} 
           showHints={false}  
           findLanguage={findLanguage}
-          items={items}
+          items={props.hints}
+          highlightedItem={props.highlightedItem}
       /> : null;
 
    return(

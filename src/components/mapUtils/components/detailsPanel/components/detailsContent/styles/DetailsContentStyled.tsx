@@ -25,6 +25,10 @@ export const DetailsContentStyled = styled(Article)`
       margin-top: 0;
    }
 
+   .clickedDestination__List  .highlight{
+      background: #f2f2e9;
+   }
+
    ::-webkit-scrollbar {
       width: 10px;
    }

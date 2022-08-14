@@ -16,23 +16,12 @@ export const HintsListStyles = styled(Div)`
       list-style: none;
    }
 
-   li{
+   li{ 
       margin-bottom: 5px;
    }
 
    li:last-child{
       margin-bottom: 0px;
-   }
-
-   button{
-      width: 100%;
-      background-color: unset;
-      border: none;
-      color: #181717;
-   }
-
-   button:hover {
-      background: #f2f2e9;
    }
 
    /** custom scroll styles */

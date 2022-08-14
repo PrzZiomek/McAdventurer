@@ -1,4 +1,5 @@
 import { FC, useCallback, useEffect, useState } from "react"
+import { useKeybordNav } from "../../../../../../customHooks/useKeybordNav";
 import { Destination, DestinationDetailed } from "../../../../../../generalTypes/apiResponse";
 import { List } from "../../../../../../ui/List";
 import { DetailsContentStyled } from "./styles/DetailsContentStyled";
@@ -17,8 +18,8 @@ interface DetailsContent {
 export const DetailsContent: FC<DetailsContent> = (props) => { 
 
    const [mapClicked, setMapClicked] = useState<boolean>(false); 
-
    const clickedDestinationArray = props.content.clickedDestination as DestinationDetailed[];
+   const [ cursor, handleKeybordNavigation ] = useKeybordNav(clickedDestinationArray?.length, () => {});
 
    useEffect(() => {
       if(!clickedDestinationArray?.[0]?.name) return; 
@@ -31,9 +32,9 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
     }, [props.content.destinationName])
 
    const destinationList = (): JSX.Element | null => { 
-   
       const destList: DestinationDetailed[] | undefined | Destination = props.content.clickedDestination;
       let element: JSX.Element | null = null;
+
       const buildDestinationInfoText = (dest: DestinationDetailed) => (acc: string, key: string) => {
          const DestinationInfoKey = key as keyof DestinationDetailed;
          if(dest[DestinationInfoKey]){
@@ -46,16 +47,19 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
        
       if(Array.isArray(destList)){ 
          const collectDestinationInfo = (dest: DestinationDetailed) => ["country", "region", "county", "locality"].reduce(buildDestinationInfoText(dest), "");
-         const returnListItem = (item: DestinationDetailed) => (
-            <div>
-                  {showInfoHeader(item.name)}
-                  <p> {collectDestinationInfo(item)} </p>
-            </div>
-         )
+         const returnListItem = (item: DestinationDetailed, i?: number) => {
+            const highligtedClass = cursor === i ? "highlight" : "";   
+            return (
+               <div className={highligtedClass}>
+                     {showInfoHeader(item.name)}
+                     <p> {collectDestinationInfo(item)} </p>
+               </div>
+         )}
 
          element = (  
             <List 
                items={destList}
+               listWrapperProps={{ onKeyDown: handleKeybordNavigation, className: "clickedDestination__List" }}
                renderChildren={returnListItem}
             />
           ) 
@@ -84,9 +88,7 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
        return (
          <div id="content_wrapper">
             {showDestinationName()} 
-            <div>
-               {props.content.localizationError}
-            </div>
+            {props.content.localizationError}
       </div>)
     }
 
