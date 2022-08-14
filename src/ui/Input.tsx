@@ -4,7 +4,7 @@ import { HtmlElementProps } from "../generalTypes/HtmlElementProps";
 interface InputProps extends HtmlElementProps {
     onChange: ChangeEventHandler;
     visibleText?: boolean;
-    handleEnterClick?: KeyboardEventHandler;
+    onKeyDown?: KeyboardEventHandler;
     type?: string;
     value?: string;
     onFocus?: FocusEventHandler;
@@ -21,7 +21,7 @@ export const Input: FC <InputProps> = (props) => (
         value={props.value}
         onChange={props.onChange}
         className={props.className}
-        onKeyDown={props.handleEnterClick}
+        onKeyDown={props.onKeyDown}
         onFocus={props.onFocus}
         onClick={props.onClick}
         placeholder={props.placeholder}

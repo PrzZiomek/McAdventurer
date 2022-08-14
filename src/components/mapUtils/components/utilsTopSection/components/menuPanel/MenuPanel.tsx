@@ -23,7 +23,6 @@ export const MenuPanel: FC<MenuPanelProps> = (props) => {
    const [showThemes, setShowThemes] = useState(false);
    const menuRef = useRef<HTMLDivElement>(null);
    useDetectOutsideClick(menuRef, () => setShowPanel(false));
-console.log("menu!");
 
    const settingsMenuId: string = "settings_menu";
    const menuButtonId: string = "menu_button";

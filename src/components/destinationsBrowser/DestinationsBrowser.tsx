@@ -1,4 +1,4 @@
-import {  useState,  ChangeEvent, MouseEvent, FC, Dispatch, SetStateAction, useEffect } from "react";
+import {  useState,  ChangeEvent, MouseEvent, FC, Dispatch, SetStateAction, useEffect, KeyboardEventHandler } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import  Search  from "@material-ui/icons/Search"
 
@@ -9,6 +9,7 @@ import { DestinationsHints } from "./components/DestinationsHints";
 import { pickIfMatch } from "./helpers/pickIfMatch";
 import { BrowserInputStyled, InputButtonStyled, DestinationsBrowserStyled} from "./styles/destinationBrowserStyle";
 import { IconButtonWithTooltip } from "../../ui/iconButton/IconButtonWithTooltip";
+import { useKeybordNav } from "../../customHooks/useKeybordNav";
 
 
 type CachedDestinations = {
@@ -29,12 +30,15 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
     const [destination, setDestinastion] = useState<string>("");
     const [inputFocused, setInputFocused] = useState<boolean>(false);
     const dispatch = useDispatch();
-    const [filteredCached, setFilteredCached] = useState<CachedDestinations>([]);
+    const [filteredCached, setFilteredCached] = useState<CachedDestinations>([]);   
     const [currentCachedList, setCurrentCachedList] = useState<CachedDestinations>([]);
     const [cachedDestinations, setCachedDestinations] = useState(getLocalStorageData);
+    const hints = [...currentCachedList, ...filtered];
+    const [ cursor, handleKeybordNavigation ] = useKeybordNav(hints.length, () => setDestinastion(highlightedItem?.name));
+    const[ highlightedItem, setHighlightedItem] = useState<{ name: string; country: string;} | undefined>();
 
     useDidMountEffect(() => dispatch({type: FETCH_START.DEST, name: destination}), [destination]);
-    
+
     useEffect(() => {
         const cachedList = filteredCached.length ? filteredCached : createCachedDestObj();
         setCurrentCachedList(cachedList); 
@@ -63,7 +67,7 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
         setCachedDestinations(() => ({ name: storedWithNextName, region: storedWithNextRegion }))
     }
 
-    const handleSearchClick = (e: MouseEvent<HTMLElement>): void => { 
+    function handleSearchClick(): void { 
         if(inputTypedValue.length < 1) return; 
 
         const valueCapitalized: string = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase());    
@@ -112,12 +116,21 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
         return cachedDestObjList;
     }
 
-    return (
+    useEffect(() => {
+        if(!hints[cursor]) return;
+        setHighlightedItem(hints[cursor]) 
+    }, [hints[cursor]])
+
+useEffect(() => {
+    if(!hints[cursor]) return;
+    setHighlightedItem(hints[cursor]) 
+}, [hints[cursor]])
+    return ( 
         <DestinationsBrowserStyled changeBorder={false}> 
             <form action="post" role="search">
                 <BrowserInputStyled 
                     id="search_input"
-                    ariaLabel="search for destinations"
+                    ariaLabel="search for destinations"             
                     name="search"
                     onChange={handleChange}
                     onFocus={handleInputFocus}
@@ -125,6 +138,7 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
                     onClick={handleInputClick}
                     placeholder="Where you wanna go?"
                     list="destination_hints_list"
+                    onKeyDown={handleKeybordNavigation}
                 />      
                 <IconButtonWithTooltip
                     icon= {<Search/>} 
@@ -135,10 +149,10 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
             <DestinationsHints
                 setInputTypedValue={setInputTypedValue}
                 setFiltered={setFiltered}
-                filtered={filtered}
-                cachedValues={currentCachedList}
+                hints={hints}
                 showCachedList={inputFocused}
                 setShowCachedList={setInputFocused}
+                highlightedItem={highlightedItem}
             />
         </DestinationsBrowserStyled>
     )
