@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 export function useKeybordNav(itemsLength: number, cb: Function): [number, ((e: KeyboardEvent) => void)] {
 
-   const [cursor, setCursor] = useState(0);
+   const [cursor, setCursor] = useState(-1);
   
    const handleKeybordNavigation = (e: KeyboardEvent) => {
       if(e.key === "ArrowDown"){   

@@ -6,7 +6,6 @@ import { Button } from "../../../../../../../ui/Button";
 export const MenuButtonStyled = styled(Button)`
    position: absolute;
    top: 6px;
-  // z-index: ${(props) => props.showPanel === false ? "-385px" : "-10px" };
    right: 0;
    text-transform: uppercase;
    padding: 0 20px;
@@ -24,6 +23,6 @@ export const MenuButtonStyled = styled(Button)`
 
    &:hover{
         color: #C7C7A9;
-        box-shadow: inset 0 0 8px #3e3e28;
+        box-shadow: inset 0 0 8px #000;
     }
 `

@@ -99,4 +99,3 @@ export const DetailsPanel: FC<DetailsPanelProps> = (props) => {
    )
 }
 
-export const DetailsPanelMemo: React.NamedExoticComponent<DetailsPanelProps> = React.memo(DetailsPanel);

@@ -39,7 +39,7 @@ export const DestinationsHints: FC<IDestinationsHints> = (props) => {
    }); 
 
    const findLanguage =  (item: {name: string; country: string;}) => languages?.find((lang) => { 
-      const name = lang.name.trim().toLowerCase();      
+      const name = lang.name.trim().toLowerCase();       
       const country = item.country.trim().toLowerCase(); 
       if(name.slice(0, 3) === country.slice(0, 3)){        
          return lang.code;

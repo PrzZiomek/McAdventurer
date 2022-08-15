@@ -4,6 +4,8 @@ import { HtmlElementProps } from "../generalTypes/HtmlElementProps";
 interface ButtonProps extends HtmlElementProps{ 
     showPanel?: boolean;
     ariaControls?: string;
+    onMouseEnter?: MouseEventHandler<HTMLButtonElement>;
+    onMouseLeave?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export const Button: FC <ButtonProps> = (props) => (
@@ -12,6 +14,8 @@ export const Button: FC <ButtonProps> = (props) => (
          onClick={props.onClick}
          aria-controls={props.ariaControls}
          aria-expanded={props.ariaExpanded}
+         onMouseEnter={props.onMouseEnter}
+         onMouseLeave={props.onMouseLeave}
     > 
         {props.children} 
     </button>

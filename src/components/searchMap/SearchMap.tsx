@@ -1,6 +1,7 @@
 import React, { Dispatch, FC, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { ErrorBoundary } from "react-error-boundary";
+import { createSelector } from "reselect";
 
 import { SearchMapStyled } from "./styles/SearchMapStyles";
 import { ActionErrObj, ErrorsCollection, Store } from "../../state/types";
@@ -13,7 +14,7 @@ import { MapUtils } from "../mapUtils/MapUtils";
 import { Destination } from "../../generalTypes/apiResponse";
 import { MainHeader } from "../../styles/MainHeader";
 import { UtilsTopSectionMemo } from "../mapUtils/components/utilsTopSection/UtilsTopSection";
-import { DetailsPanelMemo } from "../mapUtils/components/detailsPanel/DetailsPanel";
+import { DetailsPanel } from "../mapUtils/components/detailsPanel/DetailsPanel";
 import { ErrorFallback } from "../../ui/errorNotyfications/ErrorFallback";
 import { WorldMapMemo } from "../worldMap/WorldMap";
 
@@ -29,8 +30,9 @@ export const SearchMap: FC = () => {
         dispatch(startFetchDestListAction());
     }, [dispatch])
 
-    const errors: ErrorsCollection = useSelector((store: Store) => { 
-        return storeItemsNames.reduce(errorCollector(store), []) 
+
+    const errors: ErrorsCollection = useSelector((store: Store) => {  
+        return storeItemsNames.reduce(errorCollector(store), []);
      });
 
     useEffect(() => { 
@@ -52,7 +54,7 @@ export const SearchMap: FC = () => {
         let Information: JSX.Element | null = null; 
         if(!errors) return null;
 
-        const isError: boolean = errors.some(obj => obj.isError);   
+        const isError: boolean = errors?.some(obj => obj.isError);   
 
         if(isError){      
             Information = <ErrorModal />        
@@ -71,7 +73,7 @@ export const SearchMap: FC = () => {
                     {errorInformation()}  
                     <MapUtils>
                         <UtilsTopSectionMemo destinations={destList}/> 
-                        <DetailsPanelMemo />    
+                        <DetailsPanel />    
                     </MapUtils>
                     <ErrorBoundary
                         FallbackComponent={ErrorFallback}

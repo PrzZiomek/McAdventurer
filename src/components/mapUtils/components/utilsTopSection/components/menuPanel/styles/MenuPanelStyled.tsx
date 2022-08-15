@@ -5,8 +5,8 @@ import { Div } from "../../../../../../../ui/Div";
 export const MenuPanelStyled = styled(Div)`
    position: absolute;
    top: 20px;
-   right: 42px;
-   z-index: 1;
+   right: 6.4vw;
+   z-index: 2;
 
    button.MuiButtonBase-root.MuiIconButton-root:hover .MuiSvgIcon-root{
     color: #C7C7A9;

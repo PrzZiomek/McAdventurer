@@ -27,8 +27,9 @@ export const DestinationsHintsList: FC<DestinationsHintsListProps> = (props) => 
    const showListElement = () => {
       let element: null |  JSX.Element = null;
       const returnListItem = (item: DestinationNames) => { 
-         const lang = props.findLanguage(item);    
-         const highligtedClass = props.highlightedItem?.name.trim().toLowerCase() === item.name.trim().toLowerCase() ? "highlight" : ""; 
+         const lang: Language | undefined = props.findLanguage(item); 
+         const isNameMatched: boolean = props.highlightedItem?.name.trim().toLowerCase() === item.name.trim().toLowerCase();
+         const highligtedClass = isNameMatched ? "highlight" : ""; 
          return (
             <HintsButtonStyled className={highligtedClass} onClick={props.handleClick}>
                <span lang={lang?.code}>{item.name}</span>
@@ -60,51 +61,3 @@ export const DestinationsHintsList: FC<DestinationsHintsListProps> = (props) => 
 };
 
 
-
-
-
-
-
-
-
-
-/*
-export const DestinationsHintsList: FC<DestinationsHintsListProps> = (props) => {
-   
-   const list = (items: DestinationNames[]): JSX.Element[] => items.map((dest, i) => { 
-      const lang = props.languages[i]; 
-      return (
-            <li tabIndex={-1} key={i}> 
-               <HintsButtonStyled onClick={props.handleClick}>
-                  <span lang={lang?.code}>{dest.name}</span>
-                  <span>{dest.country}</span>
-               </HintsButtonStyled>            
-            </li>
-         )
-   });
-
-   const showListElement = () => {
-      let element: null |  JSX.Element = null;
-      
-      if(props.items.length){
-         element = (
-            <HintsListStyles>
-               <ul id="destination_hints_list" tabIndex={0}>
-                   {list(props.items)} 
-               </ul>
-            </HintsListStyles>
-         )
-      }
-
-      return element;
-   };
-
-   return (
-      <>
-         {showListElement()}
-      </>
-   )
-   
-};
-
-*/

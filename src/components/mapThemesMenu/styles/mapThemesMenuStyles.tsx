@@ -16,8 +16,14 @@ export const MapThemesMenuStyled = styled(Div)`
     border-radius: 0 0 12px 0px;
     transition: 0.3s;
     z-index: 3;
+
+    li {
+        list-style: none;
+        display: flex;
+    }
+
     img{
-        height: 75px;
+        height: calc(99vh / 9);
         width: 100%;
         cursor: pointer;
     }
