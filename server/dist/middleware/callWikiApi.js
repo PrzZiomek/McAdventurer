@@ -47,30 +47,3 @@ const callWikiApi = async (req, res, next) => {
     next();
 };
 exports.callWikiApi = callWikiApi;
-/*
-parameters for extracts: exintro=1&explaintext=1&exlimit=20 (max exlimit is 20)
-
-parameters for coordinates: coprop=type|dim|globe&colimit=20 (max colimit is 500)
-
-parameters for pageimages: piprop=thumbnail&pithumbsize=400&pilimit=20 (max is 50)
-
-
-async function executeParallelAsyncTasks () {
-const [ valueA, valueB, valueC ] = await Promise.all([ functionA(), functionB(), functionC() ]);
-doSomethingWith(valueA);
-doSomethingElseWith(valueB);
-doAnotherThingWith(valueC);
-}*/
-/*  request(requestOptions,function(err, response, body) {
-     try{
-       if(err) console.log("error when calling wiki api: ", err);
-       const reqRes:WikiApiResponse = JSON.parse(body);
-       const pageId = reqRes.query.pageids[0];
-       const content = reqRes.query.pages[pageId];
-       console.log("body:", reqRes);
-     }
-     catch (ex) {
-       throw errorHandle(err, 500);
-     }
- }) */ 
-//# sourceMappingURL=callWikiApi.js.map

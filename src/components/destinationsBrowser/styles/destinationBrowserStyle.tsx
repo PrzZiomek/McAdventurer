@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { Button } from "../../../ui/Button";
 import { Div } from "../../../ui/Div";
 import { Input } from "../../../ui/Input";
@@ -8,11 +9,11 @@ export const DestinationsBrowserStyled = styled(Div)`
   top: 16px;
   width: 90vw;
   min-height: 45px;
-  z-index: 1;
+  z-index: 2;
   margin-left: calc(10vw / 2);
-  border-radius: 7px;
+  border-radius: 7px; 
   background: white;
-  box-shadow: inset 0 0 8px #3e3e28;
+  box-shadow: inset 0 0 8px #000;
   border: none;
 
   form {
@@ -26,8 +27,7 @@ export const DestinationsBrowserStyled = styled(Div)`
   }
 
   button{
-    margin-right: 3px;
-    margin-right: 55px;
+    margin-right: 50px;
   }
 
   button.MuiButtonBase-root.MuiIconButton-root:hover .MuiSvgIcon-root{
@@ -57,7 +57,7 @@ export const DestinationsBrowserStyled = styled(Div)`
 
 export const BrowserInputStyled = styled(Input)`
     width: 100%;
-    margin-left: 10px;
+    margin-left: 17px;
     border-radius: 7px;
     font-size: 1.15rem;
     color:#3e3e28;

@@ -27,10 +27,4 @@ export const saveDestinationInDb = async (req: Request, res: Response, next: Nex
       });
    }
 
-  /*  if(coordinates.lat || coordinates.lng){
-      const destName = encodeURIComponent(name);
-      res.redirect(`/?name=${destName}`);
-      res.redirect('/api/destination-resend');
-    }
-*/
 }

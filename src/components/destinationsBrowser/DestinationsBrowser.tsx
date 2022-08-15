@@ -70,14 +70,13 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
     function handleSearchClick(): void { 
         if(inputTypedValue.length < 1) return; 
 
-        const valueCapitalized: string = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase());    
-        const destination: string =  valueCapitalized;  
+        const destinationCapitalized: string = inputTypedValue.replace(/^./, inputTypedValue[0].toUpperCase());   
 
-        setDestinastion(destination);
+        setDestinastion(destinationCapitalized);
 
-        const isContent = /[a-zA-Z]/.test(destination);
-        if(!isContent || cachedDestinations.name.includes(destination)) return;
-        addToCached(destination)
+        const isContent = /[a-zA-Z]/.test(destinationCapitalized);
+        if(!isContent || cachedDestinations.name.includes(destinationCapitalized)) return;
+        addToCached(destinationCapitalized)
     }
   
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -121,10 +120,6 @@ export const DestinationBrowser: FC<DestinationBrowser> = (props) => {
         setHighlightedItem(hints[cursor]) 
     }, [hints[cursor]])
 
-useEffect(() => {
-    if(!hints[cursor]) return;
-    setHighlightedItem(hints[cursor]) 
-}, [hints[cursor]])
     return ( 
         <DestinationsBrowserStyled changeBorder={false}> 
             <form action="post" role="search">

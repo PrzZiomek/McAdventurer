@@ -41,4 +41,6 @@ export const DetailsContentStyled = styled(Article)`
       cursor: pointer;
       border-radius: 7px; 
    }
+
+
 `
