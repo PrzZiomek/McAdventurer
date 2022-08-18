@@ -8,6 +8,7 @@ import { MenuPanelStyled } from "./styles/MenuPanelStyled"
 import { MapThemesMenu } from "../../../../../mapThemesMenu/MapThemesMenu";
 import { IconButtonWithTooltip } from "../../../../../../ui/iconButton/IconButtonWithTooltip";
 import { List } from "../../../../../../ui/List"
+import { LoaderInfo } from "../../../../../../ui/utils/LoaderInfo"
 
 
 const SettingsMenu = React.lazy(() => import("./components/menu/SettingsMenu"));
@@ -72,12 +73,14 @@ export const MenuPanel: FC<MenuPanelProps> = (props) => {
          ariaExpanded={showThemes}
       >
       themes
-      </Button>)
+      </Button>
+   );
+
    
   return (
       <MenuPanelStyled id="right_panel_wrapper">
          {menuButton()}
-         <Suspense fallback={<div>menu panel loading...</div>}>
+         <Suspense fallback={null}>
             <SettingsMenu
                 showPanel={showPanel} 
                 id={settingsMenuId}

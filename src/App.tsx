@@ -9,7 +9,7 @@ import * as themes from "./styles/themes/schema.json";
 
 export const App = () => {
 
-    return(
+    return(  
         <>           
         <Provider store={store}>
             <ThemeProvider theme={themes.default.data.day}>

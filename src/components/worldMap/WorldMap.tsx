@@ -12,6 +12,7 @@ import { useDestinationLocation } from "./customHooks/useDestinationLocaton";
 import { Store } from "../../state/types";
 import { Destination } from "../../generalTypes/apiResponse";
 import { FETCH_START } from "../../state/actions/actionTypes";
+import { LoaderInfo } from "../../ui/utils/LoaderInfo";
 
 export interface IWorldMap {
   destinations: Destination[] | undefined;
@@ -41,13 +42,15 @@ const WorldMap: FC<IWorldMap> = (props) => {
     const userLocationCoords = useUserLocalization();
     const destinationCoords = useDestinationLocation(props.destinations);
     const [clickedCoords, setClickedCoords] = useState<{ lat: number; lng: number; }>();
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const theme = useSelector((store: Store) => {
       return store.getMapTheme.theme;
-    })
+    }) 
     
     useEffect(() => {
-      if(!map) return;
+      if(!map) return; 
+      setIsLoaded(true); 
       map.addEventListener('tap',  (e) => {
         const extendedEvent = e as Event & {currentPointer : H.mapevents.Pointer};
         const coord: H.geo.Point = map.screenToGeo(extendedEvent.currentPointer.viewportX, extendedEvent.currentPointer.viewportY);
@@ -62,7 +65,7 @@ const WorldMap: FC<IWorldMap> = (props) => {
 
     useEffect(() => {
       const layer = layerWithTheme(theme); 
-      if(map && layer) map.setBaseLayer(layer); 
+      if(map && layer) map.setBaseLayer(layer);
     }, [theme])
 
     useEffect(() => {
@@ -100,13 +103,18 @@ const WorldMap: FC<IWorldMap> = (props) => {
             content: err as Error
           }))     
         }      
-    }
+    };
+
+    const loaderBeforeMapCreated: JSX.Element | null = !isLoaded ? <LoaderInfo>Building map</LoaderInfo> :  null;
     
     return (
       <>
+        {loaderBeforeMapCreated}
         <MapStyled mapRef={mapRef} />
       </>
     )
   };
 
-  export const WorldMapMemo: React.NamedExoticComponent<IWorldMap> = React.memo(WorldMap);
+  const WorldMapMemo: React.NamedExoticComponent<IWorldMap> = React.memo(WorldMap);
+
+  export default WorldMapMemo

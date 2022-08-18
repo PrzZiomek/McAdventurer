@@ -11,10 +11,43 @@
     <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js" ></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+
+    <link rel="stylesheet" href="./index.css">
+    <style>
+        .loader:empty {
+            position: absolute;
+            background-color: #6F6F49;
+            top: calc(50% - 4em);
+            left: calc(50% - 4em);
+            width: 6em;
+            height: 6em;
+            border: 1.1em solid rgba(0, 0, 0, 0.2);
+            border-left: 1.1em solid #000000;
+            border-radius: 50%;
+            animation: spin 1.1s infinite linear;
+        }
+
+        .loader::before:empty{
+            content: "Loading app";
+            color: #3E3E28;
+            font-size: 2rem;
+        } 
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+
+    </style>
 </head>
 <body>
     
-    <div id="root"></div>
+    <div id="root" class="loader"></div>
 
 </body>
 </html>

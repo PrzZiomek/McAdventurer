@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Div, DivWrapper } from "../../../ui/Div";
-import  mainImage  from "../../../Belfast.jpg";
 
 
 export const SearchMapStyled = styled(DivWrapper)`
@@ -9,8 +8,7 @@ export const SearchMapStyled = styled(DivWrapper)`
     height: 100vh;
     background-position: center;
     background-size: cover;
-    background-image: url(${mainImage});
-    background-color: rgba(0, 0, 0, 0.5);
+   // background-color: rgba(0, 0, 0, 0.5);
     position: relative;
     flex-wrap: wrap;
     overflow: hidden;

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import styled from "styled-components";
 import {  Div, DivWrapper } from "../../../ui/Div";
-import { ToggleBar } from "../../../ui/ToggleBar";
+import { ToggleBar } from "../../../ui/utils/ToggleBar";
 import { ToggleBarProps, ToggleBarWithChildren } from "../../../ui/types";
 
 
