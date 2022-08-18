@@ -1,7 +1,7 @@
 import { Dispatch, FC, MouseEventHandler, SetStateAction } from "react";
 import styled from "styled-components";
 import { Div } from "../../../ui/Div";
-import { ToggleBar } from "../../../ui/ToggleBar";
+import { ToggleBar } from "../../../ui/utils/ToggleBar";
 import { ToggleBarProps } from "../../../ui/types";
 
 

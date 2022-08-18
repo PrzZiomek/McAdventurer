@@ -1,7 +1,6 @@
-import React, { Dispatch, FC, useEffect, useState } from "react"
+import React, { Dispatch, FC, Suspense, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { ErrorBoundary } from "react-error-boundary";
-import { createSelector } from "reselect";
 
 import { SearchMapStyled } from "./styles/SearchMapStyles";
 import { ActionErrObj, ErrorsCollection, Store } from "../../state/types";
@@ -15,8 +14,10 @@ import { Destination } from "../../generalTypes/apiResponse";
 import { MainHeader } from "../../styles/MainHeader";
 import { UtilsTopSectionMemo } from "../mapUtils/components/utilsTopSection/UtilsTopSection";
 import { DetailsPanel } from "../mapUtils/components/detailsPanel/DetailsPanel";
-import { ErrorFallback } from "../../ui/errorNotyfications/ErrorFallback";
-import { WorldMapMemo } from "../worldMap/WorldMap";
+import { ErrorFallback } from "../../ui/utils/errorNotyfications/ErrorFallback";
+import { LoaderInfo } from "../../ui/utils/LoaderInfo";
+
+const WorldMapMemo = React.lazy(() => import("../worldMap/WorldMap"));
 
 
 export const SearchMap: FC = () => {
@@ -61,7 +62,9 @@ export const SearchMap: FC = () => {
         }; 
 
         return Information;
-    }
+    };
+
+    const loaderElement: JSX.Element = <LoaderInfo>Loading data</LoaderInfo>;
 
     return  ( 
         <>
@@ -75,11 +78,13 @@ export const SearchMap: FC = () => {
                         <UtilsTopSectionMemo destinations={destList}/> 
                         <DetailsPanel />    
                     </MapUtils>
-                    <ErrorBoundary
+                    <ErrorBoundary 
                         FallbackComponent={ErrorFallback}
-                        onReset={()=> {}}
-                    >
+                        onReset={()=> {}} 
+                    > 
+                    <Suspense fallback={loaderElement}>
                         <WorldMapMemo destinations={destList}/>
+                    </Suspense>
                     </ErrorBoundary>
                 </SearchMapStyled>
             </main>

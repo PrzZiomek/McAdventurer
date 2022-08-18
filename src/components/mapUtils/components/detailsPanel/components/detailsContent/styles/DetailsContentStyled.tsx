@@ -12,6 +12,11 @@ export const DetailsContentStyled = styled(Article)`
    max-height: 400px;
    overflow-y: auto;
    color: #3e3e28;
+   text-align: center;
+
+   h4{
+      margin-bottom: 10px;
+   }
 
    ul{
       list-style: none;

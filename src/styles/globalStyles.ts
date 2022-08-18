@@ -1,6 +1,8 @@
 import { createGlobalStyle } from "styled-components";
 
+
 const GlobalStyles = createGlobalStyle`
+
     *{
         margin: 0;
         padding: 0;
@@ -8,8 +10,16 @@ const GlobalStyles = createGlobalStyle`
         box-sizing:border-box;
         font-family: 'Open Sans', sans-serif; 
     }
+
     #root{
         margin:0 auto;
-}`
+    }
+
+    body{
+        background-color: #DFDFCE;
+    }
+    
+`
+
 
 export default GlobalStyles;
