@@ -8,8 +8,8 @@ export const SearchMapStyled = styled(DivWrapper)`
     height: 100vh;
     background-position: center;
     background-size: cover;
-   // background-color: rgba(0, 0, 0, 0.5);
     position: relative;
     flex-wrap: wrap;
     overflow: hidden;
+    background-color: #DFDFCE;
 `;
