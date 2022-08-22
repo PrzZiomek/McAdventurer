@@ -4,9 +4,14 @@ import { Div, DivWrapper } from "../../../ui/Div";
 
 export const MapStyled = styled(DivWrapper)`
 
-    margin-left: -25px;
+    margin-left: -25px; 
     height: 100vh;
-    flex-grow: 1;
+    flex-grow: 1;  
+    background-color: #DFDFCE;
+
+    div {
+        background-color: #DFDFCE;
+    }
 
     canvas{
         width: 100% !important;

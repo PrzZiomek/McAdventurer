@@ -1,28 +1,49 @@
 import styled from "styled-components";
 
-
+ 
 export const Loader = styled.div`
 
-   position: absolute;
-   margin-top: 20px;
-   background-color: #6F6F49;
-   top: calc(50% - 4em);
-   left: calc(50% - 4em);
-   width: 6em;
-   height: 6em;
-   border: 1.1em solid rgba(0, 0, 0, 0.2);
-   border-left: 1.1em solid #000000;
-   border-radius: 50%;
-   animation: spin 1.1s infinite linear;
+    position: relative;
+    height: 40px;
+    width: 40px;
+    border: 6px solid #6F6F49;
+    top: calc(30% + 30px);
+    border-radius: 50%;
+    border-top: #DFDFCE;
+    animation: spin 1.3s infinite linear;
 
-   @keyframes spin {
-   0% {
-       transform: rotate(0deg);
-   }
-   100% {
-       transform: rotate(360deg);
-   }
+    &::after{
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 55px;
+        background-color: #DFDFCE;
+    }
+
+    @keyframes spin {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @media (min-width: 768px){
+
+    .loader:empty {
+        height: 70px;
+        width: 70px;
+        top: calc(30% + 40px);
+        left: calc(50% - 35px);
+        border: 8px solid #6F6F49;
+    }
+
+    .loader:empty::after{
+        top: 0;
+        height: 55px;
+    }
 }
+
 `
 
 

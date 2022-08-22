@@ -105,7 +105,7 @@ const WorldMap: FC<IWorldMap> = (props) => {
         }      
     };
 
-    const loaderBeforeMapCreated: JSX.Element | null = !isLoaded ? <LoaderInfo>Building map</LoaderInfo> :  null;
+    const loaderBeforeMapCreated: JSX.Element | null = !isLoaded ? <LoaderInfo>Building map...</LoaderInfo> :  null;
     
     return (
       <>

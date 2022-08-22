@@ -15,8 +15,10 @@ const GlobalStyles = createGlobalStyle`
         margin:0 auto;
     }
 
-    body{
-        background-color: #DFDFCE;
+    html,
+    body,
+    main{
+        background-color: #DFDFCE; 
     }
     
 `

@@ -7,8 +7,7 @@ import { MenuButtonStyled } from "./styles/MenuButtonStyled"
 import { MenuPanelStyled } from "./styles/MenuPanelStyled"
 import { MapThemesMenu } from "../../../../../mapThemesMenu/MapThemesMenu";
 import { IconButtonWithTooltip } from "../../../../../../ui/iconButton/IconButtonWithTooltip";
-import { List } from "../../../../../../ui/List"
-import { LoaderInfo } from "../../../../../../ui/utils/LoaderInfo"
+import { List } from "../../../../../../ui/List";
 
 
 const SettingsMenu = React.lazy(() => import("./components/menu/SettingsMenu"));

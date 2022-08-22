@@ -72,7 +72,7 @@ export const SearchMap: FC = () => {
                 <MainHeader>Online interactive world map</MainHeader>
             </header>
             <main>
-                <SearchMapStyled id="main_wrapper">   
+                <SearchMapStyled id="wrapper">   
                     {errorInformation()}  
                     <MapUtils>
                         <UtilsTopSectionMemo destinations={destList}/> 
