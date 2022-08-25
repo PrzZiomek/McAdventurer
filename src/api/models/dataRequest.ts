@@ -9,12 +9,13 @@ interface QueryData {
 export const fetchData = async <T>(url: string, queryData: QueryData): Promise<T> => {
    const res = await fetch(url, {
       method: queryData.method,
-          headers:{
-             // "Cookie": "login=true",              !!! to do 
-              "Content-Type": "application/json",
-             // "Authorization": "Bearer " + token,  !!! to do
-          },
-          body: queryData.body ? queryData.body : null         
+      headers:{
+         "Content-Type": "application/json",
+         "Accept-Encoding": "gzip, deflate, br, compress"
+         // "Cookie": "login=true",              !!! to do 
+         // "Authorization": "Bearer " + token,  !!! to do
+      },
+      body: queryData.body ? queryData.body : null         
     })
       .then(res => {
          if(!res.ok){
