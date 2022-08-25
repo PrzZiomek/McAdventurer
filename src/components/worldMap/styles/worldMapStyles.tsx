@@ -9,7 +9,7 @@ export const MapStyled = styled(DivWrapper)`
     flex-grow: 1;  
     background-color: #DFDFCE;
 
-    div {
+    > div {
         background-color: #DFDFCE;
     }
 

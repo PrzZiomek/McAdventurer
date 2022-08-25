@@ -24,7 +24,6 @@ const saveDestinationInDb = async (req, res, next) => {
             },
         });
     }
-
 };
 exports.saveDestinationInDb = saveDestinationInDb;
 //# sourceMappingURL=saveDestinationInDb.js.map

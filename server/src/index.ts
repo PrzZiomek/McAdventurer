@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express, { NextFunction, Request, Response } from "express";
 import path from 'path'; 
+import  compression from "compression";
 
 import { apiRoutes } from './routes/api/main';
 
@@ -13,6 +14,7 @@ app.use(express.json({limit: '50mb'}));
 app.use(express.json());
 app.use(express.urlencoded({extended: false})); 
 app.use(express.static(path.join(__dirname, "public")));
+app.use(compression({ threshold: 512 }));
  
 
 app.use((_: Request, res: Response, next: NextFunction) => {
