@@ -12,23 +12,26 @@
     <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
 
+
     <link rel="stylesheet" href="./index.css">
     <style>
 
         html,
-        body{
+        body,
+        #root{
             background-color: #DFDFCE; 
         }
 
         .loader:empty {
-            position: relative;
-            height: 40px;
-            width: 40px;
+            position: absolute;
+            height: 38px;
+            width: 32px;
             border: 6px solid #6F6F49;
-            top: calc(30% + 30px);
+            top: calc(50% - 20px);
+            left: calc(50% - 20px);
             border-radius: 50%;
             border-top: #DFDFCE;
-            animation: spin 1.3s infinite linear;
+            animation: spin 0.8s infinite linear;
         }
 
         .loader:empty::after{
@@ -50,16 +53,16 @@
         @media (min-width: 768px){
 
             .loader:empty {
-                height: 70px;
-                width: 70px;
-                top: calc(30% + 40px);
-                left: calc(50% - 35px);
+                height: 43px;
+                width: 43px;
+                top: calc(50% - 21px);
+                left: calc(50% - 21px);
                 border: 8px solid #6F6F49;
             }
 
             .loader:empty::after{
-                top: 0;
-                height: 55px;
+                top: 30px;
+                height: 64px;
             }
         }
 
