@@ -1,16 +1,18 @@
 import styled from "styled-components";
+import { Div } from "../../Div";
 
  
-export const Loader = styled.div`
+export const LoaderStyled = styled(Div)`
 
-    position: relative;
+    position: absolute;
     height: 40px;
     width: 40px;
     border: 6px solid #6F6F49;
-    top: calc(30% + 30px);
+    top: calc(50% - 120px);
+    left: calc(50% - 20px);
     border-radius: 50%;
     border-top: #DFDFCE;
-    animation: spin 1.3s infinite linear;
+    animation: spin 0.8s infinite linear;
 
     &::after{
         content: "";
@@ -18,7 +20,7 @@ export const Loader = styled.div`
         left: 0;
         top: 0;
         width: 100%;
-        height: 55px;
+        height: 20px;
         background-color: #DFDFCE;
     }
 
@@ -30,19 +32,17 @@ export const Loader = styled.div`
 
     @media (min-width: 768px){
 
-    .loader:empty {
-        height: 70px;
-        width: 70px;
-        top: calc(30% + 40px);
-        left: calc(50% - 35px);
+        height: 50px;
+        width: 50px;
+        top: calc(50% - 35px);
+        left: calc(50% - 25px);
         border: 8px solid #6F6F49;
-    }
 
-    .loader:empty::after{
-        top: 0;
-        height: 55px;
+        &::after{
+            top: 10px;
+            height: 34px;
+        }
     }
-}
 
 `
 

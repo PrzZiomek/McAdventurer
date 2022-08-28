@@ -12,25 +12,21 @@ import { useDestinationLocation } from "./customHooks/useDestinationLocaton";
 import { Store } from "../../state/types";
 import { Destination } from "../../generalTypes/apiResponse";
 import { FETCH_START } from "../../state/actions/actionTypes";
-import { LoaderInfo } from "../../ui/utils/LoaderInfo";
+import { LoaderInfo } from "../../ui/utils/loader/LoaderInfo";
+
+
+type Coords = { lat: number; lng: number; };
 
 export interface IWorldMap {
   destinations: Destination[] | undefined;
   mapParams?: H.geo.IPoint;
-  coords?: {
-    lat: number;
-    lng: number;
-},
-  setCoords?: Dispatch<SetStateAction<{
-    lat: number;
-    lng: number;
-}>>;
+  setIsMapLoaded: Dispatch<SetStateAction<boolean>>;
+  coords?: Coords,
+  setCoords?: Dispatch<SetStateAction<Coords>>;
   typed?: string,
-  userLocationCoords?: {
-    lat: number;
-    lng: number;
-  }
+  userLocationCoords?: Coords;
 }
+
 
 const WorldMap: FC<IWorldMap> = (props) => {
 
@@ -42,7 +38,6 @@ const WorldMap: FC<IWorldMap> = (props) => {
     const userLocationCoords = useUserLocalization();
     const destinationCoords = useDestinationLocation(props.destinations);
     const [clickedCoords, setClickedCoords] = useState<{ lat: number; lng: number; }>();
-    const [isLoaded, setIsLoaded] = useState(false);
 
     const theme = useSelector((store: Store) => {
       return store.getMapTheme.theme;
@@ -50,7 +45,7 @@ const WorldMap: FC<IWorldMap> = (props) => {
     
     useEffect(() => {
       if(!map) return; 
-      setIsLoaded(true); 
+      props.setIsMapLoaded(true); 
       map.addEventListener('tap',  (e) => {
         const extendedEvent = e as Event & {currentPointer : H.mapevents.Pointer};
         const coord: H.geo.Point = map.screenToGeo(extendedEvent.currentPointer.viewportX, extendedEvent.currentPointer.viewportY);
@@ -104,17 +99,13 @@ const WorldMap: FC<IWorldMap> = (props) => {
           }))     
         }      
     };
-
-    const loaderBeforeMapCreated: JSX.Element | null = !isLoaded ? <LoaderInfo>Building map...</LoaderInfo> :  null;
     
     return (
       <>
-        {loaderBeforeMapCreated}
         <MapStyled mapRef={mapRef} />
       </>
     )
   };
 
-  const WorldMapMemo: React.NamedExoticComponent<IWorldMap> = React.memo(WorldMap);
+  export const WorldMapMemo: React.NamedExoticComponent<IWorldMap> = React.memo(WorldMap);
 
-  export default WorldMapMemo

@@ -6,7 +6,7 @@ type propsType = ThemedStyledProps<PropsWithChildren<DivProps>, any>
 
 export const ErrorModalStyled = styled(DivWrapper)` 
     position: absolute;
-    z-index: 1000;
+    z-index: 200;
     width: 300px;
     height: 170px;
     top: calc(50% - 85px);

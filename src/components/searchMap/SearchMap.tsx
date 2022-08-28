@@ -15,15 +15,15 @@ import { MainHeader } from "../../styles/MainHeader";
 import { UtilsTopSectionMemo } from "../mapUtils/components/utilsTopSection/UtilsTopSection";
 import { DetailsPanel } from "../mapUtils/components/detailsPanel/DetailsPanel";
 import { ErrorFallback } from "../../ui/utils/errorNotyfications/ErrorFallback";
-import { LoaderInfo } from "../../ui/utils/LoaderInfo";
-
-const WorldMapMemo = React.lazy(() => import("../worldMap/WorldMap"));
+import { WorldMapMemo } from "../worldMap/WorldMap";
+import { LoaderInfo } from "../../ui/utils/loader/LoaderInfo";
 
 
 export const SearchMap: FC = () => {
 
     const storeItemsNames = [StoreProps.GetErrors, StoreProps.GetDestinationList, StoreProps.GetDestination];
     const [destList, setDestList] = useState<Destination[]>([]);
+    const [isMapLoaded, setIsMapLoaded] = useState(false);
 
     const dispatch: Dispatch<ActionErrObj> = useDispatch();
 
@@ -62,32 +62,34 @@ export const SearchMap: FC = () => {
         }; 
 
         return Information;
-    };
+    }; 
 
-    const loaderElement: JSX.Element = <LoaderInfo>Loading data</LoaderInfo>;
+    const loadMapUtilsWhenMapReady = () => !isMapLoaded ? <LoaderInfo>Building map...</LoaderInfo> : 
+        <MapUtils>
+            <UtilsTopSectionMemo destinations={destList}/> 
+            <DetailsPanel />    
+        </MapUtils>
 
     return  ( 
         <>
             <header>
                 <MainHeader>Online interactive world map</MainHeader>
-            </header>
+            </header> 
             <main>
                 <SearchMapStyled id="wrapper">   
                     {errorInformation()}  
-                    <MapUtils>
-                        <UtilsTopSectionMemo destinations={destList}/> 
-                        <DetailsPanel />    
-                    </MapUtils>
+                    {loadMapUtilsWhenMapReady()}
                     <ErrorBoundary 
                         FallbackComponent={ErrorFallback}
                         onReset={()=> {}} 
                     > 
-                    <Suspense fallback={loaderElement}>
-                        <WorldMapMemo destinations={destList}/>
-                    </Suspense>
+                        <WorldMapMemo 
+                            destinations={destList}
+                            setIsMapLoaded={setIsMapLoaded}
+                        />
                     </ErrorBoundary>
-                </SearchMapStyled>
+                </SearchMapStyled>  
             </main>
-        </>
+        </> 
      )
 }
