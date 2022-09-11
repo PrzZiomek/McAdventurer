@@ -42,6 +42,7 @@ export const SearchMap: FC = () => {
     
     const destinationList: Destination[] | undefined = useSelector((state: Store) => {  
         if(state.getDestinationList.loading !== false) return; 
+        
         return state.getDestinationList.data;       
     });
 

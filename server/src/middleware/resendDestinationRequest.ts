@@ -28,5 +28,7 @@ export const resendDestinationRequest = async (req: Request, res: Response, next
          return res.status(422).send({
             message: "database error"
          });
-      }
+      };
+
+      next()
 }

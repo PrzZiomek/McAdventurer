@@ -9,11 +9,8 @@ const path_1 = __importDefault(require("path"));
 const compression_1 = __importDefault(require("compression"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const main_1 = require("./routes/api/main");
-const enums_1 = require("./models/enums");
-const Destination_1 = require("./models/Destination");
-const DestinationsLanguages_1 = require("./mongoDB/schemas/DestinationsLanguages");
 const app = (0, express_1.default)();
-const port = process.env.wORT;
+const port = process.env.PORT || 3000;
 app.use((0, cors_1.default)());
 app.use(express_1.default.json({ limit: '50mb' }));
 app.use(express_1.default.json());
@@ -28,16 +25,10 @@ app.use((_, res, next) => {
 app.use(main_1.apiRoutes);
 mongoose_1.default.connect(process.env.MONGO_URL)
     .then(async () => {
-    const destM = new Destination_1.Destinations();
-    const allDestination = await destM
-        .getAll(enums_1.Table.Destination)
-        .catch(err => console.log(err));
-    const newDests = new DestinationsLanguages_1.DestinationsLanguages({ items: allDestination });
-    const saveDests = await newDests.save();
     console.log("connect to mongoDB");
-    app.listen(port, () => {
-        console.log(`Serverrrrr start!`);
-    });
 })
     .catch((err) => console.log(err));
+app.listen(port, () => {
+    console.log(`Serverrrrr start on `, port);
+});
 //# sourceMappingURL=index.js.map

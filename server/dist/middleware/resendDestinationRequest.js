@@ -27,6 +27,8 @@ const resendDestinationRequest = async (req, res, next) => {
             message: "database error"
         });
     }
+    ;
+    next();
 };
 exports.resendDestinationRequest = resendDestinationRequest;
 //# sourceMappingURL=resendDestinationRequest.js.map

@@ -19,9 +19,8 @@ const callPositionstackApi = async (req, res, next) => {
         };
         const destinationRes = await axios_1.default.get("http://api.positionstack.com/v1/forward", { params })
             .catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
-        if (!destinationRes.data)
-            return;
-        const firstDest = destinationRes.data.data[0]; // to do - support of multiple same name destinations handling!
+        console.log("callPositionstackApi", destinationRes);
+        const firstDest = destinationRes === null || destinationRes === void 0 ? void 0 : destinationRes.data.data[0]; // to do - support of multiple same name destinations handling!
         res.locals.destination = {
             content: `${firstDest.region ? firstDest.region : ""}, ${firstDest.county ? firstDest.county : ""}`,
             name: firstDest.name,
@@ -30,12 +29,12 @@ const callPositionstackApi = async (req, res, next) => {
                 lng: firstDest.longitude
             }
         };
-        next();
     }
     else {
         res.locals.destination = destination;
-        next();
     }
+    console.log("res.locals.destination im callposstack", res.locals.destination);
+    next();
 };
 exports.callPositionstackApi = callPositionstackApi;
 //# sourceMappingURL=callPositionstackApi.js.map

@@ -31,19 +31,16 @@ class Destinations {
     async getOneCoords(name) {
         const destinationRes = await this.getDBData(`SELECT LAT, LNG FROM destinations_list WHERE (CITY = '${name}')`);
         const destArray = destinationRes[0];
-        console.log("raw mres cords 0", destinationRes[0]);
         return destArray[0];
     }
     async checkIfSavedAlready(name) {
         const content = await this.getDBData(`SELECT COUNT(*) FROM destination WHERE name = '${name}'`);
         const contentItem = content[0];
-        console.log("contentItem", contentItem);
         return contentItem[0]['COUNT(*)'];
     }
     saveOne({ name, content, coordinates, images }) {
         const lat = (coordinates === null || coordinates === void 0 ? void 0 : coordinates.lat) === "unset" ? 0 : coordinates === null || coordinates === void 0 ? void 0 : coordinates.lat;
         const lng = (coordinates === null || coordinates === void 0 ? void 0 : coordinates.lng) === "unset" ? 0 : coordinates === null || coordinates === void 0 ? void 0 : coordinates.lng;
-        console.log("cords bef save ", coordinates === null || coordinates === void 0 ? void 0 : coordinates.lat, coordinates === null || coordinates === void 0 ? void 0 : coordinates.lng);
         database_1.db.execute('INSERT INTO destination (name, content, lat, lng, images) VALUES (?, ?, ?, ?, ?)', [name, content, lat, lng, images]);
     }
 }
