@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { errorHandle } from "../../helpers/errorHandle";
 import { Destinations } from "../../models/Destination";
+import { Collection } from "../../models/enums";
 import { Destination, Locals } from "../../models/types";
+import { getCollection } from "../../mongoDB/utils/getCollection";
 
 declare module 'express' {
   interface Response  {
@@ -12,36 +14,29 @@ declare module 'express' {
 export const destinationRequest = async (req: Request, res: Response, next: NextFunction) => {
     const name: string = req.body.destination.name.trim(); 
     let callWiki = false;
-    const destinations = new Destinations();   
-  
-    const savedAlready: number | void = await destinations
-            .checkIfSavedAlready(name)
-            .catch(err => next(errorHandle(err, 500)));
-
-    if(savedAlready >= 1){
-        const destination: void | Destination = await destinations
-            .getOne(name)
-            .catch(err => next(errorHandle(err, 500))); 
-       if(destination){  
-            res.status(200).json({
-                destination: {
-                  name: destination.NAME,
-                  content: destination.CONTENT,
-                  coordinates: {
-                    lat: destination.LAT,
-                    lng: destination.LNG
-                  },
-                  images: destination.IMAGES
-                },
-              });
-        }
-        callWiki = false;  
-    };
-
-    if(savedAlready === 0){
-        callWiki = true;
-    }
+    const destsColl = await getCollection(Collection.WikiDestinations);
+    const destination = await destsColl.findOne({name}).catch(err => errorHandle(err, 500)); 
+    console.log("name", name);
+    console.log("destination req", destination);
     
+    if(destination){  
+        res.status(200).json({
+            destination: {
+              name: destination.name,
+              content: destination.content, 
+              coordinates: {
+                lat: destination.lat,
+                lng: destination.lng
+              },
+              images: destination.images
+            },
+          });
+    }
+
+    if(!destination){
+      callWiki = true;
+    }
+
     res.locals.destinationName = req.body.destination.name;
     res.locals.callWiki = callWiki; 
     next();

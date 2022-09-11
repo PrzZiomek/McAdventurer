@@ -32,6 +32,7 @@
     "here-js-api": "^2.0.0",
     "html-react-parser": "^0.0.4",
     "material-icons": "^1.2.1",
+    "mongodb-client": "^0.0.1",
     "oauth-1.0a": "^2.2.6",
     "re-reselect": "^4.0.0",
     "react": "^17.0.2",

@@ -35,20 +35,20 @@ export class Destinations {
 
   async getOneCoords(name: string): Promise<Destination>{
     const destinationRes = await this.getDBData(`SELECT LAT, LNG FROM destinations_list WHERE (CITY = '${name}')`)
-    const destArray = destinationRes[0] as Destination[];     console.log("raw mres cords 0", destinationRes[0]);   
+    const destArray = destinationRes[0] as Destination[];       
     return destArray[0];
   }
 
   async checkIfSavedAlready(name: string): Promise<number>{    
     const content = await this.getDBData(`SELECT COUNT(*) FROM destination WHERE name = '${name}'`)
-    const contentItem = content[0] as ResArray; console.log("contentItem", contentItem);
+    const contentItem = content[0] as ResArray; 
     
     return contentItem[0]['COUNT(*)'];
   }
 
   saveOne ({ name, content, coordinates , images }: DestinationTransitType): void{
     const lat = coordinates?.lat === "unset" ? 0 : coordinates?.lat;
-    const lng = coordinates?.lng === "unset" ? 0 : coordinates?.lng; console.log("cords bef save ", coordinates?.lat, coordinates?.lng);   
+    const lng = coordinates?.lng === "unset" ? 0 : coordinates?.lng; 
     db.execute(
       'INSERT INTO destination (name, content, lat, lng, images) VALUES (?, ?, ?, ?, ?)',
       [name, content, lat, lng, images ]

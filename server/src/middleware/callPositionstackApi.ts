@@ -27,6 +27,7 @@ interface DestinationRes {
    data: Destination[]
 }
 
+
  export const callPositionstackApi = async (req: Request, res: Response, next: NextFunction) => {
 
    const destination = res.locals.destination;
@@ -38,24 +39,24 @@ interface DestinationRes {
       const params = {
          access_key: '8b7251d9992206506bbf41cdf3c3dd13',
          query: destination.name
-         }
-         const destinationRes: DestinationRes | void = await axios.get("http://api.positionstack.com/v1/forward", { params })
-            .catch(err => next(errorHandle(err, 500)));
-         if(!destinationRes.data) return;
-         const firstDest = destinationRes.data.data[0]; // to do - support of multiple same name destinations handling!
-         res.locals.destination = {
-            content: `${firstDest.region ? firstDest.region : ""}, ${firstDest.county ? firstDest.county : ""}`,
-            name: firstDest.name,
-            coordinates: {
-               lat: firstDest.latitude,
-               lng: firstDest.longitude
-             }
-         }; 
-         
-         next();       
+      }
+      const destinationRes: DestinationRes | void = await axios.get("http://api.positionstack.com/v1/forward", { params })
+         .catch(err => next(errorHandle(err, 500)));
+
+      console.log("callPositionstackApi", destinationRes); 
+      
+      const firstDest = destinationRes?.data.data[0]; // to do - support of multiple same name destinations handling!
+      res.locals.destination = {
+         content: `${firstDest.region ? firstDest.region : ""}, ${firstDest.county ? firstDest.county : ""}`,
+         name: firstDest.name,
+         coordinates: {
+            lat: firstDest.latitude,
+            lng: firstDest.longitude
+            }
+      };       
    }else{
       res.locals.destination = destination; 
-      next();
    }  
-
+   console.log("res.locals.destination im callposstack", res.locals.destination);    
+   next();
  }

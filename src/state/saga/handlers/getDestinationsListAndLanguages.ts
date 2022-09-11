@@ -25,12 +25,14 @@ type OutgoingValue =
 
 export function* getDestinationsListAndLanguages(fetchData: () => Promise<void | Response>): Generator<OutgoingValue, void, Response>{
 
-   try{
-      const { destinationList, languages }: Response = yield call(fetchData); 
+   try{     
+      const { destinationList, languages }: Response = yield call(fetchData);
+      
       yield put(successFetchDestListAction(destinationList));
       yield put(successFetchLanguagesAction(languages))
    }
    catch(err){      
+
       yield put(failFetchDestListAction({
          message: "error during destinations list request",
          content: err as Error
