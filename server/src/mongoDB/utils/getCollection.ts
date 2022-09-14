@@ -3,7 +3,7 @@ import * as mongoDB from "mongodb";
 
 export const getCollection = async (name: string) => {
 
-   const client: mongoDB.MongoClient = new mongoDB.MongoClient("mongodb+srv://root:databaze7@adventurer.kkne7dg.mongodb.net/test");
+   const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.MONGO_CONNECT!);
            
    await client.connect();
        

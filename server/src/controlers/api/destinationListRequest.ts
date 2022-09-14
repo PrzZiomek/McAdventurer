@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { errorHandle } from "../../helpers/errorHandle";
-import { Destinations } from "../../models/Destination";
-import { Collection, Table } from "../../models/enums";
-import { ExtendedError } from "../../models/extendedError";
-import { AllDestination } from "../../models/types";
+
+import { Collection } from "../../models/enums";
+import { passInternalServerError } from "../../models/error/passInternalServerError";
+import { passNotFoundError } from "../../models/error/passNotFoundError";
 import { getCollection } from "../../mongoDB/utils/getCollection";
 
 type DestinationsListResponse =  {
@@ -20,10 +19,9 @@ type DestinationsListResponse =  {
 
 export const destinationListRequest = async (req: Request, res: Response, next: NextFunction) => {
 
-   const destsColl = await getCollection(Collection.Destinations);
- 
-   const destsListRes = await destsColl.find({}).toArray().catch(err => errorHandle(err, 500));
-   const destinationsList = destsListRes[0]?.items;
+   const destsColl = await getCollection(Collection.DESTINATIONS).catch(() => next(passNotFoundError("db or destination collection not found")));
+   const destsListRes = await destsColl?.find({}).toArray().catch(() => next(passInternalServerError("error when calling db for destinations list")));
+   const destinationsList = destsListRes?.[0]?.items;
    
    if (!destinationsList) {    
       return res.status(422).send({

@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.callPositionstackApi = void 0;
 const axios_1 = __importDefault(require("axios"));
-const errorHandle_1 = require("../helpers/errorHandle");
+const passInternalServerError_1 = require("../models/error/passInternalServerError");
 const callPositionstackApi = async (req, res, next) => {
     var _a, _b, _c, _d;
     const destination = res.locals.destination;
@@ -18,7 +18,7 @@ const callPositionstackApi = async (req, res, next) => {
             query: destination.name
         };
         const destinationRes = await axios_1.default.get("http://api.positionstack.com/v1/forward", { params })
-            .catch(err => next((0, errorHandle_1.errorHandle)(err, 500)));
+            .catch(err => next((0, passInternalServerError_1.passInternalServerError)("error when calling positionstack api")));
         console.log("callPositionstackApi", destinationRes);
         const firstDest = destinationRes === null || destinationRes === void 0 ? void 0 : destinationRes.data.data[0]; // to do - support of multiple same name destinations handling!
         res.locals.destination = {
@@ -37,4 +37,5 @@ const callPositionstackApi = async (req, res, next) => {
     next();
 };
 exports.callPositionstackApi = callPositionstackApi;
+// to saveDestinationInDb
 //# sourceMappingURL=callPositionstackApi.js.map

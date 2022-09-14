@@ -22,7 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCollection = void 0;
 const mongoDB = __importStar(require("mongodb"));
 const getCollection = async (name) => {
-    const client = new mongoDB.MongoClient("mongodb+srv://root:databaze7@adventurer.kkne7dg.mongodb.net/test");
+    const client = new mongoDB.MongoClient(process.env.MONGO_CONNECT);
     await client.connect();
     const db = client.db("test");
     const collection = db.collection(name);

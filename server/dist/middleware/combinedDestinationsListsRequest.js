@@ -1,14 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.combinedDestinationsRequest = void 0;
-const errorHandle_1 = require("../helpers/errorHandle");
 const enums_1 = require("../models/enums");
+const passInternalServerError_1 = require("../models/error/passInternalServerError");
+const passNotFoundError_1 = require("../models/error/passNotFoundError");
 const getCollection_1 = require("../mongoDB/utils/getCollection");
 // from destinationListRequest 
 const combinedDestinationsRequest = async (req, res, next) => {
     const destinationsList = res.locals.destinationsList;
-    const destsColl = await (0, getCollection_1.getCollection)(enums_1.Collection.WikiDestinations);
-    const checkedDestsRes = await destsColl.find({}).toArray().catch(err => (0, errorHandle_1.errorHandle)(err, 500));
+    const destsColl = await (0, getCollection_1.getCollection)(enums_1.Collection.WIKI_DESTINATIONS).catch(() => next((0, passNotFoundError_1.passNotFoundError)("db or wiki destination collection not found")));
+    const checkedDestsRes = await (destsColl === null || destsColl === void 0 ? void 0 : destsColl.find({}).toArray().catch(() => next((0, passInternalServerError_1.passInternalServerError)("error when calling db for destinations list"))));
     const checkedDestinations = checkedDestsRes[0].items;
     const mergedDestsList = [...destinationsList, ...checkedDestinations];
     const combinedDestsLists = combineDests(mergedDestsList);
@@ -29,9 +30,4 @@ function combineDests(dests) {
     }, []);
 }
 // to languagesRequest
-/*  country: poz.COUNTRY ? poz.COUNTRY : poz?.CONTENT.slice(0, 20),
-          name: poz?.NAME ? poz?.NAME : poz?.CITY,
-          lat: poz?.LAT ? poz?.LAT : poz?.LAT ? poz?.LAT : "unset",
-          lng: poz.LNG ? poz.LNG : poz?.LNG ? poz?.LNG : "unset",
-          */ 
 //# sourceMappingURL=combinedDestinationsListsRequest.js.map

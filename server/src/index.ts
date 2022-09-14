@@ -6,6 +6,7 @@ import  compression from "compression";
 import mongoose from "mongoose" ;
 
 import { apiRoutes } from './routes/api/main'; 
+import { handleErrors } from './middleware/handleErrors';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,6 +26,7 @@ app.use((_: Request, res: Response, next: NextFunction) => {
   });
 
 app.use(apiRoutes);
+app.use(handleErrors)
 
 mongoose.connect(process.env.MONGO_URL!)
   .then(async () =>{ 
@@ -37,3 +39,4 @@ app.listen(port, () => {
 });      
 
 
+ 
