@@ -1,9 +1,8 @@
 import axios, { AxiosResponse } from "axios";
 import { NextFunction, Request, Response } from "express";
 
-import { errorHandle } from "../../helpers/errorHandle";
 import { Destinations } from "../../models/Destination";
-import { Destination, Locals } from "../../models/types";
+import { Destination } from "../../models/types";
 
 interface ResponseData {
     latitude: number ,
@@ -35,17 +34,17 @@ export const reverseGeolocationRequest = async (req: Request, res: Response, nex
    const destinations = new Destinations();   
    const params = {
     access_key: '8b7251d9992206506bbf41cdf3c3dd13',
-    query:`${coordinates?.lat},${coordinates?.lng}` // `51.507822,-0.076702`
+    query:`${coordinates?.lat},${coordinates?.lng}` 
   }
 
    let destination: void | Destination | AxiosResponse<unknown> = await destinations
       .getOne(coordinates, "destination")
-      .catch(err => next(errorHandle(err, 500))); 
+      .catch(err => err); 
           
    if(!destination){  
         destination = await destinations
           .getOne(coordinates, "destinations_list")
-          .catch(err => next(errorHandle(err, 500))); 
+          .catch(err => err); 
     }
 
     if(destination){
@@ -57,7 +56,7 @@ export const reverseGeolocationRequest = async (req: Request, res: Response, nex
     if(!destination || destination.LAT === "unset"){
         const response = await axios.get<{data: ResponseData[]}>("http://api.positionstack.com/v1/reverse", { params })
           .then(res => res.data)
-          .catch(err => next(errorHandle(err, 500)));
+          .catch(err => err);
       
         if(response.data){
             const destinations = response.data.map(dest => ({ 

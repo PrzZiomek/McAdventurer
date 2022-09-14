@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { errorHandle } from "../../helpers/errorHandle";
-import { Destinations } from "../../models/Destination";
+
 import { Collection } from "../../models/enums";
-import { Destination, Locals } from "../../models/types";
+import { passInternalServerError } from "../../models/error/passInternalServerError";
+import { passNotFoundError } from "../../models/error/passNotFoundError";
+import { Locals } from "../../models/types";
 import { getCollection } from "../../mongoDB/utils/getCollection";
 
 declare module 'express' {
@@ -14,9 +15,8 @@ declare module 'express' {
 export const destinationRequest = async (req: Request, res: Response, next: NextFunction) => {
     const name: string = req.body.destination.name.trim(); 
     let callWiki = false;
-    const destsColl = await getCollection(Collection.WikiDestinations);
-    const destination = await destsColl.findOne({name}).catch(err => errorHandle(err, 500)); 
-    console.log("name", name);
+    const destsColl = await getCollection(Collection.WIKI_DESTINATIONS).catch(() => next(passNotFoundError("db or wiki destination collection not found")));
+    const destination = await destsColl?.findOne({name}).catch(err => next(passInternalServerError("error when calling db for one destination"))); 
     console.log("destination req", destination);
     
     if(destination){  

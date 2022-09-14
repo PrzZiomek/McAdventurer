@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { errorHandle } from "../helpers/errorHandle";
-import { Destinations } from "../models/Destination";
 import { Collection } from "../models/enums";
+import { passInternalServerError } from "../models/error/passInternalServerError";
+import { passNotFoundError } from "../models/error/passNotFoundError";
 import { DestinationTransitType } from "../models/types";
 import { getCollection } from "../mongoDB/utils/getCollection";
 
@@ -16,8 +16,8 @@ export const saveDestinationInDb = async (req: Request, res: Response, next: Nex
 
     console.log("res.locals.destination in last", res.locals.destination);
     
-    const destsColl = await getCollection(Collection.WikiDestinations);
-    const destinationSaved = await destsColl.insertOne(res.locals.destination).catch(err => errorHandle(err, 500)); 
+    const destsColl = await getCollection(Collection.WIKI_DESTINATIONS).catch(() => next(passNotFoundError("db or wiki destination collection not found")));
+    const destinationSaved = await destsColl?.insertOne(res.locals.destination).catch(() => next(passInternalServerError("error when saving destination in db"))); 
 
     if(!coordinates){
       res.status(200).json({
@@ -36,7 +36,5 @@ export const saveDestinationInDb = async (req: Request, res: Response, next: Nex
          },
       });
    }
-
-    
 
 }

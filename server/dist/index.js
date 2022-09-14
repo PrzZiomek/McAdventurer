@@ -9,6 +9,7 @@ const path_1 = __importDefault(require("path"));
 const compression_1 = __importDefault(require("compression"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const main_1 = require("./routes/api/main");
+const handleErrors_1 = require("./middleware/handleErrors");
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 app.use((0, cors_1.default)());
@@ -23,6 +24,7 @@ app.use((_, res, next) => {
     next();
 });
 app.use(main_1.apiRoutes);
+app.use(handleErrors_1.handleErrors);
 mongoose_1.default.connect(process.env.MONGO_URL)
     .then(async () => {
     console.log("connect to mongoDB");

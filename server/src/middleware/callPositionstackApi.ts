@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express"; 
 import axios  from "axios";
-import { errorHandle } from "../helpers/errorHandle";
+import { passInternalServerError } from "../models/error/passInternalServerError";
 
 interface Destination {
       latitude: number,
@@ -41,7 +41,7 @@ interface DestinationRes {
          query: destination.name
       }
       const destinationRes: DestinationRes | void = await axios.get("http://api.positionstack.com/v1/forward", { params })
-         .catch(err => next(errorHandle(err, 500)));
+         .catch(err => next(passInternalServerError("error when calling positionstack api")));
 
       console.log("callPositionstackApi", destinationRes); 
       
@@ -60,3 +60,5 @@ interface DestinationRes {
    console.log("res.locals.destination im callposstack", res.locals.destination);    
    next();
  }
+
+ // to saveDestinationInDb

@@ -1,14 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.destinationRequest = void 0;
-const errorHandle_1 = require("../../helpers/errorHandle");
 const enums_1 = require("../../models/enums");
+const passInternalServerError_1 = require("../../models/error/passInternalServerError");
+const passNotFoundError_1 = require("../../models/error/passNotFoundError");
 const getCollection_1 = require("../../mongoDB/utils/getCollection");
 const destinationRequest = async (req, res, next) => {
     const name = req.body.destination.name.trim();
     let callWiki = false;
-    const destsColl = await (0, getCollection_1.getCollection)(enums_1.Collection.WikiDestinations);
-    const destination = await destsColl.findOne({ name }).catch(err => (0, errorHandle_1.errorHandle)(err, 500));
+    const destsColl = await (0, getCollection_1.getCollection)(enums_1.Collection.WikiDestinations).catch(() => next((0, passNotFoundError_1.passNotFoundError)("db or wiki destination collection not found")));
+    const destination = await (destsColl === null || destsColl === void 0 ? void 0 : destsColl.findOne({ name }).catch(err => next((0, passInternalServerError_1.passInternalServerError)("error when calling db for one destination"))));
     console.log("name", name);
     console.log("destination req", destination);
     if (destination) {
