@@ -1,8 +1,10 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { NextFunction, Request, Response } from "express";
+import { DestinationData } from "../../models/DestinationData";
 
-import { Destinations } from "../../models/Destination";
-import { Destination } from "../../models/types";
+import { Collection } from "../../models/enums";
+import { passInternalServerError } from "../../models/error/passInternalServerError";
+import { WikiDestinationModel } from "../../models/types";
 
 interface ResponseData {
     latitude: number ,
@@ -29,50 +31,44 @@ interface ResponseData {
 
 export const reverseGeolocationRequest = async (req: Request, res: Response, next: NextFunction) => {
 
-   const coordinates: {lat: string, lng: string} = req.body.coordinates; 
-   if(!coordinates?.lat && !coordinates?.lng) return;
-   const destinations = new Destinations();   
+   const { lat, lng }: {lat: string, lng: string} = req.body.coordinates; 
+   if(!lat && !lng) return;
    const params = {
-    access_key: '8b7251d9992206506bbf41cdf3c3dd13',
-    query:`${coordinates?.lat},${coordinates?.lng}` 
-  }
+      access_key: '8b7251d9992206506bbf41cdf3c3dd13',
+      query:`${lat},${lng}` 
+  };
+  const destinationData = new DestinationData();
+  const destination = await destinationData.getOne<WikiDestinationModel>(Collection.WIKI_DESTINATIONS, { coordinates: { lat, lng } }).catch(() => next(passInternalServerError("error when looking for destination with coords")));
 
-   let destination: void | Destination | AxiosResponse<unknown> = await destinations
-      .getOne(coordinates, "destination")
-      .catch(err => err); 
-          
-   if(!destination){  
-        destination = await destinations
-          .getOne(coordinates, "destinations_list")
-          .catch(err => err); 
-    }
+  if(!destination || (destination.coordinates.lat === 0 && destination.coordinates.lng === 0)){
+      const response = await axios.get<{data: ResponseData[]}>("http://api.positionstack.com/v1/reverse", { params })
+        .then(res => res.data)
+        .catch(() =>  next(passInternalServerError("error when calling reverse api")));
+    
+      if(response && response.data){
+          const destinations = response.data.map(dest => ({ 
+              name: dest.name,
+              region: dest.region,
+              county: dest.county,
+              locality: dest.locality,
+              country: dest.country,
+              label: dest.label
+          }))
 
-    if(destination){
-      res.status(200).json({
-        destination
-      });
-   }
-  
-    if(!destination || destination.LAT === "unset"){
-        const response = await axios.get<{data: ResponseData[]}>("http://api.positionstack.com/v1/reverse", { params })
-          .then(res => res.data)
-          .catch(err => err);
-      
-        if(response.data){
-            const destinations = response.data.map(dest => ({ 
-                name: dest.name,
-                region: dest.region,
-                county: dest.county,
-                locality: dest.locality,
-                country: dest.country,
-                label: dest.label
-            }))
+          res.status(200).json({
+            destinations
+          });
+      }
+      else {
+        const destination = await destinationData.getOne<WikiDestinationModel>(Collection.DESTINATIONS, { coordinates: { lat, lng } }).catch(() => next(passInternalServerError("error when looking for destination with coords")));
 
-            res.status(200).json({
-              destinations
-            });
+        if(destination){
+          res.status(200).json({
+            destination
+          });
         }
-    };
+      }
+  };
 
     next();
 

@@ -5,34 +5,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reverseGeolocationRequest = void 0;
 const axios_1 = __importDefault(require("axios"));
-const Destination_1 = require("../../models/Destination");
+const DestinationData_1 = require("../../models/DestinationData");
+const enums_1 = require("../../models/enums");
+const passInternalServerError_1 = require("../../models/error/passInternalServerError");
 const reverseGeolocationRequest = async (req, res, next) => {
-    const coordinates = req.body.coordinates;
-    if (!(coordinates === null || coordinates === void 0 ? void 0 : coordinates.lat) && !(coordinates === null || coordinates === void 0 ? void 0 : coordinates.lng))
+    const { lat, lng } = req.body.coordinates;
+    if (!lat && !lng)
         return;
-    const destinations = new Destination_1.Destinations();
     const params = {
         access_key: '8b7251d9992206506bbf41cdf3c3dd13',
-        query: `${coordinates === null || coordinates === void 0 ? void 0 : coordinates.lat},${coordinates === null || coordinates === void 0 ? void 0 : coordinates.lng}`
+        query: `${lat},${lng}`
     };
-    let destination = await destinations
-        .getOne(coordinates, "destination")
-        .catch(err => err);
-    if (!destination) {
-        destination = await destinations
-            .getOne(coordinates, "destinations_list")
-            .catch(err => err);
-    }
-    if (destination) {
-        res.status(200).json({
-            destination
-        });
-    }
-    if (!destination || destination.LAT === "unset") {
+    const destinationData = new DestinationData_1.DestinationData();
+    // const destColl = await getCollection(Collection.WIKI_DESTINATIONS).catch(() => next(passNotFoundError("db or wiki destination collection not found")));
+    // let destination = await destColl?.findOne({ coordinates: { lat, lng } }).catch(() => next(passInternalServerError("error when calling db for one destination"))); 
+    const destination = await destinationData.getOne(enums_1.Collection.WIKI_DESTINATIONS, { coordinates: { lat, lng } }).catch(() => next((0, passInternalServerError_1.passInternalServerError)("error when looking for destination with coords")));
+    if (!destination || (destination.coordinates.lat === 0 && destination.coordinates.lng === 0)) {
         const response = await axios_1.default.get("http://api.positionstack.com/v1/reverse", { params })
             .then(res => res.data)
-            .catch(err => err);
-        if (response.data) {
+            .catch(() => next((0, passInternalServerError_1.passInternalServerError)("error when calling reverse api")));
+        if (response && response.data) {
             const destinations = response.data.map(dest => ({
                 name: dest.name,
                 region: dest.region,
@@ -44,6 +36,16 @@ const reverseGeolocationRequest = async (req, res, next) => {
             res.status(200).json({
                 destinations
             });
+        }
+        else {
+            //  const destColl = await getCollection(Collection.DESTINATIONS).catch(() => next(passNotFoundError("db or destination list collection not found")));
+            // let destination = await destColl?.findOne({ coordinates: { lat, lng } }).catch(() => next(passInternalServerError("error when calling db for one destination"))); 
+            const destination = await destinationData.getOne(enums_1.Collection.DESTINATIONS, { coordinates: { lat, lng } }).catch(() => next((0, passInternalServerError_1.passInternalServerError)("error when looking for destination with coords")));
+            if (destination) {
+                res.status(200).json({
+                    destination
+                });
+            }
         }
     }
     ;
