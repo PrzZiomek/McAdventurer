@@ -4,9 +4,7 @@ import { destinationRequest } from "../../controlers/api/destinationRequest";
 import { reverseGeolocationRequest } from "../../controlers/api/reverseGeolocationRequest";
 import { callPositionstackApi } from "../../middleware/callPositionstackApi";
 import { combinedDestinationsRequest } from "../../middleware/combinedDestinationsListsRequest";
-import { handleErrors } from "../../middleware/handleErrors";
 import { languagesRequest } from "../../middleware/languagesRequest";
-import { resendDestinationRequest } from "../../middleware/resendDestinationRequest";
 import { saveDestinationInDb } from "../../middleware/saveDestinationInDb";
 import { callWikiApi } from "../../middleware/wikiApi/callWikiApi";
 

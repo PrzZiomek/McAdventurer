@@ -49,6 +49,34 @@ export interface Locals {
     destinationName: string;
     callWiki: boolean;
     destination: DestinationTransitType;
-    destinationsList: AllDestination[] | Destination[];
+    destinationsList: DestinationModel[];
     coordinates: {lat: string, lng: string};
+    combinedDestsLists: DestinationModel[] & WikiDestinationModel[];
   }
+
+  
+export interface DestinationModel {
+  city: string;
+  country: string;
+  coordinates: {
+     lat: number;
+     lng: number;
+  }
+}
+
+export interface WikiDestinationModel {
+  name: string;
+  content: string;
+  images: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+ }
+}
+
+export interface LanguagesModel{
+  code: string,
+  name: string,
+  nativeName: string
+}
+
