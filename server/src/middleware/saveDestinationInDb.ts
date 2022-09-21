@@ -13,7 +13,6 @@ export const saveDestinationInDb = async (req: Request, res: Response, next: Nex
   
     const { name, content, coordinates, images } = { ...res.locals.destination } as DestinationTransitType;      
     const destinationData = new DestinationData();
-    console.log("res.locals.destination in last", res.locals.destination);
     
     await destinationData.setOne(Collection.WIKI_DESTINATIONS, res.locals.destination).catch(err => next(passInternalServerError("error when saving destination in db"))); 
 

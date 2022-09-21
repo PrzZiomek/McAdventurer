@@ -11,7 +11,6 @@ const saveDestinationInDb = async (req, res, next) => {
         return;
     const { name, content, coordinates, images } = Object.assign({}, res.locals.destination);
     const destinationData = new DestinationData_1.DestinationData();
-    console.log("res.locals.destination in last", res.locals.destination);
     await destinationData.setOne(enums_1.Collection.WIKI_DESTINATIONS, res.locals.destination).catch(err => next((0, passInternalServerError_1.passInternalServerError)("error when saving destination in db")));
     if (!coordinates) {
         res.status(200).json({

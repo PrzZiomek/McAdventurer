@@ -28,6 +28,7 @@ const callWikiApi = async (req, res, next) => {
                 lat: coordinates[0].lat,
                 lng: coordinates[0].lon
             } });
+        console.log("destination with coords!!!", destination);
         await destinationData.setOne(enums_1.Collection.WIKI_DESTINATIONS, destination).catch(err => next((0, passInternalServerError_1.passInternalServerError)("error when adding destination to db")));
         res.status(200).json({ destination });
     }
@@ -39,8 +40,10 @@ const callWikiApi = async (req, res, next) => {
             destination = Object.assign(Object.assign({}, destination), { coordinates: coords });
             res.status(200).json({ destination });
         }
-        res.locals.destination = destination;
-        next();
+        else {
+            res.locals.destination = destination;
+            next();
+        }
     }
 };
 exports.callWikiApi = callWikiApi;
