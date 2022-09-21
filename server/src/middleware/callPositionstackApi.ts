@@ -31,11 +31,10 @@ interface DestinationRes {
  export const callPositionstackApi = async (req: Request, res: Response, next: NextFunction) => {
 
    const destination = res.locals.destination;
-   const hasDestinationCoords: boolean = (destination.coordinates?.lat !== "unset" || 
+ /*  const hasDestinationCoords: boolean = (destination.coordinates?.lat !== "unset" || 
       !destination.coordinates?.lat) || 
       (destination.coordinates?.lng !== "unset" || !destination.coordinates?.lng);
-
-   if(!hasDestinationCoords){  
+*/
       const params = {
          access_key: '8b7251d9992206506bbf41cdf3c3dd13',
          query: destination.name
@@ -54,10 +53,7 @@ interface DestinationRes {
             lng: firstDest.longitude
             }
       };       
-   }else{
-      res.locals.destination = destination; 
-   }  
-   console.log("res.locals.destination im callposstack", res.locals.destination);    
+  
    next();
  }
 

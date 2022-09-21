@@ -1,5 +1,5 @@
 import { Destination, WikiDestination } from "../generalTypes/apiResponse";
-import { getMapTheme } from "./reducers/sliceReducers/getMapTheme";
+
 
 interface RequestState {
    error: Error | null;

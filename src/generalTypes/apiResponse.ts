@@ -1,8 +1,10 @@
 export interface Destination {
    name: string;
    country: string;
-   lat: string | number;
-   lng: string | number;
+   coordinates: {
+      lat: string | number;
+      lng: string | number;
+   }
 }
 
 export interface WikiDestination {

@@ -40,7 +40,7 @@ import { getDestinationData } from "./getDestinationData";
             lng: coordinates[0].lon
           },
         }; 
-
+        console.log("destination with coords!!!", destination);
         await destinationData.setOne(Collection.WIKI_DESTINATIONS, destination).catch(err => next(passInternalServerError("error when adding destination to db"))); 
         res.status(200).json({ destination });
 
@@ -55,10 +55,11 @@ import { getDestinationData } from "./getDestinationData";
               coordinates: coords
             }; 
             res.status(200).json({ destination });
+      }else{
+        res.locals.destination = destination; 
+        next();
       }
       
-      res.locals.destination = destination; 
-      next();
     }
 
     

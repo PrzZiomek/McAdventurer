@@ -16,22 +16,23 @@ export const destinationRequest = async (req: Request, res: Response, next: Next
     let callWiki = false;
     const destinationData = new DestinationData();
     const destination = await destinationData.getOne<WikiDestinationModel>(Collection.WIKI_DESTINATIONS, {name}).catch(() => next(passInternalServerError("error when looking for destination")));
-      
-    if(destination){  
+    const areCoordsSet = destination?.coordinates?.lat || destination?.coordinates?.lng;
+
+    if(destination && areCoordsSet){  
         res.status(200).json({
             destination: {
               name: destination.name,
               content: destination.content, 
               coordinates: {
-                lat: destination.coordinates.lat,
-                lng: destination.coordinates.lng
+                lat: destination.coordinates?.lat,
+                lng: destination.coordinates?.lng,
               },
               images: destination.images
             },
           });
     }
 
-    if(!destination){
+    if(!destination || !areCoordsSet){
       callWiki = true;
     }
 

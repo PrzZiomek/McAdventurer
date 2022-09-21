@@ -3,8 +3,11 @@ import { useKeybordNav } from "../../../../../../customHooks/useKeybordNav";
 import { Destination, DestinationDetailed } from "../../../../../../generalTypes/apiResponse";
 import { List } from "../../../../../../ui/List";
 import { DetailsContentStyled } from "./styles/DetailsContentStyled";
+import React from "react";
+import { BarList } from "../barsList/BarList";
 
-interface DetailsContent {
+
+interface DetailsContentProps {
    content: {
       destinationName: string | undefined;
       localizationError: JSX.Element | null,
@@ -15,7 +18,7 @@ interface DetailsContent {
 }
 
 
-export const DetailsContent: FC<DetailsContent> = (props) => { 
+export const DetailsContent: FC<DetailsContentProps> = (props) => { 
 
    const [mapClicked, setMapClicked] = useState<boolean>(false); 
    const clickedDestinationArray = props.content.clickedDestination as DestinationDetailed[];
@@ -98,9 +101,12 @@ export const DetailsContent: FC<DetailsContent> = (props) => {
       
    const content: JSX.Element = mapClicked ? clickedDestinationElement() : typedDestinationElement();
 
+   const showBarList = (): JSX.Element | null => props.content.destinationName || props.content.clickedDestination ? <BarList mapClicked={mapClicked} /> : null;
+
    return ( 
       <DetailsContentStyled id={props.id}>
          {content}
+         {showBarList()}
       </DetailsContentStyled>
    )
 }

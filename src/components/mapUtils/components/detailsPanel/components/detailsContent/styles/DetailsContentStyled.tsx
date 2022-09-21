@@ -14,6 +14,10 @@ export const DetailsContentStyled = styled(Article)`
    color: #3e3e28;
    text-align: center;
 
+   h3{
+      margin-top: 10px;
+   }
+
    h4{
       margin-bottom: 10px;
    }
