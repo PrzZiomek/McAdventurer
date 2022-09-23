@@ -29,6 +29,7 @@ export const DestinationsBrowserStyled = styled(Div)`
   button{
     margin-right: 50px;
     padding-top: 10px;
+    padding-left: 9px;
   }
 
   button.MuiButtonBase-root.MuiIconButton-root:hover .MuiSvgIcon-root{

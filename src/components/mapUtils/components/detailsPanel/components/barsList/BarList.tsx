@@ -8,57 +8,18 @@ import { Coordinates } from "../../../../../../generalTypes/others";
 import { Store } from "../../../../../../state/types";
 import { List } from "../../../../../../ui/List";
 import { Bar } from "./components/Bar";
+import { Local } from "../../../../../../generalTypes/apiResponse";
 
 
 interface BarListProps {
    mapClicked: boolean;
 }
 
-interface Bar {
-   address: {
-      country: "United States"
-      countryCode: "US";
-      countryCodeISO3: "USA";
-      countrySecondarySubdivision: "Okaloosa";
-      countrySubdivision: "FL";
-      countrySubdivisionName: "Florida";
-      freeformAddress: "745 Beal Parkway Northwest, Fort Walton Beach, FL 32547";
-      localName: "Fort Walton Beach";
-      municipality: "Fort Walton Beach";
-      postalCode: "32547";
-      streetName: "Beal Parkway Northwest";
-      streetNumber: "745";
-   };
-   dist: 753.3724431347536;
-   entryPoints:{ 
-      type: "main";
-      position: Coordinates
-   }[];
-   id: "840121001299424";
-   info: "search:ta:840121001299424-US";
-   poi: {
-      brands: {name: "McDonald's"};
-      categories: string[];
-      categorySet : [{id: 9376006}];
-      classifications : [{code: 'CAFE_PUB', names: {nameLocale: 'en-US', name: 'coffee shop'}}];
-      name: "McCafé";
-      phone: "+48 539 983 186";
-      url: "mccafe.mcdonalds.pl/";
-   };
-   position: Coordinates;
-   score: 2.574344635;
-   type: "POI";
-   viewport: {
-      btmRightPoint: Coordinates;
-      topLeftPoint: Coordinates;
-   };
-}
-
 
 export const BarList: FC<BarListProps> = (props) => { 
 
-   const [searchResults, setSearchResults] = useState([]);
-   const [selectedPlace, setSelectedPlace] = useState();
+   const [searchResults, setSearchResults] = useState<Local[] | undefined>([]);
+   const [selectedPlace, setSelectedPlace] = useState<Local | undefined>();
 
    const typedDestCoords: Coordinates | undefined = useSelector((state: Store) => { 
       if(state.getDestination.loading !== false) return; 
@@ -73,7 +34,8 @@ export const BarList: FC<BarListProps> = (props) => {
    const getBarsNearby = async ({ query, lat, lng, limit = 20, radius = 10000 }) => { 
       let baseUrl = 'https://api.tomtom.com/search/2/poiSearch'; 
       let queryString = `limit=${limit}&lat=${lat}&lon=${lng}&radius=${radius}&key=3HzsXWuQLWDL2hbJw9IJKNpwXpcx4NJG`;
-      let response = await axios.get(`${baseUrl}/${query}.json?${queryString}`).catch((err) => console.log(err));
+      let response = await axios.get<{ results: Local[] }>(`${baseUrl}/${query}.json?${queryString}`).catch((err) => console.log(err));
+      if(!response) return;
       return response.data.results;
    }
 
@@ -85,12 +47,13 @@ export const BarList: FC<BarListProps> = (props) => {
       setSearchResults(results); console.log(results);
    }
 
-   const setPlace = (key) =>{
+   const setPlace = (key) =>{ console.log("???", searchResults?.slice(0,2));
+      if(!searchResults) return;
       const selectedPlace = searchResults.find((p) => p.id === key);
       setSelectedPlace(selectedPlace);
     }
 
-   const matchedResults = searchResults
+   const matchedResults = searchResults && searchResults
       .map(result => ({
          key: result.id,
          name: result.poi.name,
@@ -99,7 +62,7 @@ export const BarList: FC<BarListProps> = (props) => {
          }))
       .sort((a, b) => a.dist - b.dist);
 
-   const allResults = searchResults
+   const allResults = searchResults && searchResults
       .map(result => ({
          key: result.id,
          name: result.poi.name,
@@ -107,6 +70,7 @@ export const BarList: FC<BarListProps> = (props) => {
          value: result.poi.name
       }))
       .sort((a, b) => a.dist - b.dist)
+   console.log("selectedPlace", selectedPlace);
    
    const showBar = (): JSX.Element | null => selectedPlace ? <Bar data={selectedPlace} /> : null;
 
@@ -116,7 +80,7 @@ export const BarList: FC<BarListProps> = (props) => {
             placeholder="Search for nearby bars"
             matchedRecords={matchedResults}
             data={allResults}
-            onSelect={(place) => setPlace(place)}
+            onSelect={(place) => {console.log("place",place);return setPlace(place.item.key)}}
             autoFocus={true}
             onChange={(query) => onSearchChange(query)}
             fuseConfigs={{
