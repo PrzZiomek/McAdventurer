@@ -5,7 +5,7 @@ import { Div } from "../../../../../../../ui/Div";
 export const MenuPanelStyled = styled(Div)`
    position: absolute;
    top: 20px;
-   right: 6.4vw;
+   right: 6.2vw;
    z-index: 2;
 
    button.MuiButtonBase-root.MuiIconButton-root:hover .MuiSvgIcon-root{

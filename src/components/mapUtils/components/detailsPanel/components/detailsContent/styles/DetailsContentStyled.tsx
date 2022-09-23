@@ -14,6 +14,10 @@ export const DetailsContentStyled = styled(Article)`
    color: #3e3e28;
    text-align: center;
 
+   h2{
+      margin-bottom: 16px;
+   }
+
    h3{
       margin-top: 10px;
    }
@@ -38,6 +42,10 @@ export const DetailsContentStyled = styled(Article)`
       background: #f2f2e9;
    }
 
+   input{
+      border: 1px solid #3E3E28;
+   }
+
    ::-webkit-scrollbar {
       width: 10px;
    }
@@ -51,5 +59,17 @@ export const DetailsContentStyled = styled(Article)`
       border-radius: 7px; 
    }
 
+   .react-search-box-dropdown{
 
+         margin: 0;
+
+         li {
+            margin: 0px;
+            border: 1px solid #C7C7A9;
+         }
+
+         li:hover{
+            background: #f2f2e9;
+         }
+   }
 `

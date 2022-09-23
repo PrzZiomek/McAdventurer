@@ -6,7 +6,6 @@ export const HintsListStyles = styled(Div)`
    margin: 0 7px;
    margin-right: 8px;
    margin-bottom: 12px;
-   padding-left: 9px;
    background: white;
    max-height: 87vh;
    overflow-y: auto;
