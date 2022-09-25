@@ -1,4 +1,4 @@
-import { Destination, WikiDestination } from "../generalTypes/apiResponse";
+import { Destination, Local, WikiDestination } from "../generalTypes/apiResponse";
 
 
 interface RequestState {
@@ -31,6 +31,11 @@ export interface GetClickedDestination extends RequestState{
    data: Destination
 }
 
+export interface GetNearbyBars extends RequestState{
+   data: Local[]
+}
+
+
 interface GetMapThemeReducer{
    theme: string,
 }
@@ -40,16 +45,18 @@ type StoreKey = GetErrorsReducer |
    GetDestinationListReducer | 
    GetCoordinatesReducer | 
    GetMapThemeReducer | 
-   GetClickedDestination; 
+   GetClickedDestination |
+   GetNearbyBars; 
 
 export interface Store{
    [key: string]: StoreKey;
    getDestination: GetDestinationReducer;
-   getErrors: GetErrorsReducer,
-   getDestinationList: GetDestinationListReducer,
-   getCoordinates: GetCoordinatesReducer,
-   getMapTheme: GetMapThemeReducer,
-   getClickedDestination: GetClickedDestination
+   getErrors: GetErrorsReducer;
+   getDestinationList: GetDestinationListReducer;
+   getCoordinates: GetCoordinatesReducer;
+   getMapTheme: GetMapThemeReducer;
+   getClickedDestination: GetClickedDestination;
+   getNearbyBars: GetNearbyBars;
 }
 
 export type ErrorsCollection = { isError: true; content: Error; }[] & { isError: false; }[];
