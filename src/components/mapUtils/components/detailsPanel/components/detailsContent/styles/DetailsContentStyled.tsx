@@ -42,6 +42,10 @@ export const DetailsContentStyled = styled(Article)`
       background: #f2f2e9;
    }
 
+   .clickedDestination__List {
+      margin-bottom: 10px;
+   }
+
    input{
       border: 1px solid #3E3E28;
    }

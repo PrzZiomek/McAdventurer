@@ -14,6 +14,7 @@ export const reducers = combineReducers({
    getLanguages: getApiData(LANGUAGES),
    getCoordinates: getApiData(COORDINATES),
    getClickedDestination: getApiData(DEST_CLICKED),
+   getNearbyBars: getApiData("BARS"),
    getErrors: getData(getErrors, SET_ERROR),
    getOneFromDestList: getData(getOneFromDestList, FIND_DESTINATION),
    getMapTheme: getData(getMapTheme, SET_MAP_THEME),

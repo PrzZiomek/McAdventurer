@@ -52,11 +52,12 @@ export const reverseGeolocationRequest = async (req: Request, res: Response, nex
               county: dest.county,
               locality: dest.locality,
               country: dest.country,
-              label: dest.label
+              label: dest.label,
+              coordinates: { lat, lng }
           }))
 
           res.status(200).json({
-            destinations
+            destination: destinations[0]
           });
       }
       else {

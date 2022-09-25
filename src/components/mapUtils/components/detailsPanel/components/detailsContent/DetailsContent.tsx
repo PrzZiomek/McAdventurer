@@ -1,5 +1,4 @@
 import { FC, useCallback, useEffect, useState } from "react"
-import { useKeybordNav } from "../../../../../../customHooks/useKeybordNav";
 import { Destination, DestinationDetailed } from "../../../../../../generalTypes/apiResponse";
 import { List } from "../../../../../../ui/List";
 import { DetailsContentStyled } from "./styles/DetailsContentStyled";
@@ -11,7 +10,7 @@ interface DetailsContentProps {
    content: {
       destinationName: string | undefined;
       localizationError: JSX.Element | null,
-      clickedDestination: Destination | undefined | DestinationDetailed[];
+      clickedDestination: Destination | undefined;
    };
    ariaLabelledBy: string;
    id: string;
@@ -20,18 +19,16 @@ interface DetailsContentProps {
 
 export const DetailsContent: FC<DetailsContentProps> = (props) => { 
 
-   const [mapClicked, setMapClicked] = useState<boolean>(false); 
-   const clickedDestinationArray = props.content.clickedDestination as DestinationDetailed[];
-   const [ cursor, handleKeybordNavigation ] = useKeybordNav(clickedDestinationArray?.length, () => {});
+   const [isMapClicked, setisMapClicked] = useState<boolean>(false); 
 
    useEffect(() => {
-      if(!clickedDestinationArray?.[0]?.name) return; 
-      setMapClicked(true)
-    }, [clickedDestinationArray?.[0]?.name])
+      if(props.content.clickedDestination?.name) return; 
+      setisMapClicked(true)
+    }, [props.content.clickedDestination?.name])
 
     useEffect(() => {
       if(!props.content.destinationName) return;
-      setMapClicked(false)
+      setisMapClicked(false)
     }, [props.content.destinationName])
 
    const destinationList = (): JSX.Element | null => { 
@@ -47,7 +44,7 @@ export const DetailsContent: FC<DetailsContentProps> = (props) => {
       };
 
       const showInfoHeader = (name: string | undefined): JSX.Element | null => name ? <h4>{name}</h4> : null;
-       
+       // to do: list is not needed anymore
       if(Array.isArray(destList)){ 
          const collectDestinationInfo = (dest: DestinationDetailed) => ["country", "region", "county", "locality"].reduce(buildDestinationInfoText(dest), "");
          const returnListItem = (item: DestinationDetailed, i?: number) => {
@@ -62,7 +59,7 @@ export const DetailsContent: FC<DetailsContentProps> = (props) => {
          element = (  
             <List 
                items={destList}
-               listWrapperProps={{ onKeyDown: handleKeybordNavigation, className: "clickedDestination__List" }}
+               listWrapperProps={{ className: "clickedDestination__List" }}
                renderChildren={returnListItem}
             />
           ) 
@@ -99,9 +96,9 @@ export const DetailsContent: FC<DetailsContentProps> = (props) => {
       <> { destinationList() || destination() }</>
     );
       
-   const content: JSX.Element = mapClicked ? clickedDestinationElement() : typedDestinationElement();
+   const content: JSX.Element = isMapClicked ? clickedDestinationElement() : typedDestinationElement();
 
-   const showBarList = (): JSX.Element | null => props.content.destinationName || props.content.clickedDestination ? <BarList mapClicked={mapClicked} /> : null;
+   const showBarList = (): JSX.Element | null => props.content.destinationName || props.content.clickedDestination ? <BarList isMapClicked={isMapClicked} /> : null;
 
    return ( 
       <DetailsContentStyled id={props.id}>
